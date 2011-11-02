@@ -127,7 +127,7 @@ class Workbench_Model_Workbench_Endpoint
     {
         $this->_method = strtolower($method);
         //@todo: remove me!
-        if (!Glitch_Application::isDevelopment() && 'get' !== $this->_method) {
+        if (!Workbench_Model_Application::isDevelopment() && 'get' !== $this->_method) {
             $this->setDisableCommit(true);
         }
         return $this;
@@ -271,14 +271,7 @@ class Workbench_Model_Workbench_Endpoint
 
 	public function isValid()
     {
+    	//@todo: implement me!
         return true;
     }
-
-    /*public function fromDocBlock($object)
-    {
-        if (!is_object($object)) {
-            throw new InvalidArgumentException('Idiot!');
-        }
-        return $this;
-    }*/
 }

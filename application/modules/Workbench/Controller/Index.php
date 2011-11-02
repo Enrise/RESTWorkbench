@@ -45,15 +45,8 @@
 
 class Workbench_Controller_Index extends Zend_Controller_Action
 {
-
-    public function init()
-    {
-
-    }
-
     public function indexAction()
     {
-    	//foo
         $r = Glitch_Registry::getSettings()->workbench;
         $m = new Workbench_Model_Workbench_EntryPoints();
 
@@ -69,7 +62,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $core = $p['core'];
 
         //@todo: remove me!
-        if (!Glitch_Application::isDevelopment() && 'get' !== $core['http_method']) {
+        if (!Workbench_Model_Application::isDevelopment() && 'get' !== $core['http_method']) {
             throw new Exception('Something went horribly wrong!');
         }
 
