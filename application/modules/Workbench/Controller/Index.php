@@ -53,6 +53,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
     public function indexAction()
     {
+    	//foo
         $r = Glitch_Registry::getSettings()->workbench;
         $m = new Workbench_Model_Workbench_EntryPoints();
 
