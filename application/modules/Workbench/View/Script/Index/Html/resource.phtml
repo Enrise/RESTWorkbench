@@ -1,0 +1,124 @@
+<?php
+$url    = $this->endpoint->getUrl();
+$nodeId = trim($this->endpoint->getUseageUrl());
+$jslink = '#!/' . $nodeId;
+
+$method = $this->endpoint->getMethod();
+$listClass = array($method, 'operation');
+?>
+<li class="endpoint">
+    <ul class="operations">
+        <li id="list_<?php echo $nodeId ?>" class="<?php echo implode(' ', $listClass) ?>">
+            <div class="heading">
+                <h3>
+                    <span class="http_method">
+                        <a onclick="Docs.toggleOperationContent('<?php echo $nodeId ?>');" href="<?php echo $jslink ?>"><?php echo $method ?></a>
+                    </span>
+                    <span class="path">
+                        <a onclick="Docs.toggleOperationContent('<?php echo $nodeId ?>');" href="<?php echo $jslink ?>"><?php echo $url ?></a>
+                    </span>
+                </h3>
+                <ul class="options">
+                    <li>
+                        <a onclick="Docs.toggleOperationContent('<?php echo $nodeId ?>');" href="<?php echo $jslink ?>"><?php echo $this->endpoint->getHint() ?></a>
+                    </li>
+                </ul>
+            </div>
+            <div id="<?php echo $nodeId ?>" class="content" style="display: none;">
+                <form method="post" data-remote="true" class="sandbox" action="<?php echo $this->url(array('action' => 'rest')) ?>" accept-charset="UTF-8">
+                    <div style="margin:0;padding:0;display:inline">
+                        <input type="hidden" value="✓" name="misc[utf8]">
+                        <input type="hidden" value="" name="misc[authenticity_token]">
+                    </div>
+                    <h4>Description</h4>
+                    <p class="description"><?php echo $this->endpoint->getDescription() ?></p>
+                    <h4>Parameters</h4>
+                    <table class="fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th><?php echo ($this->endpoint->isDisabledCommit() ? 'Default' : '' )?> Value</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $fields = $this->endpoint->getFields();
+                            foreach ($fields as $fieldName => $field) {
+                                $tdCssClasses = array('code');
+                                if ($field->isRequired()) {
+                                    $tdCssClasses[] = 'required';
+                                }
+                                ?>
+                                <tr>
+                                    <td width="100"><?php echo $fieldName ?></td>
+                                    <td width="100" class="<?php echo implode(' ', $tdCssClasses) ?>">
+                                        <?php echo $field ?>
+                                    </td>
+                                    <td width="500">
+                                        <strong><?php echo $field->getDescription() ?></strong>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            $fields = $this->endpoint->getQuery();
+                            foreach ($fields as $fieldName => $field) {
+                                $tdCssClasses = array('code');
+                                if ($field->isRequired()) {
+                                    $tdCssClasses[] = 'required';
+                                }
+                                ?>
+                                <tr>
+                                    <td width="100"><?php echo $fieldName ?></td>
+                                    <td width="100" class="<?php echo implode(' ', $tdCssClasses) ?>">
+                                        <?php echo $field ?>
+                                    </td>
+                                    <td width="500">
+                                        <strong><?php echo $field->getDescription() ?></strong>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <?php
+                    if (!$this->endpoint->isDisabledCommit()) {
+                    ?>
+                    <input type="hidden" value="<?php echo $this->endpoint->getMethod() ?>" name="core[http_method]" id="http_method" />
+                    <input type="hidden" value="<?php echo $url ?>" name="core[path]" id="path" />
+                    <input type="hidden" value="<?php echo $nodeId ?>_sandbox_response" name="misc[dom_id]" />
+                    <div id="<?php echo $nodeId ?>_sandbox_response_header" class="sandbox_header">
+                        <input type="submit" value="Try it out!" name="commit" id="<?php echo $nodeId ?>_sandbox_response_button" class="submit">
+                        <a style="display:none" onclick="$('#<?php echo $nodeId ?>_sandbox_response').slideUp();$(this).fadeOut();; return false;" id="<?php echo $nodeId ?>_sandbox_response_hider" href="#">Hide Response</a>
+                        <div class="throbber" style="display:none"></div>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                </form>
+
+                <div style="display:none" id="<?php echo $nodeId ?>_sandbox_response" class="response">
+                    <?php
+                    if (APP_DEBUG) {
+                    ?>
+                    <h4>Response Time</h4>
+                    <div class="block response_time"></div>
+                    <?php
+                    }
+                    ?>
+                    <h4>Request URL</h4>
+                    <div class="block request_url"></div>
+                    <h4>Last Request</h4>
+                    <div class="block request_last"></div>
+                    <h4>Response Body</h4>
+                    <div class="block response_body"></div>
+                    <h4>Response Code</h4>
+                    <div class="block response_code"></div>
+                    <h4>Response Headers</h4>
+                    <div class="block response_headers"></div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</li>

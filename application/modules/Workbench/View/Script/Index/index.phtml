@@ -1,0 +1,61 @@
+<div id="content">
+    <div class="container">
+        <div class="fullwidth_column">
+            <?php
+            $form = new Zend_Form(array(
+                'decorators' => array('Description', 'FormElements', 'Fieldset', 'Form'),
+                'legend' => 'OAuth',
+                'description' => 'OAuth settings',
+                'elementDecorators' => array('ViewHelper', 'Label', 'HtmlTag'),
+                'attribs' => array(
+                    'class' => 'formtastic',
+                    'id' => 'oauth',
+                ),
+            ));
+            $form->addElement('text', 'consumerkey', array('label' => 'OAuth Consumerkey'));
+            $form->addElement('text', 'consumersecret', array('label' => 'OAuth Consumersecret'));
+            $form->addElement('select', 'signing', array(
+                'label' => 'OAuth Signing method',
+                'multiOptions' => array(
+                    'sha1' => 'SHA1',
+                    'rsa' => 'RSA',
+                    'plaintext' => 'Plaintext'
+            )));
+
+            $form->setElementsBelongTo('oauth');
+            $form->addElement('text', 'realm', array('label' => 'OAuth Realm (Optional)'));
+            $form->populate(Workbench_Model_Workbench_Endpoint::getOauth());
+            echo $form;
+            ?>
+            <h3 id="oauthToggler"><a href="" onclick="$('#oauth').toggle('slow'); return false;">Toggle OAuth form</a></h3>
+            <?php
+            $content = '';
+            foreach ($this->resources as $k => $v) {
+                $this->resource = $v;
+                $content .= $this->render('Index/Html/resources.phtml');
+            }
+            if (0 < strlen($content)) {
+                echo '<ul class="resources">' , $content , '</ul>',
+                     'The latest API base URL is ', Glitch_Registry::getSettings()->workbench->baseUrl;
+            } else {
+                echo '<p>No documentation available</p>';
+            }
+            if (Glitch_Application::isDevelopment()) {
+                echo '<div id="appDebug">';
+                if (0 < count($this->resources->getSkipped())) {
+                    echo '<h3>Skipped</h3><pre>', $this->htmlList($this->resources->getSkipped()), '</pre>';
+                }
+                $todos = array(
+                    'Implement 3 legged OAuth',
+                    'Check if master docblock of a class is required (disabled for now..)',
+                    'Make Accept a select as more then one string can be send, stated by Dolf',
+                    'Implement CSS colors, etc with CSS3 SSAS see http://compass-style.org/ for more info',
+                    'Make a HTML5 variant with correct tags, etc..',
+                    'Replace the onload hide/show based on cookie with PHP reading cookies and the place correct classes?',
+                );
+                echo '<h3>Todo\'s</h3><pre>', $this->htmlList($todos, true), '</pre></div>';
+            }
+            ?>
+        </div>
+    </div>
+</div>

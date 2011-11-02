@@ -1,0 +1,24 @@
+<?php
+$body = $this->response->getBody();
+if ('json' === $this->format) {
+    //Woohoo!
+    $body = Zend_Json::prettyPrint($body, array(
+        'indent' => str_repeat(' ', 4),
+    ));
+}
+$n = array(PHP_EOL, "\r\n", "\r", "\n");
+$body = trim(str_replace($n, '<br/>', $this->escape(print_r($body, true))));
+
+$headers = trim(str_replace($n, '<br/>', $this->escape(print_r($this->response->getHeadersAsString(), true))));
+$request = trim(str_replace($n, '<br/>', $this->escape(print_r($this->request, true))));
+?>
+
+$('#<?php echo $this->id ?> .request_url').html('<pre><?php echo $this->escape($this->url) ?></pre>');
+$('#<?php echo $this->id ?> .request_last').html('<pre><?php echo $request ?></pre>');
+$('#<?php echo $this->id ?> .response_code').html('<pre><?php echo $this->escape($this->response->getStatus()) ?></pre>');
+$('#<?php echo $this->id ?> .response_headers').html('<pre><?php echo $headers ?></pre>');
+$('#<?php echo $this->id ?> .response_time').html('<pre><?php echo $this->responsetime ?> seconds</pre>');
+$('#<?php echo $this->id ?> .response_body').html('<pre><?php echo $body ?></pre>');
+$('#<?php echo $this->id ?>').slideDown();
+$('#<?php echo $this->id ?>_hider').fadeIn();
+$('#<?php echo $this->id ?>_button').attr({'value': 'Again!'});
