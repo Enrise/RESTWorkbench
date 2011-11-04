@@ -1,0 +1,1591 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+  color: black;
+  background: white;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: "" "";
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+}
+
+a img {
+  border: none;
+}
+
+input[disabled="disabled"]{
+	visibility: hidden;
+}
+
+input.select[disabled="disabled"]{
+    visibility: visible;
+	border: 0;
+	background: none;
+}
+
+.hidden {
+	display: none;
+}
+
+/* incase an inverted custom gradient isn't specified */
+.fancy-button-reset-base-class {
+  font-family: "Lucida Grande", Lucida, Arial, sans-serif;
+  /*background: url('/images/button_bg.png') repeat-x bottom left;*/
+  margin: 0;
+  width: auto;
+  overflow: visible;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  border-style: solid;
+  font-weight: bold;
+}
+.fancy-button-reset-base-class::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+.fancy-button-reset-base-class:focus {
+  outline: none;
+}
+
+form.formtastic {
+  margin: 0;
+  padding: 0;
+}
+form.formtastic ul, form.formtastic ol, form.formtastic li, form.formtastic fieldset, form.formtastic legend, form.formtastic input, form.formtastic textarea, form.formtastic select, form.formtastic p {
+  margin: 0;
+  padding: 0;
+}
+form.formtastic fieldset {
+  border: 0;
+}
+form.formtastic em, form.formtastic strong {
+  font-style: normal;
+  font-weight: normal;
+}
+form.formtastic ol, form.formtastic ul {
+  list-style: none;
+}
+form.formtastic abbr, form.formtastic acronym {
+  border: 0;
+  font-variant: normal;
+}
+form.formtastic input, form.formtastic textarea, form.formtastic select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+form.formtastic input, form.formtastic textarea, form.formtastic select {
+  font-size: 100%;
+}
+form.formtastic legend {
+  white-space: normal;
+  color: black;
+}
+form.formtastic ul.errors {
+  color: #cc0000;
+  margin: 0.5em 0 1.5em 25%;
+  list-style: square;
+}
+form.formtastic ul.errors li {
+  padding: 0;
+  border: none;
+  display: list-item;
+}
+form.formtastic fieldset {
+  overflow: auto;
+}
+/* line 41, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset.buttons {
+  padding-left: 25%;
+}
+/* line 44, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset.buttons li {
+  float: left;
+  padding-right: 0.5em;
+}
+/* line 47, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li {
+  padding: 0.5em 0;
+  margin-top: -0.5em;
+  margin-bottom: 1em;
+  overflow: auto;
+}
+/* line 53, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li label {
+  display: block;
+  width: 25%;
+  float: left;
+  padding-top: 0.2em;
+}
+/* line 58, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li > li label {
+  line-height: 100%;
+  padding-top: 0;
+}
+/* line 61, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li > li label input {
+  line-height: 100%;
+  vertical-align: middle;
+  margin-top: -0.1em;
+}
+/* line 65, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li fieldset {
+  position: relative;
+}
+/* line 67, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li fieldset legend {
+  position: absolute;
+  width: 95%;
+  padding-top: 0.1em;
+  left: 0px;
+}
+/* line 72, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li fieldset legend span, form.formtastic fieldset > ol > li fieldset legend.label label {
+  position: absolute;
+}
+/* line 74, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li fieldset ol {
+  float: left;
+  width: 74%;
+  margin: 0;
+  padding: 0 0 0 25%;
+}
+/* line 79, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li fieldset ol li {
+  padding: 0;
+  border: 0;
+}
+/* line 83, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li p.inline-hints {
+  color: #666666;
+  margin: 0.5em 0 0 25%;
+}
+/* line 86, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li p.inline-errors {
+  color: #cc0000;
+  margin: 0.5em 0 0 25%;
+}
+/* line 89, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li ul.errors {
+  color: #cc0000;
+  margin: 0.5em 0 0 25%;
+  list-style: square;
+}
+/* line 93, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li ul.errors li {
+  padding: 0;
+  border: none;
+  display: list-item;
+}
+/* line 97, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.string input, form.formtastic fieldset > ol > li.password input, form.formtastic fieldset > ol > li.numeric input, form.formtastic fieldset > ol > li.email input, form.formtastic fieldset > ol > li.url input, form.formtastic fieldset > ol > li.phone input, form.formtastic fieldset > ol > li.search input {
+  width: 72%;
+}
+/* line 99, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.string input[size], form.formtastic fieldset > ol > li.password input[size], form.formtastic fieldset > ol > li.numeric input[size], form.formtastic fieldset > ol > li.email input[size], form.formtastic fieldset > ol > li.url input[size], form.formtastic fieldset > ol > li.phone input[size], form.formtastic fieldset > ol > li.search input[size] {
+  width: auto;
+  max-width: 72%;
+}
+/* line 102, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.text textarea {
+  width: 72%;
+}
+/* line 104, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.text textarea[cols] {
+  width: auto;
+  max-width: 72%;
+}
+/* line 107, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset ol li.hidden {
+  display: none;
+}
+/* line 110, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.boolean label {
+  padding-left: 25%;
+  width: auto;
+}
+/* line 113, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.boolean label input {
+  margin: 0 0.5em 0 0.2em;
+}
+/* line 115, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.radio fieldset, form.formtastic fieldset > ol > li.check_boxes fieldset {
+  overflow: visible;
+}
+/* line 117, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.radio fieldset ol, form.formtastic fieldset > ol > li.check_boxes fieldset ol {
+  margin-bottom: -0.5em;
+}
+/* line 119, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.radio fieldset ol li, form.formtastic fieldset > ol > li.check_boxes fieldset ol li {
+  margin: 0.1em 0 0.5em 0;
+  overflow: visible;
+}
+/* line 122, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.radio fieldset ol li label, form.formtastic fieldset > ol > li.check_boxes fieldset ol li label {
+  float: none;
+  width: 100%;
+}
+/* line 125, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.radio fieldset ol li label input, form.formtastic fieldset > ol > li.check_boxes fieldset ol li label input {
+  margin-right: 0.2em;
+}
+/* line 127, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.date fieldset ol li, form.formtastic fieldset > ol > li.time fieldset ol li, form.formtastic fieldset > ol > li.datetime fieldset ol li {
+  float: left;
+  width: auto;
+  margin: 0 0.3em 0 0;
+}
+/* line 131, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.date fieldset ol li label, form.formtastic fieldset > ol > li.time fieldset ol li label, form.formtastic fieldset > ol > li.datetime fieldset ol li label {
+  display: none;
+}
+/* line 133, ../../../app/stylesheets/_formtastic_defaults.sass */
+form.formtastic fieldset > ol > li.date fieldset ol li label input, form.formtastic fieldset > ol > li.time fieldset ol li label input, form.formtastic fieldset > ol > li.datetime fieldset ol li label input {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+form#oauth {
+	background: url(/workbenchResources/gfx/oauth-logo.png) no-repeat scroll 0 0 transparent;
+}
+
+form#oauth legend {
+	font-size: 20px;
+	display: none;
+}
+
+form#oauth fieldset {
+    padding-left: 160px;
+}
+
+form#oauth div {
+    margin-bottom: 5px;
+}
+
+form#oauth div label,
+form#oauth div input {
+	display: inline-block;
+	width: 180px;
+}
+
+form#oauth div input {
+	width: 360px;
+}
+
+form.sandbox input,
+form.sandbox select {
+	width: 99%;
+}
+form.sandbox select {
+	width: 100%;
+}
+
+form.sandbox textarea {
+	height: 300px;
+}
+
+.throbber {
+	background: url(/workbenchResources/gfx/throbber.gif) no-repeat 0 0 transparent;
+	width: 126px;
+	height: 16px;
+	float: right;
+}
+
+#appDebug pre {
+	line-height: 0.5em;
+}
+
+#appDebug pre li {
+	padding: 0;
+}
+
+#header h1 {
+	color: white;
+}
+
+/* line 5, ../../../app/stylesheets/_global.sass */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  text-decoration: none;
+}
+/* line 7, ../../../app/stylesheets/_global.sass */
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+  text-decoration: underline;
+}
+/* line 9, ../../../app/stylesheets/_global.sass */
+h1 span.divider, h2 span.divider, h3 span.divider, h4 span.divider, h5 span.divider, h6 span.divider {
+  color: #aaaaaa;
+}
+
+/* line 12, ../../../app/stylesheets/_global.sass */
+h1 {
+  color: #ff5401;
+  color: black;
+  font-size: 1.5em;
+  line-height: 1.3em;
+  padding: 10px 0 10px 0;
+  font-family: Georgia, serif;
+}
+
+/* line 20, ../../../app/stylesheets/_global.sass */
+h2 {
+  color: #ffa014;
+  color: black;
+  font-size: 1.3em;
+  padding: 10px 0 10px 0;
+}
+/* line 25, ../../../app/stylesheets/_global.sass */
+h2 a {
+  color: black;
+}
+/* line 27, ../../../app/stylesheets/_global.sass */
+h2 span.sub {
+  font-size: 0.7em;
+  color: #999999;
+  font-style: italic;
+}
+/* line 31, ../../../app/stylesheets/_global.sass */
+h2 span.sub a {
+  color: #777777;
+}
+
+/* line 34, ../../../app/stylesheets/_global.sass */
+h3 {
+  color: black;
+  font-size: 1.1em;
+  padding: 10px 0 10px 0;
+}
+
+/* line 39, ../../../app/stylesheets/_global.sass */
+p {
+  line-height: 1.4em;
+  padding: 0 0 10px 0;
+  color: #333333;
+}
+
+/* line 44, ../../../app/stylesheets/_global.sass */
+ol {
+  margin: 0px 0 10px 0;
+  padding: 0 0 0 18px;
+  list-style-type: decimal;
+}
+/* line 48, ../../../app/stylesheets/_global.sass */
+ol li {
+  padding: 5px 0px;
+  font-size: 0.9em;
+  color: #333333;
+}
+
+/* line 56, ../../../app/stylesheets/_global.sass */
+.markdown h3 {
+  color: #ff5401;
+}
+/* line 59, ../../../app/stylesheets/_global.sass */
+.markdown h4 {
+  color: #666666;
+}
+/* line 62, ../../../app/stylesheets/_global.sass */
+.markdown pre {
+  font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+  background-color: #f7f6e8;
+  border: 1px solid black;
+  border-color: #e5e0c6;
+  padding: 10px;
+  margin: 0 0 10px 0;
+}
+/* line 69, ../../../app/stylesheets/_global.sass */
+.markdown pre code {
+  line-height: 1.6em;
+}
+/* line 73, ../../../app/stylesheets/_global.sass */
+.markdown p code, .markdown li code {
+  font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+  background-color: #f0f0f0;
+  color: black;
+  padding: 1px 3px;
+}
+/* line 80, ../../../app/stylesheets/_global.sass */
+.markdown ol, .markdown ul {
+  font-family: "droid_sans", serif;
+  margin: 5px 0 10px 0;
+  padding: 0 0 0 18px;
+  list-style-type: disc;
+}
+/* line 85, ../../../app/stylesheets/_global.sass */
+.markdown ol li, .markdown ul li {
+  padding: 3px 0px;
+  line-height: 1.4em;
+  color: #333333;
+}
+
+/* line 91, ../../../app/stylesheets/_global.sass */
+div.gist {
+  margin: 20px 0 25px 0 !important;
+}
+
+/* line 96, ../../../app/stylesheets/_global.sass */
+p.big, div.big p {
+  font-size: 1 em;
+  margin-bottom: 10px;
+}
+
+/* line 101, ../../../app/stylesheets/_global.sass */
+span.weak {
+  color: #666666;
+}
+/* line 103, ../../../app/stylesheets/_global.sass */
+span.blank, span.empty {
+  color: #888888;
+  font-style: italic;
+}
+
+/* line 107, ../../../app/stylesheets/_global.sass */
+a {
+  color: #ff5401;
+}
+/* line 109, ../../../app/stylesheets/_global.sass */
+a.admin {
+  color: #2e4b92 !important;
+}
+/* line 111, ../../../app/stylesheets/_global.sass */
+a.buttonish {
+  background-color: #ff5401;
+  color: white;
+  padding: 5px 11px;
+  text-decoration: none;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -o-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  border-radius: 2px;
+}
+/* line 117, ../../../app/stylesheets/_global.sass */
+a.buttonish:hover {
+  background-color: #cd4300;
+}
+
+/* line 120, ../../../app/stylesheets/_global.sass */
+strong {
+  font-family: Georgia, serif;
+  font-weight: bold;
+	line-height: 1.7em;
+}
+
+/* line 124, ../../../app/stylesheets/_global.sass */
+.code {
+  font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+}
+
+/* line 127, ../../../app/stylesheets/_global.sass */
+pre {
+  font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+  background-color: #f7f6e8;
+  border: 1px solid black;
+  border-color: #e5e0c6;
+  padding: 10px;
+  /* white-space: pre-line */
+}
+/* line 134, ../../../app/stylesheets/_global.sass */
+pre code {
+  line-height: 1.6em;
+}
+
+/* line 138, ../../../app/stylesheets/_global.sass */
+.required {
+  font-weight: bold;
+}
+
+/* line 142, ../../../app/stylesheets/_global.sass */
+table.fullwidth {
+  width: 100%;
+}
+/* line 146, ../../../app/stylesheets/_global.sass */
+table thead tr th {
+  padding: 5px;
+  font-size: 0.9em;
+  color: #666666;
+  border-bottom: 1px solid #999999;
+}
+/* line 153, ../../../app/stylesheets/_global.sass */
+table tbody tr.offset {
+  background-color: #f5f5f5;
+}
+/* line 155, ../../../app/stylesheets/_global.sass */
+table tbody tr td {
+  padding: 6px;
+  font-size: 0.9em;
+  border-bottom: 1px solid #cccccc;
+  vertical-align: middle;
+  line-height: 1.3em;
+}
+/* line 162, ../../../app/stylesheets/_global.sass */
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+/* line 164, ../../../app/stylesheets/_global.sass */
+table tbody tr.offset {
+  background-color: #f0f0f0;
+}
+
+/* line 169, ../../../app/stylesheets/_global.sass */
+div#flash_messages p {
+  padding: 10px 10px;
+  margin: 10px 0;
+  border: 1px solid black;
+  font-weight: bold;
+  font-family: Georgia, serif;
+}
+/* line 175, ../../../app/stylesheets/_global.sass */
+div#flash_messages p.alert {
+  background-color: #faeaea;
+  border-color: #db4c4c;
+  color: #cc0000;
+}
+/* line 179, ../../../app/stylesheets/_global.sass */
+div#flash_messages p.notice {
+  background-color: #eaf4ea;
+  border-color: #4ca54c;
+  color: #007f00;
+}
+
+/* line 185, ../../../app/stylesheets/_global.sass */
+form.form_box {
+  background-color: #ebf3f9;
+  border: 1px solid black;
+  border-color: #c3d9ec;
+  padding: 10px;
+}
+/* line 190, ../../../app/stylesheets/_global.sass */
+form.form_box label {
+  color: #0f6ab4 !important;
+}
+/* line 192, ../../../app/stylesheets/_global.sass */
+form.form_box input[type=submit] {
+  display: block;
+  padding: 10px;
+}
+/* line 195, ../../../app/stylesheets/_global.sass */
+form.form_box p {
+  font-size: 0.9em;
+  padding: 0 0 15px 0;
+  color: #7b7b74;
+}
+/* line 199, ../../../app/stylesheets/_global.sass */
+form.form_box p a {
+  color: #62625c;
+}
+/* line 201, ../../../app/stylesheets/_global.sass */
+form.form_box p strong {
+  color: black;
+}
+/* line 203, ../../../app/stylesheets/_global.sass */
+form.form_box p.weak {
+  font-size: 0.8em;
+}
+/* line 210, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li p.inline-hints {
+  margin-left: 0;
+  font-style: italic;
+  font-size: 0.9em;
+  margin: 0;
+}
+/* line 215, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li label {
+  display: block;
+  clear: both;
+  width: auto;
+  padding: 0 0 3px 0;
+  color: #666666;
+}
+/* line 221, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li label abbr {
+  padding-left: 3px;
+  color: #888888;
+}
+/* line 225, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.required label {
+  color: black;
+}
+/* line 228, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.string input, form.formtastic fieldset.inputs ol li.url input, form.formtastic fieldset.inputs ol li.numeric input {
+  display: block;
+  padding: 4px;
+  width: auto;
+  clear: both;
+}
+/* line 233, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.string input.title, form.formtastic fieldset.inputs ol li.url input.title, form.formtastic fieldset.inputs ol li.numeric input.title {
+  font-size: 1.3em;
+}
+/* line 236, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.text textarea {
+  font-family: "droid_sans", serif;
+  height: 250px;
+  padding: 4px;
+  display: block;
+  clear: both;
+}
+/* line 244, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.select select {
+  display: block;
+  clear: both;
+}
+/* line 248, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.boolean {
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 250, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.boolean input {
+  display: block;
+  float: left;
+  clear: none;
+  margin: 0 5px 0 0;
+}
+/* line 255, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.inputs ol li.boolean label {
+  display: block;
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 262, ../../../app/stylesheets/_global.sass */
+form.formtastic fieldset.buttons {
+  margin: 0;
+  padding: 0;
+}
+/* line 269, ../../../app/stylesheets/_global.sass */
+form.fullwidth ol li.string input, form.fullwidth ol li.url input, form.fullwidth ol li.text textarea, form.fullwidth ol li.numeric input {
+  width: 500px !important;
+}
+
+/* line 273, ../../../app/stylesheets/_global.sass */
+div.errorExplanation h2 {
+  color: #cc0000;
+}
+
+/* line 39, ../../../app/stylesheets/screen.sass */
+body {
+  font-family: "droid_sans", serif;
+  font-size: 0.9em;
+}
+
+/* line 44, ../../../app/stylesheets/screen.sass */
+#header {
+  background-color: black;
+  overflow: hidden;
+  -moz-box-shadow: #999999 0 2px 5px 3px;
+  -webkit-box-shadow: #999999 0 2px 5px 3px;
+  -o-box-shadow: #999999 0 2px 5px 3px;
+  box-shadow: #999999 0 2px 5px 3px;
+}
+
+#header h1 {
+	width: 960px;
+	margin: 0 auto;
+}
+
+/* line 73, ../../../app/stylesheets/screen.sass */
+#header .container ul#nav {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: block;
+  float: right;
+  clear: none;
+  padding: 20px 0 0 0;
+}
+/* line 33, ../../../app/stylesheets/zass/_zass.sass */
+#header .container ul#nav li {
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 2px 10px;
+  border-right: 1px solid #dddddd;
+}
+/* line 39, ../../../app/stylesheets/zass/_zass.sass */
+#header .container ul#nav li:first-child, #header .container ul#nav li.last {
+  padding-left: 0;
+}
+/* line 41, ../../../app/stylesheets/zass/_zass.sass */
+#header .container ul#nav li:last-child, #header .container ul#nav li.last {
+  padding-right: 0;
+  border-right: none;
+}
+/* line 79, ../../../app/stylesheets/screen.sass */
+#header .container ul#nav li {
+  border: none;
+  padding: 0 5px;
+}
+/* line 82, ../../../app/stylesheets/screen.sass */
+#header .container ul#nav li a {
+  display: block;
+  padding: 8px 10px 8px 10px;
+  color: #999999;
+  text-decoration: none;
+}
+/* line 87, ../../../app/stylesheets/screen.sass */
+#header .container ul#nav li a:active, #header .container ul#nav li a.active, #header .container ul#nav li a:hover {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0%, #ff5401), color-stop(100%, #ffa014));
+  background-image: -moz-linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
+  background-image: linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
+  color: white;
+}
+/* line 94, ../../../app/stylesheets/screen.sass */
+#header .container ul#nav:hover li {
+  border-color: #222222;
+}
+
+/* line 97, ../../../app/stylesheets/screen.sass */
+#content {
+  clear: both;
+  overflow: hidden;
+}
+/* line 100, ../../../app/stylesheets/screen.sass */
+#content .container {
+  margin: 0px auto;
+  padding: 0px;
+  position: relative;
+  width: 960px;
+  margin-top: 40px;
+  margin-bottom: 80px;
+}
+/* line 105, ../../../app/stylesheets/screen.sass */
+#content .container .fullwidth_column {
+  margin: 0px 0 0 0;
+  width: 960px;
+}
+/* line 109, ../../../app/stylesheets/screen.sass */
+#content .container .main_column {
+  float: left;
+  width: 630px;
+}
+/* line 113, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar {
+  float: right;
+  width: 300px;
+}
+/* line 118, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar h1 a, #content .container .sidebar h2 a, #content .container .sidebar h3 a, #content .container .sidebar h4 a, #content .container .sidebar h5 a, #content .container .sidebar h6 a {
+  color: black;
+}
+/* line 121, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar ul.toc {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* line 125, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar ul.toc > li {
+  padding: 8px 0px;
+  border-bottom: 1px solid #cccccc;
+}
+/* line 128, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar ul.toc > li:last-child {
+  border-bottom: none;
+}
+/* line 130, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar ul.toc > li a {
+  text-decoration: none;
+}
+/* line 132, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar ul.toc > li p.info {
+  font-family: Georgia;
+  font-size: 0.8em;
+  color: #888888;
+  padding: 2px 0;
+}
+/* line 138, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar ul.toc > li.active a {
+  color: black;
+}
+/* line 140, ../../../app/stylesheets/screen.sass */
+#content .container .sidebar ul.toc > li.active p.info {
+  padding-left: 18px;
+}
+/* line 145, ../../../app/stylesheets/screen.sass */
+#content .container ul.feature_thumbs, #content .container ul.library_thumbs {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+/* line 148, ../../../app/stylesheets/screen.sass */
+#content .container ul.feature_thumbs li, #content .container ul.library_thumbs li {
+  display: block;
+  clear: none;
+  float: left;
+}
+/* line 152, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource {
+  border-bottom: 1px solid #dddddd;
+}
+/* line 154, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource:last-child {
+  border-bottom: none;
+}
+/* line 156, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading {
+  border: 1px solid transparent;
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 159, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading h2 {
+  color: #999999;
+  padding-left: 0px;
+  display: block;
+  clear: none;
+  float: left;
+  font-family: Georgia, serif;
+}
+/* line 164, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading h2 a {
+  color: #999999;
+}
+/* line 166, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading h2 a:hover {
+  color: black;
+}
+/* line 168, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading ul.options {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: block;
+  clear: none;
+  float: right;
+  margin: 14px 10px 0 0;
+}
+/* line 33, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.resources li.resource div.heading ul.options li {
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 2px 10px;
+  border-right: 1px solid #dddddd;
+}
+/* line 39, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.resources li.resource div.heading ul.options li:first-child, #content .container ul.resources li.resource div.heading ul.options li.last {
+  padding-left: 0;
+}
+/* line 41, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.resources li.resource div.heading ul.options li:last-child, #content .container ul.resources li.resource div.heading ul.options li.last {
+  padding-right: 0;
+  border-right: none;
+}
+/* line 172, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading ul.options li {
+  color: #666666;
+  font-size: 0.9em;
+}
+/* line 175, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading ul.options li a {
+  color: #aaaaaa;
+  text-decoration: none;
+}
+/* line 178, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource div.heading ul.options li a:hover {
+  text-decoration: underline;
+  color: black;
+}
+/* line 184, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource:hover div.heading h2 a, #content .container ul.resources li.resource.active div.heading h2 a {
+  color: black;
+}
+/* line 188, ../../../app/stylesheets/screen.sass */
+#content .container ul.resources li.resource:hover div.heading ul.options li a, #content .container ul.resources li.resource.active div.heading ul.options li a {
+  color: #555555;
+}
+
+
+
+/* line 204, ../../../app/stylesheets/screen.sass */
+#content .container ul.features, #content .container ul.libraries {
+  margin-bottom: 20px;
+}
+/* line 206, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li, #content .container ul.libraries li {
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 0 10px 0;
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 209, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li:last-child, #content .container ul.libraries li:last-child {
+  border: none;
+}
+/* line 212, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.thumb, #content .container ul.libraries li div.thumb {
+  display: block;
+  clear: none;
+  float: left;
+  width: 100px;
+}
+/* line 215, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.content, #content .container ul.libraries li div.content {
+  display: block;
+  clear: none;
+  float: right;
+  width: 520px;
+}
+/* line 219, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.content p a, #content .container ul.libraries li div.content p a {
+  color: #222222;
+}
+/* line 221, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.content ul.links, #content .container ul.libraries li div.content ul.links {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 33, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.features li div.content ul.links li, #content .container ul.libraries li div.content ul.links li {
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 2px 10px;
+  border-right: 1px solid #dddddd;
+}
+/* line 39, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.features li div.content ul.links li:first-child, #content .container ul.features li div.content ul.links li.last, #content .container ul.libraries li div.content ul.links li:first-child, #content .container ul.libraries li div.content ul.links li.last {
+  padding-left: 0;
+}
+/* line 41, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.features li div.content ul.links li:last-child, #content .container ul.features li div.content ul.links li.last, #content .container ul.libraries li div.content ul.links li:last-child, #content .container ul.libraries li div.content ul.links li.last {
+  padding-right: 0;
+  border-right: none;
+}
+/* line 225, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.content ul.links li, #content .container ul.libraries li div.content ul.links li {
+  display: block;
+  clear: none;
+  float: left;
+  font-size: 0.9em;
+  border-bottom: none;
+}
+/* line 229, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.content ul.links li span.info_pair, #content .container ul.libraries li div.content ul.links li span.info_pair {
+  color: #555555;
+}
+/* line 231, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.content ul.links li span.info_pair span.label, #content .container ul.libraries li div.content ul.links li span.info_pair span.label {
+  color: #777777;
+}
+/* line 233, ../../../app/stylesheets/screen.sass */
+#content .container ul.features li div.content ul.links li a, #content .container ul.libraries li div.content ul.links li a {
+  text-decoration: none;
+  color: #ff5401;
+}
+/* line 24, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.features li div.content ul.links li a:hover, #content .container ul.libraries li div.content ul.links li a:hover {
+  text-decoration: underline;
+}
+/* line 239, ../../../app/stylesheets/screen.sass */
+#content .container ul.features.downplayed li div.thumb, #content .container ul.libraries.downplayed li div.thumb {
+  width: 50px;
+}
+/* line 241, ../../../app/stylesheets/screen.sass */
+#content .container ul.features.downplayed li div.content, #content .container ul.libraries.downplayed li div.content {
+  width: 570px;
+  min-height: 50px;
+}
+/* line 244, ../../../app/stylesheets/screen.sass */
+#content .container ul.features.downplayed li div.content p, #content .container ul.libraries.downplayed li div.content p {
+  padding: 0;
+  display: block;
+}
+/* line 247, ../../../app/stylesheets/screen.sass */
+#content .container ul.features.downplayed li div.content p a, #content .container ul.libraries.downplayed li div.content p a {
+  font-family: Georgia, serif;
+  text-decoration: none;
+  color: #555555;
+}
+/* line 24, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.features.downplayed li div.content p a:hover, #content .container ul.libraries.downplayed li div.content p a:hover {
+  text-decoration: underline;
+}
+/* line 252, ../../../app/stylesheets/screen.sass */
+#content .container ul.support {
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 254, ../../../app/stylesheets/screen.sass */
+#content .container ul.support li {
+  display: block;
+  clear: none;
+  float: left;
+  margin-top: 20px;
+  padding: 15px 4px;
+}
+/* line 259, ../../../app/stylesheets/screen.sass */
+#content .container ul.support li:last-child {
+  border: none;
+}
+/* line 261, ../../../app/stylesheets/screen.sass */
+#content .container ul.support li div.image {
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 263, ../../../app/stylesheets/screen.sass */
+#content .container ul.support li div.label {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  text-align: center;
+}
+/* line 266, ../../../app/stylesheets/screen.sass */
+#content .container ul.support li div.label a, #content .container ul.support li div.label p {
+  display: block;
+  padding: 15px 0;
+}
+/* line 272, ../../../app/stylesheets/screen.sass */
+#content .container ul.posts > li p.info {
+  font-family: Georgia;
+  font-size: 0.8em;
+  color: #888888;
+}
+/* line 278, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li {
+  border-bottom: 1px solid #dddddd;
+  padding: 6px 4px 4px 4px;
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 281, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li:hover {
+  background-color: #f0f0f0;
+}
+/* line 283, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li:hover a {
+  color: #ff5401;
+}
+/* line 285, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li a {
+  color: black;
+  text-decoration: none;
+}
+/* line 288, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li a:hover {
+  text-decoration: underline;
+}
+/* line 290, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li:last-child {
+  border-bottom: none;
+}
+/* line 293, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li div.label {
+  display: block;
+  clear: none;
+  float: left;
+}
+/* line 296, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li div.label a.featured {
+  font-weight: bold;
+}
+/* line 298, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li div.label a.disabled {
+  color: #666666;
+  text-decoration: line-through;
+}
+/* line 301, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li ul.options {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: block;
+  clear: none;
+  float: right;
+}
+/* line 33, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.sortable > li ul.options li {
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 2px 10px;
+  border-right: 1px solid #dddddd;
+}
+/* line 39, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.sortable > li ul.options li:first-child, #content .container ul.sortable > li ul.options li.last {
+  padding-left: 0;
+}
+/* line 41, ../../../app/stylesheets/zass/_zass.sass */
+#content .container ul.sortable > li ul.options li:last-child, #content .container ul.sortable > li ul.options li.last {
+  padding-right: 0;
+  border-right: none;
+}
+/* line 305, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li ul.options li a {
+  color: #777777;
+  font-size: 0.9em;
+}
+/* line 308, ../../../app/stylesheets/screen.sass */
+#content .container ul.sortable > li ul.options li a:hover {
+  color: #333333;
+}
+/* line 311, ../../../app/stylesheets/screen.sass */
+#content .container p.github {
+  margin: 10px 0 20px 0;
+  background: transparent url('/images/github.png?1296587046') no-repeat left center;
+  padding: 30px 0 30px 110px;
+}
+/* line 321, ../../../app/stylesheets/screen.sass */
+#content .container form#signup_form fieldset.inputs ol li.string input {
+  width: 94%;
+}
+/* line 324, ../../../app/stylesheets/screen.sass */
+#content .container form#signup_form fieldset.inputs ol li.text textarea {
+  width: 94%;
+}
+
+/* line 327, ../../../app/stylesheets/screen.sass */
+div.admin_menu {
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+/* line 333, ../../../app/stylesheets/screen.sass */
+div.admin_menu p {
+  display: block;
+  clear: none;
+  float: left;
+  margin: 0;
+  padding: 0;
+  color: #2e4b92;
+  font-size: 1.1em;
+}
+/* line 339, ../../../app/stylesheets/screen.sass */
+div.admin_menu ul {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: block;
+  clear: none;
+  float: left;
+  margin-top: 2px;
+}
+/* line 33, ../../../app/stylesheets/zass/_zass.sass */
+div.admin_menu ul li {
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 2px 10px;
+  border-right: 1px solid #dddddd;
+}
+/* line 39, ../../../app/stylesheets/zass/_zass.sass */
+div.admin_menu ul li:first-child, div.admin_menu ul li.last {
+  padding-left: 0;
+}
+/* line 41, ../../../app/stylesheets/zass/_zass.sass */
+div.admin_menu ul li:last-child, div.admin_menu ul li.last {
+  padding-right: 0;
+  border-right: none;
+}
+/* line 343, ../../../app/stylesheets/screen.sass */
+div.admin_menu ul li {
+  font-size: 0.9em;
+}
+/* line 345, ../../../app/stylesheets/screen.sass */
+div.admin_menu ul li a {
+  color: #2e4b92;
+  text-decoration: none;
+}
+/* line 348, ../../../app/stylesheets/screen.sass */
+div.admin_menu ul li a:hover {
+  text-decoration: underline;
+}
+
+/* line 352, ../../../app/stylesheets/screen.sass */
+#footer {
+  clear: both;
+  display: block;
+  margin: 100px 0 100px 0;
+}
+/* line 356, ../../../app/stylesheets/screen.sass */
+#footer .container {
+  margin: 0px auto;
+  padding: 0px;
+  position: relative;
+  width: 960px;
+  border-top: 1px solid #cccccc;
+  padding: 10px;
+}
+/* line 360, ../../../app/stylesheets/screen.sass */
+#footer .container ul {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+/* line 33, ../../../app/stylesheets/zass/_zass.sass */
+#footer .container ul li {
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 2px 10px;
+  border-right: 1px solid #dddddd;
+}
+/* line 39, ../../../app/stylesheets/zass/_zass.sass */
+#footer .container ul li:first-child, #footer .container ul li.last {
+  padding-left: 0;
+}
+/* line 41, ../../../app/stylesheets/zass/_zass.sass */
+#footer .container ul li:last-child, #footer .container ul li.last {
+  padding-right: 0;
+  border-right: none;
+}
+/* line 362, ../../../app/stylesheets/screen.sass */
+#footer .container ul li {
+  color: #666666;
+}
+/* line 364, ../../../app/stylesheets/screen.sass */
+#footer .container ul li a {
+  text-decoration: none;
+  color: #666666;
+  line-height: 1.1em;
+}
+/* line 24, ../../../app/stylesheets/zass/_zass.sass */
+#footer .container ul li a:hover {
+  text-decoration: underline;
+}
+/* line 368, ../../../app/stylesheets/screen.sass */
+#footer .container ul li a.strong {
+  font-size: 1.1em;
+  color: black;
+  font-weight: bold;
+}
+
+
+
+
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0 0 10px 0;
+  padding: 0 0 0 0px;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0 0 0 0;
+  padding: 0;
+  background-color: #f5e8e8;
+  border: 1px solid black;
+  border-color: #e8c6c7;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 {
+  display: block;
+  clear: none;
+  float: left;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  line-height: 1.1em;
+  color: black;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span {
+  margin: 0;
+  padding: 0;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path {
+  padding-left: 10px;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path a {
+  color: black;
+  text-decoration: none;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path a:hover {
+  text-decoration: underline;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: block;
+  clear: none;
+  float: right;
+  margin: 6px 10px 0 0;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li {
+  float: left;
+  clear: none;
+  margin: 0;
+  padding: 2px 10px;
+  border-right: 1px solid #dddddd;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li:first-child,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li.last {
+  padding-left: 0;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li:last-child,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li.last {
+  padding-right: 0;
+  border-right: none;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li {
+  /*border-right-color: #e8c6c7;
+  color: #a41e22;*/
+  font-size: 0.9em;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li a {
+  color: black;
+  text-decoration: none;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li a:hover,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li a:active,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading ul.options li a.active {
+  text-decoration: underline;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content {
+  background-color: white;
+  border: 1px solid black;
+  border-top: none;
+  padding: 10px;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -o-border-bottom-left-radius: 6px;
+  -ms-border-bottom-left-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -o-border-bottom-right-radius: 6px;
+  -ms-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin: 0 0 20px 0;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content h4 {
+  color: black;
+  font-size: 1.1em;
+  margin: 0;
+  padding: 15px 0 5px 0px;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content form input[type='text'].error {
+  outline: 2px solid black;
+  outline-color: #cc0000;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header {
+  float: none;
+  clear: both;
+  overflow: hidden;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header input.submit {
+  display: block;
+  clear: none;
+  float: left;
+  padding: 6px 8px;
+  width: auto;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header img {
+  display: block;
+  display: block;
+  clear: none;
+  float: right;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header a {
+  padding: 11px 0 0 10px;
+  color: #c8787a;
+  display: inline-block;
+  font-size: 0.9em;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.response div.block {
+  background-color: #f7f6e8;
+  border: 1px solid black;
+  border-color: #e5e0c6;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.response div.block pre {
+    font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+    padding: 10px;
+    font-size: 0.9em;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path {
+    padding-left: 10px; 
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path a {
+  color: black;
+  text-decoration: none;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.http_method a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    width: 50px;
+    font-size: 0.7em;
+    text-align: center;
+    padding: 7px 0 4px 0;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -o-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    border-radius: 2px;
+}
+
+/** GET Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content div.sandbox_header a {
+	color: #0F6AB4;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get h3 span.http_method a {
+    background-color: #0f6ab4;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading {
+    background-color: #E7F0F7;
+    border-color: #C3D9EC;
+}
+
+/** DELETE Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content div.sandbox_header a {
+    color: #a41e22;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete h3 span.http_method a {
+    background-color: #a41e22;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading {
+    background-color: #F5E8E8;
+    border-color: #E8C6C7;
+}
+
+/** POST Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content div.sandbox_header a {
+    color: #10a54a;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post h3 span.http_method a {
+    background-color: #10a54a;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading {
+	background-color: #E7F6EC;
+    border-color: #C3E8D1;
+}
+
+/** PUT Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content div.sandbox_header a {
+    color: #C5862B;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put h3 span.http_method a {
+    background-color: #C5862B;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.heading {
+	background-color: #F9F2E9;
+	border-color: #F0E0CA;
+}

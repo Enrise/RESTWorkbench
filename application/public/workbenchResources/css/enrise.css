@@ -1,0 +1,238 @@
+@font-face {
+    font-family: "EnriseLight";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/workbenchResources/gfx/enrise-light-webfont.woff") format("woff"), url("/workbenchResources/gfx/enrise-light-webfont.ttf") format("truetype"), url("/workbenchResources/gfx/enrise-light-webfont.svg#webfontXptnulVc") format("svg");
+}
+@font-face {
+    font-family: "EnriseSemibold";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/workbenchResources/gfx/enrise-semibold-webfont.woff") format("woff"), url("/workbenchResources/gfx/enrise-semibold-webfont.ttf") format("truetype"), url("/workbenchResources/gfx/enrise-semibold-webfont.svg#webfontiS7Rl6YO") format("svg");
+}
+
+body {
+	background: #EBECEB;
+}
+
+#wrapper {
+	background: white;
+    box-shadow: 0 2px 5px 3px #999999;
+	width: 960px;
+	margin: 0 auto;
+	padding: 0px 20px 50px;
+}
+
+form#oauth {
+	position: fixed;
+	margin: 40px 0 0 -10px;
+	background-color: white;
+	background-position: 12px 12px;
+	width: auto;
+	padding: 20px;
+	box-shadow: 0 2px 5px 3px #999999;
+}
+
+form#oauth fieldset {
+	padding-left: 0;
+	padding-top: 60px;
+}
+
+form#oauth p.hint,
+form#oauth div {
+	margin-bottom: 10px;
+}
+
+form#oauth div:last-child {
+	margin-bottom: 0;
+}
+
+form#oauth div label {
+	margin-bottom: 5px;
+}
+
+form#oauth div label,
+form#oauth div input {
+	width: 260px;
+	display: block;
+}
+
+#oauthToggler {
+	background: none repeat scroll 0 0 white;
+    box-shadow: 0 -8px 10px 0 #999;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    padding: 5px 10px;
+    position: fixed;
+    margin: 100px -100px 0;
+}
+
+#oauthToggler a {
+	color: #FFA600;
+}
+
+#header {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	box-shadow: 0 0 0 0 white;
+	background: white;
+	overflow: hidden;
+}
+
+#header h1 {
+    padding: 0;
+    margin: 0;
+    background: url("/workbenchResources/gfx/enrise-creative-webtechnology-logo.gif") no-repeat scroll right 10px transparent;
+    /** Min height should match background image height! **/
+    min-height: 64px;
+    line-height: 64px;
+    color: #FFA600;
+}
+
+#content .container {
+	padding: 0 0 50px;
+	margin-top: 0;
+	margin-bottom: 0;
+	/** Needed for the rotated OAuth toggler **/
+	min-height: 200px;
+}
+
+#footer {
+	margin: 0;
+	padding: 0;
+}
+
+#footer .container {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	background-image: url(/workbenchResources/gfx/double-line.gif);
+    background-repeat: repeat-x;
+}
+
+#footer .container ul {
+	padding-top: 10px;
+}
+
+#enrise {
+    color: #999689;
+    font-size: 13px;
+    margin-top: 30px;
+    text-align: center;
+    font-family: EnriseSemibold;
+}
+
+#enrise a, #enrise:visited a {
+    background: url("http://www.enrise.com/favicon.ico") no-repeat scroll left top transparent;
+    color: #FF9900;
+    
+    padding-left: 17px;
+    text-decoration: none;
+}
+
+strong {
+	font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: bold;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header input.submit {
+	font-family: EnriseSemibold;
+}
+
+#content .container ul.resources li.resource div.heading h2 a,
+#content .container ul.resources li.resource.active div.heading h2 a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path a {
+	/** Donkergrijs **/
+    color: #999595;
+    font-family: EnriseLight;
+}
+
+#content .container ul.resources li.resource:hover div.heading h2 a,
+#content .container ul.resources li.resource div.heading h2 a:hover,
+#content .container ul.resources li.resource:hover div.heading ul.options li a:hover {
+	/** Pretty dark **/
+	color: #4d4d4f;
+}
+
+#content .container ul.resources li.resource:hover div.heading ul.options li a,
+#content .container ul.resources li.resource.active div.heading ul.options li a,
+#content .container ul.resources li.resource div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.http_method a {
+	font-family: EnriseSemibold;
+	padding: 7px 0 5px;
+	width: 60px;
+}
+
+/** GET Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content div.sandbox_header a {
+    color: #00A9D3;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get h3 span.http_method a {
+    background-color: #00A9D3;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading {
+    background-color: #E7F0F7;
+    border-color: #C3D9EC;
+}
+
+/** DELETE Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content div.sandbox_header a {
+    color: #BB0000;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete h3 span.http_method a {
+    background-color: #BB0000;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading {
+    background-color: #F5E8E8;
+    border-color: #E8C6C7;
+}
+
+/** POST Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content div.sandbox_header a {
+    color: #87C521;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post h3 span.http_method a {
+    background-color: #87C521;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading {
+    background-color: #E7F6EC;
+    border-color: #C3E8D1;
+}
+
+/** PUT Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content div.sandbox_header a {
+    color: #FFA600;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put h3 span.http_method a {
+    background-color: #FFA600;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.heading {
+    background-color: #F9F2E9;
+    border-color: #F0E0CA;
+}
