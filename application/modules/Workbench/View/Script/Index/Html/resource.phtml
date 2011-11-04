@@ -99,24 +99,18 @@ $listClass = array($method, 'operation');
                 </form>
 
                 <div style="display:none" id="<?php echo $nodeId ?>_sandbox_response" class="response">
-                    <?php
-                    if (APP_DEBUG) {
-                    ?>
-                    <h4>Response Time</h4>
-                    <div class="block response_time"></div>
-                    <?php
-                    }
-                    ?>
+                    <h4>Response Code</h4>
+                    <div class="block response_code"></div>
+                    <h4>Response Body</h4>
+                    <div class="block response_body"></div>
+                    <h4>Response Headers</h4>
+                    <div class="block response_headers"></div>
                     <h4>Request URL</h4>
                     <div class="block request_url"></div>
                     <h4>Last Request</h4>
                     <div class="block request_last"></div>
-                    <h4>Response Body</h4>
-                    <div class="block response_body"></div>
-                    <h4>Response Code</h4>
-                    <div class="block response_code"></div>
-                    <h4>Response Headers</h4>
-                    <div class="block response_headers"></div>
+                    <h4>Response Time</h4>
+                    <div class="block response_time"></div>
                 </div>
             </div>
         </li>
