@@ -75,15 +75,30 @@ class Workbench_Model_Workbench_EntryPoints
         '__unset', '__sleep', '__wakeup', '__toString', '__invoke', '__set_state', '__clone()',
     );
 
+    /**
+     * Sanitize a path with the current OS directory separator
+     *
+     * @return string
+     */
     protected function _sanitizePath($path)
     {
         return str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $path);
     }
 
+    /**
+     * Filter the paths by checking if the input is an array and sanitize if it is
+     *
+     * @param mixed $paths
+     * @return array
+     */
     protected function _filterPaths($paths = array())
     {
         if ($paths instanceof Zend_Config) {
             $paths = $paths->toArray();
+        }
+        //If it's not an array, well we know that we want to use an array furher down
+        if (!is_array($paths)) {
+            return array();
         }
         return array_map(array($this, '_sanitizePath'), $paths);
     }
