@@ -52,6 +52,7 @@ class Workbench_Model_Workbench_EntryPoints
     const ACCEPT = 'accept';
     const QUERY = 'query';
     const URL = 'url';
+    const DISABLED = 'disabled';
     const ACTION_REGEX = '~^(resource|collection)(Delete|Get|Head|Options|Put|Post)Action~';
 
     protected $_parseFields = array(
@@ -60,14 +61,19 @@ class Workbench_Model_Workbench_EntryPoints
         'signing' => '~(.+)~',
         'realm',
         self::HINT => '~(.+)~',
-        self::PARAM => '~([a-z_]+)( {optional} |)(.+|)~',
+        self::PARAM => '~([a-z_]+)(.+|) ({optional}|)~',
         self::FORMAT => '~(.+)(\+@format)~',
         self::ACCEPT => '~(.+)~',
-        self::QUERY => '~([a-z_]+)( {optional} |)(.+|)~',
+        self::QUERY => '~([a-z_]+)(.+|) ({optional}|)~',
         self::URL => '(.+)',
+        self::DISABLED => '(true)',
     );
 
-    protected $_skipMethods = array('init', 'passThrough', '__construct', '__destruct');
+    protected $_skipMethods = array('init', 'passThrough',
+        //Magic methods are never valid..
+        '__construct', '__destruct', '__call', '__callStatic', '__get', '__set', '__isset',
+        '__unset', '__sleep', '__wakeup', '__toString', '__invoke', '__set_state', '__clone()',
+    );
 
     protected function _sanitizePath($path)
     {
@@ -183,6 +189,10 @@ class Workbench_Model_Workbench_EntryPoints
                                 case self::HINT:
                                     $endpoint->setHint($value);
                                     break;
+                                case self::DISABLED:
+                                    $endpoint->setDisableCommit(true);
+                                    break;
+                                //All params
                                 case self::ACCEPT:
                                     $params[$k] = $value;
                                     break;
@@ -190,21 +200,23 @@ class Workbench_Model_Workbench_EntryPoints
                                     $params[$k] = array_filter(explode('|', trim($value)));
                                     break;
                                 case self::PARAM:
-                                    //Check for optional value
-                                    if (empty($tmp[2])) {
-                                        $params[$tmp[1]]['required'] = true;
+                                    //Check for description
+                                    if (!empty($tmp[2])) {
+                                        $params[$tmp[1]]['description'] = trim($tmp[2]);
                                     }
-                                    if (!empty($tmp[3])) {
-                                        $params[$tmp[1]]['description'] = trim($tmp[3]);
+                                    //Check for optional value
+                                    if (empty($tmp[3])) {
+                                        $params[$tmp[1]]['required'] = true;
                                     }
                                     break;
                                 case self::QUERY:
-                                    //Check for optional value
-                                    if (empty($tmp[2])) {
-                                        $query[$tmp[1]]['required'] = true;
+                                    //Check for description
+                                    if (!empty($tmp[2])) {
+                                        $query[$tmp[1]]['description'] = trim($tmp[2]);
                                     }
-                                    if (!empty($tmp[3])) {
-                                        $query[$tmp[1]]['description'] = trim($tmp[3]);
+                                    //Check for optional value
+                                    if (empty($tmp[3])) {
+                                        $query[$tmp[1]]['required'] = true;
                                     }
                                     break;
                             }
