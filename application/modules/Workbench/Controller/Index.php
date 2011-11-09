@@ -89,11 +89,12 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {
             $hasBody = false;
-            if (array_key_exists('body', $p['params'])) {
+            if (array_key_exists('body', $p['params']) && 0 < strlen($p['params']['body'])) {
                 $client->setRawData($p['params']['body']);
-                unset($p['params']['body']);
                 $hasBody = true;
             }
+            //Not needed after this..
+            unset($p['params']['body']);
 
             $modifyClient = false;
             foreach ($p['params'] as $k => $v) {
