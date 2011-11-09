@@ -84,7 +84,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $format = $core['format'];
         $this->view->format = $format;
 
-        $body = '';
         $client = new Zend_Http_Client();
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {

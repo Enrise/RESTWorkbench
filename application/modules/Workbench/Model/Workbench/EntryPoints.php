@@ -61,10 +61,10 @@ class Workbench_Model_Workbench_EntryPoints
         'signing' => '~(.+)~',
         'realm',
         self::HINT => '~(.+)~',
-        self::PARAM => '~([a-z_]+)(.+|) ({optional}|)~',
+        self::PARAM => '~([a-z_]+) ([()a-z:\./_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
+        self::QUERY => '~([a-z_]+) ([()a-z:\./_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
         self::FORMAT => '~(.+)(\+@format)~',
         self::ACCEPT => '~(.+)~',
-        self::QUERY => '~([a-z_]+)(.+|) ({optional}|)~',
         self::URL => '(.+)',
         self::DISABLED => '(true)',
     );
@@ -75,30 +75,15 @@ class Workbench_Model_Workbench_EntryPoints
         '__unset', '__sleep', '__wakeup', '__toString', '__invoke', '__set_state', '__clone()',
     );
 
-    /**
-     * Sanitize a path with the current OS directory separator
-     *
-     * @return string
-     */
     protected function _sanitizePath($path)
     {
         return str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $path);
     }
 
-    /**
-     * Filter the paths by checking if the input is an array and sanitize if it is
-     *
-     * @param mixed $paths
-     * @return array
-     */
     protected function _filterPaths($paths = array())
     {
         if ($paths instanceof Zend_Config) {
             $paths = $paths->toArray();
-        }
-        //If it's not an array, well we know that we want to use an array furher down
-        if (!is_array($paths)) {
-            return array();
         }
         return array_map(array($this, '_sanitizePath'), $paths);
     }
@@ -107,6 +92,9 @@ class Workbench_Model_Workbench_EntryPoints
     {
         $paths = $this->_filterPaths($paths);
         $strips = $this->_filterPaths($strips);
+        if (!is_array($includePaths)) {
+            $includePaths = array();
+        }
         $includePaths = $this->_filterPaths($includePaths);
 
         $resources = new Workbench_Model_Workbench_Resources();
@@ -222,6 +210,10 @@ class Workbench_Model_Workbench_EntryPoints
                                     //Check for optional value
                                     if (empty($tmp[3])) {
                                         $params[$tmp[1]]['required'] = true;
+                                    }
+                                    //Check for example value
+                                    if (!empty($tmp[4])) {
+                                        $params[$tmp[1]]['value'] = trim($tmp[4]);
                                     }
                                     break;
                                 case self::QUERY:
