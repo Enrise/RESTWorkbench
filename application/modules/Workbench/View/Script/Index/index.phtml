@@ -32,7 +32,7 @@
             $content = '';
             foreach ($this->resources as $k => $v) {
                 $this->resource = $v;
-                $content .= $this->render('index/Html/resources.phtml');
+                $content .= $this->render('Index/Html/resources.phtml');
             }
             if (0 < strlen($content)) {
                 echo '<ul class="resources">' , $content , '</ul>',
@@ -40,7 +40,7 @@
             } else {
                 echo '<p>No documentation available</p>';
             }
-            if (Workbench_Model_Application::isDevelopment()) {
+            if (Glitch_Application::isDevelopment()) {
                 echo '<div id="appDebug">';
                 if (0 < count($this->resources->getSkipped())) {
                     echo '<h3>Skipped</h3><pre>', $this->htmlList($this->resources->getSkipped()), '</pre>';
@@ -53,7 +53,6 @@
                     'Make a HTML5 variant with correct tags, etc..',
                     'Replace the onload hide/show based on cookie with PHP reading cookies and the place correct classes?',
                     'Changeable view configuration',
-                    'Make loading more obvious (white overlay maybe?)',
                 );
                 echo '<h3>Todo\'s</h3><pre>', $this->htmlList($todos, true), '</pre></div>';
             }

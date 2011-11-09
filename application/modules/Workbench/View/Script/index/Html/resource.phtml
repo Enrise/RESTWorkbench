@@ -44,6 +44,7 @@ $listClass = array($method, 'operation');
                         <tbody>
                             <?php
                             $fields = $this->endpoint->getFields();
+                            $group  = array();
                             foreach ($fields as $fieldName => $field) {
                                 $tdCssClasses = array('code');
                                 if ($field->isRequired()) {
@@ -61,6 +62,7 @@ $listClass = array($method, 'operation');
                                 </tr>
                                 <?php
                             }
+
                             $fields = $this->endpoint->getQuery();
                             foreach ($fields as $fieldName => $field) {
                                 $tdCssClasses = array('code');
