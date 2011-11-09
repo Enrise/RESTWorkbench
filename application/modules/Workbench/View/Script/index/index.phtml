@@ -40,7 +40,7 @@
             } else {
                 echo '<p>No documentation available</p>';
             }
-            if (Glitch_Application::isDevelopment()) {
+            if (Workbench_Model_Application::isDevelopment()) {
                 echo '<div id="appDebug">';
                 if (0 < count($this->resources->getSkipped())) {
                     echo '<h3>Skipped</h3><pre>', $this->htmlList($this->resources->getSkipped()), '</pre>';
