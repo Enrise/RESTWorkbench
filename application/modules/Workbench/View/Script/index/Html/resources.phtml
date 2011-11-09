@@ -5,7 +5,7 @@ $nodeId = lcfirst(str_replace(' ', '', ucwords(str_ireplace(array('\\', '\\\\', 
 $content = '';
 foreach ($this->resource as $data) {
     $this->endpoint = $data;
-    $content .= $this->render('index/Html/resource.phtml');
+    $content .= $this->render('Index/Html/resource.phtml');
 }
 $id = 'resource_' . $nodeId;
 

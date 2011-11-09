@@ -8,7 +8,11 @@ if ('json' === $this->format) {
 }
 $n = array(PHP_EOL, "\r\n", "\r", "\n");
 //Escape single quotes for JS
-$body = addslashes(trim(str_replace($n, '<br/>', $this->escape(print_r($body, true)))));
+$body = trim(str_replace($n, '<br/>', $this->escape(print_r($body, true))));
+//Zend_Json::prettyPrint takes care of addslashes
+if ('json' !== $this->format) {
+    $body = addslashes($body);
+}
 
 $headers = trim(str_replace($n, '<br/>', $this->escape(print_r($this->response->getHeadersAsString(), true))));
 $request = trim(str_replace($n, '<br/>', $this->escape(print_r($this->request, true))));

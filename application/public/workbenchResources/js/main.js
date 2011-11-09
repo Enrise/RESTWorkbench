@@ -288,6 +288,7 @@ var Docs = {
 $(function() {
      //Must be first! 
      Docs.init();
+     $('#oauth').hide();
      
      // Helper function for vertically aligning DOM elements
      // http://www.seodenver.com/simple-vertical-align-plugin-for-jquery/
@@ -350,7 +351,7 @@ $(function() {
  jQuery(function ($) {
      var csrf_token = $('meta[name=csrf-token]').attr('content'),
      csrf_param = $('meta[name=csrf-param]').attr('content');
-     $('#oauth').hide();
+     
      $.fn.extend({
          /**
          * Triggers a custom event on an element and returns the event result
@@ -379,11 +380,12 @@ $(function() {
                  throw "No URL specified for remote call (action or href must be present).";
              } else {
                  var $this = $(this),
-                     $throbber = $this.find('img.throbber'),
+                     $throbber = $this.find('.throbber'),
                      data = el.is('form') ? el.serializeArray() : [];
                  
                  data = data.concat($('#oauth').serializeArray());
                  $throbber.show();
+                 $this.siblings('div.response').css('opacity', '0.1');
                  var startTime = new Date();
                  $.ajax({
                      url: url,
@@ -403,14 +405,17 @@ $(function() {
                      success: function (response, status, xhr) {
                          el.trigger('ajax:success', [response, status, xhr]);
                          $throbber.hide();
+                         $this.siblings('div.response').css('opacity', '1');
                      },
                      complete: function (xhr) {
                          el.trigger('ajax:complete', xhr);
                          $throbber.hide();
+                         $this.siblings('div.response').css('opacity', '1');
                      },
                      error: function (xhr, status, error) {
                          el.trigger('ajax:error', [xhr, status, error]);
                          $throbber.hide();
+                         $this.siblings('div.response').css('opacity', '1');
                      }
                  });
              }

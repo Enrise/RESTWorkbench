@@ -127,7 +127,7 @@ class Workbench_Model_Workbench_Endpoint
     {
         $this->_method = strtolower($method);
         //@todo: remove me!
-        if (!Workbench_Model_Application::isDevelopment() && 'get' !== $this->_method) {
+        if (!Glitch_Application::isDevelopment() && 'get' !== $this->_method) {
             $this->setDisableCommit(true);
         }
         return $this;

@@ -31,7 +31,7 @@ form#oauth {
 	width: auto;
 	padding: 20px;
 	box-shadow: 0 2px 5px 3px #999999;
-    z-index: 1;
+	z-index: 1;
 }
 
 form#oauth fieldset {
