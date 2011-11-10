@@ -59,6 +59,84 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $this->view->resources = $m->getResources($r->scanPaths, $r->fileToClassStrip, $r->additionalIncludes);
     }
 
+    public function colorAction()
+    {
+        function showColors($color) {
+            if (is_string($color)) {
+                $color = str_replace('#', '', $color);
+                if (6 !== strlen($color)) {
+                    //Invalid value, return input
+                    return $color;
+                }
+                $r = substr($color, 0, 2);
+                $g = substr($color, 2, 2);
+                $b = substr($color, 4);
+            } else if (is_array($color)) {
+                if (3 !== count($color)) {
+                    return $color;
+                }
+                $r = array_shift($color);
+                if (ctype_digit((string) $r)) {
+                    $r = dechex($r);
+                }
+                $g = array_shift($color);
+                if (ctype_digit((string) $g)) {
+                    $g = dechex($g);
+                }
+                $b = array_shift($color);
+                if (ctype_digit((string) $b)) {
+                    $b = dechex($b);
+                }
+            } else {
+                return $color;
+            }
+            $r = '0x' . $r;
+            $g = '0x' . $g;
+            $b = '0x' . $b;
+
+            if (0 == $r) {
+                //Just plus one, save me alot of headache
+                $r++;
+            }
+
+            $ratio1 = $g/$r;
+            $ratio2 = $b/$r;
+
+            $tohex = function ($v) {
+                return strtoupper(sprintf('%02x', $v));
+            };
+
+            $x = 1;
+            $percent = 0.01;
+            $data = array();
+            do {
+                $rx = $r * $x;
+                $gx = $rx*$ratio1;
+                $bx = $rx*$ratio2;
+
+                $wx = (1-$x)*0xFF;
+                $rCalc = floor($wx+$rx);
+                $gCalc = floor($wx+$gx);
+                $bCalc = floor($wx+$bx);
+
+                $data[round($x * 100)] = array(
+                    'hex' => '#' . $tohex($rCalc) . $tohex($gCalc) . $tohex($bCalc),
+                    'rgb' => implode(', ', array($rCalc, $gCalc, $bCalc))
+                );
+                $x = round($x - $percent, 2);
+            } while($x >= 0);
+            return $data;
+        }
+        $color = $this->_getParam('styleColor', $this->getRequest()->getQuery('styleColor', null));
+        $colors = showColors($color);
+        if (!is_array($colors)) {
+            $this->getResponse()->setHttpResponseCode(400);
+        }
+        $this->getResponse()->setBody(json_encode($colors));
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+    }
+
     public function restAction()
     {
         $this->_helper->layout()->disableLayout();

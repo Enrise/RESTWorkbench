@@ -94,6 +94,12 @@ class Workbench_Model_Workbench_Params implements Iterator
         return true === $this->getField('required', false);
     }
 
+    public function setDisabled($flag)
+    {
+        $this->_fields[$this->key()]['disabled'] = (bool) $flag;
+        return $this;
+    }
+
     public function isDisabled()
     {
         return true === $this->getField('disabled', false);
@@ -141,6 +147,9 @@ class Workbench_Model_Workbench_Params implements Iterator
             if ('format' === $fieldName || 'signing' === $fieldName) {
                 $value = (array) $value;
                 $value = array_combine($value, $value);
+                if (1 === count($value)) {
+                    $this->setDisabled(true);
+                }
             }
             $elm->setMultiOptions($value);
         } else {

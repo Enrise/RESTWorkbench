@@ -85,6 +85,9 @@ class Workbench_Model_Workbench_EntryPoints
         if ($paths instanceof Zend_Config) {
             $paths = $paths->toArray();
         }
+        if (!is_array($paths)) {
+            return array();
+        }
         return array_map(array($this, '_sanitizePath'), $paths);
     }
 
@@ -92,9 +95,6 @@ class Workbench_Model_Workbench_EntryPoints
     {
         $paths = $this->_filterPaths($paths);
         $strips = $this->_filterPaths($strips);
-        if (!is_array($includePaths)) {
-            $includePaths = array();
-        }
         $includePaths = $this->_filterPaths($includePaths);
 
         $resources = new Workbench_Model_Workbench_Resources();
