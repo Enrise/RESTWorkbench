@@ -237,3 +237,37 @@ strong {
     background-color: #F9F2E9;
     border-color: #F0E0CA;
 }
+
+/** OPTIONS Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content div.sandbox_header a {
+    color: #4D4D4F;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options h3 span.http_method a {
+    background-color: #4D4D4F;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.heading {
+    background-color: #EDEDED;
+    border-color: #D2D2D3;
+}
+
+/** HEAD Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content div.sandbox_header a {
+    color: #7A28A3;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head h3 span.http_method a {
+    background-color: #7A28A3;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.heading {
+    background-color: #F1E9F5;
+    border-color: #DDC9E8;
+}

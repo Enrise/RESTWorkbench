@@ -289,6 +289,80 @@ $(function() {
      //Must be first! 
      Docs.init();
      $('#oauth').hide();
+     $("#colorchange").change(function(evt) {
+         var $form = $(this);
+         $.ajax({
+             url: '/workbench/index/color',
+             data: $form.serializeArray(),
+             type: 'get',
+             dataType: 'json',
+             success: function (response, status, xhr) {
+                 var foo = '';
+                 var methods = [];
+                 var active = null;
+                 $form.find('#styleMethod option').each(function(elm) {
+                     methods.push(this.value);
+                 });
+                 if (!$form.find('#styleAll').attr('checked')) {
+                     active = $form.find('#styleMethod').attr('value');
+                 }
+                 
+                 for (i in methods) {
+                     var method = methods[i];
+                     
+                     var queries = [
+                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading ul.options li a',
+                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content h4',
+                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content div.sandbox_header a'
+                     ];
+                     queries = queries.join(', ');
+                     val = '';
+                     if (null === active || active === method) {
+                         val = response[100].hex;
+                         foo += '/** ' + method.toUpperCase() + ' override **/<br/>';
+                         foo += queries + ' { color: ' + response[100].hex + '; }';
+                     }
+                     $(queries).css('color', val);
+                     
+                     queries = [
+                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' h3 span.http_method a'
+                     ];
+                     queries = queries.join(', ');
+                     val = '';
+                     if (null === active || active === method) {
+                         val = response[100].hex;
+                         foo += "<br/>" + queries + ' { background-color: ' + response[100].hex + '; }';
+                     }
+                     $(queries).css('backgroundColor', val);
+                     
+                     queries = [
+                          'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content',
+                          'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading'
+                     ];
+                     queries = queries.join(', ');
+                     val = {
+                         'backgroundColor': '',
+                         'borderColor': ''
+                     };
+                     if (null === active || active === method) {
+                         val = {
+                             'backgroundColor': response[10].hex,
+                             'borderColor': response[25].hex
+                         };
+                         foo += "<br/>" + queries + ' { background-color: ' + response[10].hex + '; border-color: ' + response[25].hex + '; }<br/><br/>';
+                     }
+                     $(queries).css(val);
+                     
+                 }
+                 $('#showStylesContainer').html(foo);
+             },
+             error: function (xhr, status, error) { }
+         });
+     });
+     $('#showStyles').click(function(evt) {
+         $('#showStylesContainer').toggle('slow');
+         return false;
+     });
      
      // Helper function for vertically aligning DOM elements
      // http://www.seodenver.com/simple-vertical-align-plugin-for-jquery/
@@ -489,3 +563,4 @@ $(function() {
          });
      });
 });
+ 
