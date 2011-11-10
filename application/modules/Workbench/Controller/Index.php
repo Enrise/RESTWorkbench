@@ -48,7 +48,9 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
     public function init()
     {
-
+        $this->_helper->layout()->setLayoutPath(implode(DIRECTORY_SEPARATOR, array(
+            GLITCH_MODULES_PATH, $this->getRequest()->getModuleName(), 'layout'
+        )));
     }
 
     public function indexAction()
