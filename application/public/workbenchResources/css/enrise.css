@@ -39,26 +39,47 @@ form#oauth fieldset {
 	padding-top: 60px;
 }
 
-form#oauth p.hint,
-form#oauth div {
+form#colorchange {
+    position: fixed;
+    margin: 192px 0 0 -10px;
+    background-color: white;
+    background-position: 12px 12px;
+    padding: 10px;
+    box-shadow: 0 2px 5px 3px #999999;
+    z-index: 1;
+}
+
+form#colorchange input.miniColors {
+	width: 56px;
+    display: inline;
+    height: 20px;
+    line-height: 20px;
+}
+
+body form.formtastic {
+	max-width: 50%;
+}
+
+form.formtastic p.hint,
+form.formtastic div {
 	margin-bottom: 10px;
 }
 
-form#oauth div:last-child {
+form.formtastic div:last-child {
 	margin-bottom: 0;
 }
 
-form#oauth div label {
+form.formtastic div label {
 	margin-bottom: 5px;
 }
 
-form#oauth div label,
-form#oauth div input {
+form.formtastic div label,
+form.formtastic div input {
 	width: 260px;
 	display: block;
 }
 
-#oauthToggler {
+.toggler {
 	background: none repeat scroll 0 0 white;
     box-shadow: 0 -8px 10px 0 #999;
     -webkit-transform: rotate(-90deg);
@@ -68,11 +89,15 @@ form#oauth div input {
     transform: rotate(-90deg);
     padding: 5px 10px;
     position: fixed;
-    margin: 100px -100px 0;
+    margin: 100px -100px 0; 
 }
 
-#oauthToggler a {
+.toggler a {
 	color: #FFA600;
+}
+
+#styleToggler {
+	margin: 245px -94px 0;
 }
 
 #header {
