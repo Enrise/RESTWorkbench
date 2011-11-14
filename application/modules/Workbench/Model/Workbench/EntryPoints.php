@@ -72,8 +72,9 @@ class Workbench_Model_Workbench_EntryPoints
         'signing' => '~(.+)~',
         'realm',
         self::HINT => '~(.+)~',
-        self::PARAM => '~([a-z_]+) ([()a-z:\./_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
-        self::QUERY => '~([a-z_]+) ([()a-z:\./_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
+        self::PARAM => '~([a-z_]+) ([()0-9-a-z:\.,/_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
+        self::QUERY => '~([a-z_]+) ([()0-9-a-z:\.,/_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
+        //self::QUERY => '~([a-z_]+)(.+|) ({optional}|)~i',
         self::FORMAT => '~(.+)(\+@format)~',
         self::ACCEPT => '~(.+)~',
         self::URL => '(.+)',
@@ -260,6 +261,10 @@ class Workbench_Model_Workbench_EntryPoints
                                     //Check for optional value
                                     if (empty($tmp[3])) {
                                         $query[$tmp[1]]['required'] = true;
+                                    }
+                                    //Check for example value
+                                    if (!empty($tmp[4])) {
+                                        $query[$tmp[1]]['value'] = trim($tmp[4]);
                                     }
                                     break;
                             }
