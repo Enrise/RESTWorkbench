@@ -181,7 +181,7 @@ class Workbench_Model_Workbench_Params implements Iterator
         $elm->setAttrib('placeholder', $placeholder);
 
         if ($this->isDisabled() || $this->getParent()->isDisabledCommit()) {
-            $elm->setAttrib('disabled', 'disabled');
+            $elm->setAttrib('readonly', 'readonly');
             $elm->helper = 'formText';
             if ($elm instanceof Zend_Form_Element_Select) {
                 $value = $elm->getMultiOptions();
