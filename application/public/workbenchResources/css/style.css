@@ -289,27 +289,37 @@ form#oauth {
 	background: url(/workbenchResources/gfx/oauth-logo.png) no-repeat scroll 0 0 transparent;
 }
 
-form#oauth legend {
-	font-size: 20px;
-	display: none;
-}
-
 form#oauth fieldset {
     padding-left: 160px;
 }
 
-form#oauth div {
+form#oauth legend {
+    display: none;
+}
+
+form.formtastic legend {
+    font-size: 20px;
+}
+
+form.formtastic div {
     margin-bottom: 5px;
 }
 
-form#oauth div label,
-form#oauth div input {
+form.formtastic div label,
+form.formtastic div input {
 	display: inline-block;
 	width: 180px;
 }
 
-form#oauth div input {
+form.formtastic div input {
 	width: 360px;
+}
+
+form.formtastic div input[type="checkbox"],
+form.formtastic div input[type="checkbox"] + label {
+	width: auto;
+	display: inline;
+	vertical-align: text-top;
 }
 
 form.sandbox input,
@@ -337,10 +347,6 @@ form.sandbox textarea {
 
 #appDebug pre li {
 	padding: 0;
-}
-
-#header h1 {
-	color: white;
 }
 
 /* line 5, ../../../app/stylesheets/_global.sass */
@@ -714,17 +720,34 @@ body {
 
 /* line 44, ../../../app/stylesheets/screen.sass */
 #header {
-  background-color: black;
-  overflow: hidden;
-  -moz-box-shadow: #999999 0 2px 5px 3px;
-  -webkit-box-shadow: #999999 0 2px 5px 3px;
-  -o-box-shadow: #999999 0 2px 5px 3px;
-  box-shadow: #999999 0 2px 5px 3px;
+	background-color: black;
+	overflow: hidden;
+	-moz-box-shadow: #999999 0 2px 5px 3px;
+	-webkit-box-shadow: #999999 0 2px 5px 3px;
+	-o-box-shadow: #999999 0 2px 5px 3px;
+	box-shadow: #999999 0 2px 5px 3px;
+	position: relative;
 }
 
-#header h1 {
+#header h1,
+noscript p {
 	width: 960px;
 	margin: 0 auto;
+	color: white;
+}
+
+#header noscript {
+	background-color: red;
+	position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    width: 100%;
+}
+
+noscript p {
+    width: 960px;
+	margin: 0 auto;
+	padding: 10px 0;
 }
 
 /* line 73, ../../../app/stylesheets/screen.sass */

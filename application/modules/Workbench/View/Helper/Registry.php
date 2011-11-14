@@ -70,9 +70,11 @@ class Workbench_View_Helper_Registry extends Zend_View_Helper_Abstract
                 $value = $prev->{$v};
                 $prev = $value;
             } else if (!isset($prev)) {
-                $value = Zend_Registry::getInstance()->{$v};
-                if ($value instanceof Zend_Config) {
-                    $prev = $value;
+                if (Zend_Registry::getInstance()->isRegistered($v)) {
+                    $value = Zend_Registry::getInstance()->{$v};
+                    if ($value instanceof Zend_Config) {
+                        $prev = $value;
+                    }
                 }
             } else {
                 break;

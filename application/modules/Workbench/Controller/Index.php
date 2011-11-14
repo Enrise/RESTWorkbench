@@ -132,7 +132,8 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $color = $this->_getParam('styleColor', $this->getRequest()->getQuery('styleColor', null));
         $colors = showColors($color);
         if (!is_array($colors)) {
-            $this->getResponse()->setHttpResponseCode(400);
+            $colors = array();
+            //$this->getResponse()->setHttpResponseCode(400);
         }
         $this->getResponse()->setBody(json_encode($colors));
         $this->_helper->layout()->disableLayout();

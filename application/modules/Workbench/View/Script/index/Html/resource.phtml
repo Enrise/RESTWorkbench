@@ -25,10 +25,10 @@ $listClass = array($method, 'operation');
                 </ul>
             </div>
             <div id="<?php echo $nodeId ?>" class="content" style="display: none;">
-                <form method="post" data-remote="true" class="sandbox" action="<?php echo $this->url(array('action' => 'rest')) ?>" accept-charset="UTF-8">
+                <form method="post" class="sandbox" action="<?php echo $this->url(array('action' => 'rest')) ?>" accept-charset="UTF-8">
                     <div style="margin:0;padding:0;display:inline">
-                        <input type="hidden" value="✓" name="misc[utf8]">
-                        <input type="hidden" value="" name="misc[authenticity_token]">
+                        <input type="hidden" value="✓" name="misc[utf8]" />
+                        <input type="hidden" value="" name="misc[authenticity_token]" />
                     </div>
                     <h4>Description</h4>
                     <p class="description"><?php echo $this->endpoint->getDescription() ?></p>
@@ -87,11 +87,11 @@ $listClass = array($method, 'operation');
                     <?php
                     if (!$this->endpoint->isDisabledCommit()) {
                     ?>
-                    <input type="hidden" value="<?php echo $this->endpoint->getMethod() ?>" name="core[http_method]" id="http_method" />
-                    <input type="hidden" value="<?php echo $url ?>" name="core[path]" id="path" />
+                    <input type="hidden" value="<?php echo $this->endpoint->getMethod() ?>" name="core[http_method]" />
+                    <input type="hidden" value="<?php echo $url ?>" name="core[path]" />
                     <input type="hidden" value="<?php echo $nodeId ?>_sandbox_response" name="misc[dom_id]" />
                     <div id="<?php echo $nodeId ?>_sandbox_response_header" class="sandbox_header">
-                        <input type="submit" value="Try it out!" name="commit" id="<?php echo $nodeId ?>_sandbox_response_button" class="submit">
+                        <input type="submit" value="Try it out!" name="commit" id="<?php echo $nodeId ?>_sandbox_response_button" class="submit" />
                         <a style="display:none" onclick="$('#<?php echo $nodeId ?>_sandbox_response').slideUp();$(this).fadeOut();; return false;" id="<?php echo $nodeId ?>_sandbox_response_hider" href="#">Hide Response</a>
                         <div class="throbber" style="display:none"></div>
                     </div>
@@ -101,18 +101,24 @@ $listClass = array($method, 'operation');
                 </form>
 
                 <div style="display:none" id="<?php echo $nodeId ?>_sandbox_response" class="response">
-                    <h4>Response Code</h4>
-                    <div class="block response_code"></div>
-                    <h4>Response Body</h4>
-                    <div class="block response_body"></div>
-                    <h4>Response Headers</h4>
-                    <div class="block response_headers"></div>
-                    <h4>Request URL</h4>
-                    <div class="block request_url"></div>
-                    <h4>Last Request</h4>
-                    <div class="block request_last"></div>
-                    <h4>Response Time</h4>
-                    <div class="block response_time"></div>
+                    <?php
+                    $mapping = array(
+                        'response_code' => 'Response Code',
+                        'response_body' => 'Response Body',
+                        'response_headers' => 'Response Headers',
+                        'request_url' => 'Request URL',
+                        'request_last' => 'Last Request',
+                        'response_time' => 'Response Time',
+                    );
+                    $order = $this->registry()->query('settings.workbench.view.responseData', array_flip(array_keys($mapping)));
+                    if (is_string($order)) {
+                        $order = array_flip(array_map('trim', explode(',', $order)));
+                    }
+                    $order = array_intersect_key($mapping, (array) $order);
+                    foreach ($order as $k => $v) {
+                        printf('<h4>%s</h4><div class="%s"></div>', $v, $k);
+                    }
+                    ?>
                 </div>
             </div>
         </li>
