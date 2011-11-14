@@ -110,7 +110,7 @@ class Workbench_Model_Workbench_Query implements Iterator
         $belongsTo = 'query';
 
         $elm = 'Zend_Form_Element_' . $elm;
-        $id = implode('_', array('parameters', $this->getParent()->getName(), $fieldName));
+        $id = implode('_', array('parameters', $this->getParent()->getUseageUrl(), $fieldName));
         $name = $fieldName;
         $elm = new $elm($name, array(
             'label' => $fieldName,

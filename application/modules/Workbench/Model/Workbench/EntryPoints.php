@@ -45,7 +45,12 @@
 
 class Workbench_Model_Workbench_EntryPoints
 {
-
+    /**#@+
+     *
+     * Field names that can be read from docblock
+     *
+     * @var string
+     */
     const HINT = 'hint';
     const PARAM = 'param';
     const FORMAT = 'format';
@@ -54,7 +59,13 @@ class Workbench_Model_Workbench_EntryPoints
     const URL = 'url';
     const DISABLED = 'disabled';
     const ACTION_REGEX = '~^(resource|collection)(Delete|Get|Head|Options|Put|Post)Action~';
+    /*#@-*/
 
+    /**
+     * Array of fieldnames and their matching regex
+     *
+     * @var array
+     */
     protected $_parseFields = array(
         //@todo: what do we do with OAuth fields?
         'oauth',
@@ -69,17 +80,34 @@ class Workbench_Model_Workbench_EntryPoints
         self::DISABLED => '(true)',
     );
 
+    /**
+     * Array of methods that we know to be invalid for a REST action controller
+     *
+     * @var array
+     */
     protected $_skipMethods = array('init', 'passThrough',
         //Magic methods are never valid..
         '__construct', '__destruct', '__call', '__callStatic', '__get', '__set', '__isset',
         '__unset', '__sleep', '__wakeup', '__toString', '__invoke', '__set_state', '__clone()',
     );
 
+    /**
+     * String replace all directory separators with the OS set DIRECTORY_SEPARATOR
+     *
+     * @param string $path
+     * @return string
+     */
     protected function _sanitizePath($path)
     {
         return str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $path);
     }
 
+    /**
+     * Filter method for paths
+     *
+     * @param array|Zend_Config $paths
+     * @return array
+     */
     protected function _filterPaths($paths = array())
     {
         if ($paths instanceof Zend_Config) {
@@ -91,6 +119,14 @@ class Workbench_Model_Workbench_EntryPoints
         return array_map(array($this, '_sanitizePath'), $paths);
     }
 
+    /**
+     * Method for reading all the files given in $paths and parsing of docblocks
+     *
+     * @param $paths
+     * @param $strips
+     * @param $includePaths
+     * @return Workbench_Model_Workbench_Resources
+     */
     public function getResources($paths = array(), $strips = array(), $includePaths = array())
     {
         $paths = $this->_filterPaths($paths);
@@ -238,6 +274,12 @@ class Workbench_Model_Workbench_EntryPoints
         return $resources;
     }
 
+    /**
+     * Get all the tokens from a docblock
+     *
+     * @param string $doc
+     * @return Workbench_Model_Workbench_Tokens
+     */
     protected function _getTokensFromDocblock($doc)
     {
         preg_match_all('~(@([a-z]+)) (.+)~', $doc, $matches);

@@ -47,6 +47,7 @@ $isEnrise = false !== stripos($projectname, 'enrise');
 $this->headTitle($projectname)->enableTranslation();
 
 $this->headLink()->appendStylesheet('/workbenchResources/css/style.css');
+$this->headLink()->appendStylesheet('/workbenchResources/css/jquery.miniColors.css');
 if ($isEnrise) {
     //$this->headLink()->appendStylesheet('/workbenchResources/css/enrise.css');
 }
@@ -77,12 +78,13 @@ echo $this->headMeta() . PHP_EOL,
      $this->headStyle() . PHP_EOL,
      $this->headScript() . PHP_EOL;
 ?>
-<link href="/favicon.ico" rel="shortcut icon">
+<link href="/favicon.ico" rel="shortcut icon" />
 </head>
 <body<?php if (isset($layout->bodyId)){ echo ' id="'.$layout->bodyId.'"'; } if (isset($layout->bodyClass)){ echo ' class="'.$layout->bodyClass.'"'; } ?>>
     <div id="wrapper">
         <div id="header">
-            <h1><?php echo $projectname ?></h1>
+            <h1><?php echo $this->escape($projectname) ?></h1>
+            <noscript><p>This application works best and only for now with Javascript enabled</p></noscript>
         </div>
         <?php echo $layout->content ?>
         <div id="footer">
