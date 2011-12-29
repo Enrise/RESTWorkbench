@@ -161,11 +161,27 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $url = rtrim($url, '/');
 
-        $accept = $core['accept'];
-        $format = $core['format'];
+        $accept = '*/*';
+        $format = '';
+        if (isset($core['accept'])) {
+            $accept = $core['accept'];
+        }
+        if (isset($core['format'])) {
+            $format = $core['format'];
+        }
         $this->view->format = $format;
 
+        $timeout = 10; //10 seconds should be enough
+        if (isset($p['misc'], $p['misc']['timeout'])) {
+            $tmp = Zend_Filter::filterStatic($p['misc']['timeout'], 'Digits');
+            if (!empty($tmp)) {
+                $timeout = $tmp;
+            }
+        }
         $client = new Zend_Http_Client();
+        $client->setConfig(array(
+            'timeout' => $timeout,
+        ));
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {
             $hasBody = false;
@@ -244,12 +260,25 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $headers = array_merge((array) $headers, array(
             'Accept' => $accept,
             'Accept-Charset' => 'utf-8',
-            'Content-Type' => 'text/' . $format . '; charset=utf-8',
         ));
+        if (!empty($format)) {
+           $headers['Content-Type'] = 'text/' . $format . '; charset=utf-8';
+        }
         $client->setHeaders($headers);
 
         $starttime = microtime(true);
-        $a = $client->request($core['http_method']);
+        try {
+        	$a = $client->request($core['http_method']);
+        } catch (Exception $e) {
+            $last = $client->getLastResponse();
+            $code = 500;
+            $headers = array();
+            if ($last instanceof Zend_Http_Response) {
+                $code = $last->getStatus();
+                $headers = $last->getHeaders();
+            }
+            $a = new Zend_Http_Response($code, $headers, (string) $e);
+        }
         $endtime = microtime(true);
 
         $this->view->responsetime = $endtime - $starttime;
@@ -262,6 +291,9 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
     protected function _filterAcceptHeader($accept, $format)
     {
+        if (empty($format)) {
+            return $accept;
+        }
         if (false === strpos($accept, '+')) {
             //Append the format to the accept header
             $accept .= '+' . $format;

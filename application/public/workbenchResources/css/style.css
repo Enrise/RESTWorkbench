@@ -331,7 +331,7 @@ form.sandbox select {
 }
 
 form.sandbox textarea {
-	height: 300px;
+	height: 200px;
 }
 
 .throbber {
@@ -354,7 +354,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   text-decoration: none;
 }
 /* line 7, ../../../app/stylesheets/_global.sass */
-h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, a.hover {
   text-decoration: underline;
 }
 /* line 9, ../../../app/stylesheets/_global.sass */
@@ -529,8 +529,19 @@ pre {
   border: 1px solid black;
   border-color: #e5e0c6;
   padding: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
   /* white-space: pre-line */
 }
+
+.response_body pre {
+	height: 300px;
+	max-width: 916px;
+	min-width: 916px;
+	overflow-y: visible;
+	overflow-x: hidden;
+}
+
 /* line 134, ../../../app/stylesheets/_global.sass */
 pre code {
   line-height: 1.6em;
@@ -1345,9 +1356,6 @@ div.admin_menu ul li a:hover {
   font-weight: bold;
 }
 
-
-
-
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation {
   float: none;
   clear: both;
@@ -1482,12 +1490,20 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div
   overflow: hidden;
 }
 
-ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header input.submit {
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header input.submit,
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header button.submit {
   display: block;
   clear: none;
   float: left;
-  padding: 6px 8px;
+  padding: 2px;
   width: auto;
+}
+
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header button.submit span {
+	display: inline-block;
+	width: 16px;
+	height: 13px;
+	background: url("/workbenchResources/gfx/send-btn-small-black.png") no-repeat scroll 0 bottom transparent;
 }
 
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header img {
@@ -1498,10 +1514,11 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div
 }
 
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header a {
-  padding: 11px 0 0 10px;
-  color: #c8787a;
-  display: inline-block;
-  font-size: 0.9em;
+	padding: 8px 0 0 10px;
+	color: #c8787a;
+	display: inline-block;
+	font-size: 0.9em;
+	text-decoration: underline;
 }
 
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.response div.block {
@@ -1544,10 +1561,16 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div
     border-radius: 2px;
 }
 
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation a.expandBody {
+	text-decoration: underline;
+	font-size: 0.9em;
+}
+
 /** GET Specifics **/
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading ul.options li a,
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content h4,
-ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content div.sandbox_header a {
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content div.sandbox_header a,
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post a.expandBody {
 	color: #0F6AB4;
 }
 
@@ -1564,7 +1587,8 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.headi
 /** DELETE Specifics **/
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading ul.options li a,
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content h4,
-ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content div.sandbox_header a {
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content div.sandbox_header a,
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete a.expandBody {
     color: #a41e22;
 }
 
@@ -1581,7 +1605,8 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.he
 /** POST Specifics **/
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading ul.options li a,
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content h4,
-ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content div.sandbox_header a {
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content div.sandbox_header a,
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post a.expandBody {
     color: #10a54a;
 }
 
@@ -1598,7 +1623,8 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.head
 /** PUT Specifics **/
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.put div.heading ul.options li a,
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content h4,
-ul#resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content div.sandbox_header a {
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content div.sandbox_header a,
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.put a.expandBody {
     color: #C5862B;
 }
 
@@ -1621,7 +1647,8 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation div
 /** OPTIONS Specifics **/
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.options div.heading ul.options li a,
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content h4,
-ul#resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content div.sandbox_header a {
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content div.sandbox_header a,
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.options a.expandBody {
     color: #7D6855;
 }
 
@@ -1638,7 +1665,8 @@ ul#resources li.resource ul.endpoints li.endpoint ul.operations li.options div.h
 /** HEAD Specifics **/
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.head div.heading ul.options li a,
 ul#resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content h4,
-ul#resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content div.sandbox_header a {
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content div.sandbox_header a,
+ul#resources li.resource ul.endpoints li.endpoint ul.operations li.head a.expandBody {
     color: #171926;
 }
 

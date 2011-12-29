@@ -86,7 +86,7 @@ class Workbench_Model_Workbench_EntryPoints
      *
      * @var array
      */
-    protected $_skipMethods = array('init', 'passThrough',
+    protected $_skipMethods = array('init', 'passThrough', 'preDispatch', 'postDispatch',
         //Magic methods are never valid..
         '__construct', '__destruct', '__call', '__callStatic', '__get', '__set', '__isset',
         '__unset', '__sleep', '__wakeup', '__toString', '__invoke', '__set_state', '__clone()',
@@ -142,8 +142,9 @@ class Workbench_Model_Workbench_EntryPoints
             $regex = new RegexIterator($iterator, '/^.+\.php$/i', RecursiveRegexIterator::GET_MATCH);
             $files = array();
             foreach ($regex as $info) {
-                array_unshift($files, $info[0]);
+                $files[] = $info[0];
             }
+            sort($files);
 
             $strips = array_merge($strips, array('.php'));
             foreach ($includePaths as $includePath) {
@@ -213,7 +214,7 @@ class Workbench_Model_Workbench_EntryPoints
                         $part = ltrim(trim(rtrim(trim($part), '*')), '* ');
                     }
                     $description = array_filter($description);
-                    $description = implode('<br/>', $description);
+                    $description = implode(PHP_EOL, $description);
                     $endpoint->setDescription($description);
 
                     $params = array();
@@ -234,7 +235,7 @@ class Workbench_Model_Workbench_EntryPoints
                                     break;
                                 //All params
                                 case self::ACCEPT:
-                                    $params[$k] = $value;
+                                    $params[$k][] = $value;
                                     break;
                                 case self::FORMAT:
                                     $params[$k] = array_filter(explode('|', trim($value)));

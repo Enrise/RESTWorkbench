@@ -23,15 +23,19 @@ body {
 	padding: 0px 20px 50px;
 }
 
-form#oauth {
+#wrapper form.config {
 	position: fixed;
-	margin: 40px 0 0 -10px;
 	background-color: white;
-	background-position: 12px 12px;
-	width: auto;
-	padding: 20px;
-	box-shadow: 0 2px 5px 3px #999999;
-	z-index: 1;
+    background-position: 12px 12px;
+    width: auto;
+    padding: 20px;
+    box-shadow: 0 2px 5px 3px #999999;
+    z-index: 1;
+    margin-left: -10px;
+}
+
+form#oauth {
+	
 }
 
 form#oauth fieldset {
@@ -39,33 +43,103 @@ form#oauth fieldset {
 	padding-top: 60px;
 }
 
+form#misc {
+	margin-top: 143px;
+	background: url("/workbenchResources/gfx/settings.png") no-repeat scroll 0 0 transparent;
+}
+
+form#misc fieldset {
+	padding-top: 30px;
+}
+
+form#misc legend {
+	padding-left: 60px;
+    padding-top: 10px;
+}
+
+form#misc #misc-timeout {
+	width: 30px;
+	display: inline-block;
+}
+
+form#misc #misc-timeout+p.hint {
+	display: inline-block;
+}
+
+#styleMethod,
+#resetStyles {
+	width: 95px;
+}
+
 form#colorchange {
-    position: fixed;
-    margin: 192px 0 0 -10px;
-    background-color: white;
-    background-position: 12px 12px;
-    padding: 10px;
-    box-shadow: 0 2px 5px 3px #999999;
-    z-index: 1;
+	margin-top: 288px;
+    background: url("/workbenchResources/gfx/colors.png") no-repeat scroll 0 0 transparent;
+}
+
+form#colorchange fieldset {
+    padding-top: 30px;
+}
+
+form#colorchange legend {
+    padding-left: 60px;
+    padding-top: 10px;
 }
 
 form#colorchange input.miniColors {
-	width: 56px;
+	width: 68px;
     display: inline;
     height: 20px;
     line-height: 20px;
+}
+
+form#colorchange #colorchange-links {
+    list-style: disc outside none;
+	margin-left: 17px;
+}
+
+form#colorchange #colorchange-links li {
+	margin-bottom: 5px;
+}
+
+form#colorchange #colorchange-links li:last-child {
+	margin: 0;
+}
+
+form#colorchange #colorchange-links a {
+	color: #FFA600;
+	text-decoration: none;
+}
+
+form#colorchange #colorchange-links a:hover,
+form#colorchange #colorchange-links a.hover,
+.zclip,
+.zclip:hover,
+.zclip embed,
+.zclip object {
+	text-decoration: underline;
+	cursor: pointer;
+	outline: 0;
 }
 
 body form.formtastic {
 	max-width: 50%;
 }
 
-form.formtastic p.hint,
 form.formtastic div {
+	margin: 0;
+}
+
+form.formtastic > p.hint,
+fieldset.formtastic > p.hint,
+form.formtastic > div,
+fieldset.formtastic > div,
+form.formtastic > ul,
+fieldset.formtastic > ul {
 	margin-bottom: 10px;
 }
 
-form.formtastic div:last-child {
+form.formtastic > *:last-child,
+fieldset.formtastic > *:last-child {
 	margin-bottom: 0;
 }
 
@@ -74,12 +148,26 @@ form.formtastic div label {
 }
 
 form.formtastic div label,
-form.formtastic div input {
+form.formtastic div input,
+form.formtastic div button {
 	width: 260px;
 	display: block;
 }
 
-.toggler {
+form.formtastic div input[type="button"],
+form.formtastic div input[type="reset"],
+form.formtastic div button {
+	/*height: 20px;*/
+	line-height: 20px;
+}
+
+.togglers {
+	position: fixed;
+	left: 19.8%;
+	top: 0;
+}
+
+.togglers li {
 	background: none repeat scroll 0 0 white;
     box-shadow: 0 -8px 10px 0 #999;
     -webkit-transform: rotate(-90deg);
@@ -88,16 +176,28 @@ form.formtastic div input {
     -ms-transform: rotate(-90deg);
     transform: rotate(-90deg);
     padding: 5px 10px;
-    position: fixed;
-    margin: 100px -100px 0; 
+    margin-top: 120px;
+    text-align: center;
 }
 
-.toggler a {
+.togglers a,
+.togglers a:active,
+.togglers a:visited {
 	color: #FFA600;
+}
+
+#copyToClipboard.succes:after {
+	content: " ✓";
 }
 
 #styleToggler {
 	margin: 245px -94px 0;
+}
+
+#showStylesContainer {
+	margin-top: 5px;
+	overflow: auto;
+	max-height: 100px;
 }
 
 #header {
@@ -198,7 +298,8 @@ strong {
 /** GET Specifics **/
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content h4,
-#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content div.sandbox_header a {
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content div.sandbox_header a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.get a.expandBody {
     color: #00A9D3;
 }
 
@@ -215,7 +316,8 @@ strong {
 /** DELETE Specifics **/
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content h4,
-#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content div.sandbox_header a {
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content div.sandbox_header a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.delete a.expandBody {
     color: #BB0000;
 }
 
@@ -232,7 +334,8 @@ strong {
 /** POST Specifics **/
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content h4,
-#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content div.sandbox_header a {
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content div.sandbox_header a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.post a.expandBody {
     color: #87C521;
 }
 
@@ -249,7 +352,8 @@ strong {
 /** PUT Specifics **/
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content h4,
-#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content div.sandbox_header a {
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content div.sandbox_header a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put a.expandBody {
     color: #FFA600;
 }
 
@@ -266,7 +370,8 @@ strong {
 /** OPTIONS Specifics **/
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content h4,
-#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content div.sandbox_header a {
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options div.content div.sandbox_header a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.options a.expandBody {
     color: #4D4D4F;
 }
 
@@ -283,7 +388,8 @@ strong {
 /** HEAD Specifics **/
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content h4,
-#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content div.sandbox_header a {
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head div.content div.sandbox_header a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.head a.expandBody {
     color: #7A28A3;
 }
 

@@ -55,6 +55,7 @@ $cssFiles = $this->registry()->query('settings.workbench.layout.css', array());
 foreach ($cssFiles as $file) {
     $this->headLink()->appendStylesheet($file);
 }
+//$this->headLink()->appendStylesheet('/workbenchResources/css/test.css');
 $this->headScript()->appendFile('//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js');
 $this->headScript()->appendFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js');
 $this->headScript()->appendFile('/workbenchResources/js/main.js');
@@ -85,6 +86,7 @@ echo $this->headMeta() . PHP_EOL,
         <div id="header">
             <h1><?php echo $this->escape($projectname) ?></h1>
             <noscript><p>This application works best and only for now with Javascript enabled</p></noscript>
+            <?php echo $layout->forms ?>
         </div>
         <?php echo $layout->content ?>
         <div id="footer">
@@ -94,6 +96,9 @@ echo $this->headMeta() . PHP_EOL,
                 ?>
                 <ul>
                     <li><a target="_blank" href="http://twitter.com/#!/enrise" title="Follow us on twitter!">@Enrise</a></li>
+                    <li><a target="_blank" href="http://php.net/manual/en/index.php" title="We are masters in PHP, check us out!">PHP</a></li>
+                    <li><a target="_blank" href="http://jquery.com/" title="We use jQuery">jQuery</a>
+                    <li><a target="_blank" href="https://www.varnish-cache.org/" title="We use Varnish">Varnish</a></li>
                 </ul>
                 <div id="enrise">
                     Powered by <a title="Creative Web Technology" href="http://www.enrise.com/">Enrise</a>
