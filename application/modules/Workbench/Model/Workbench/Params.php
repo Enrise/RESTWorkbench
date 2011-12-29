@@ -110,10 +110,11 @@ class Workbench_Model_Workbench_Params implements Iterator
      */
     public function current()
     {
-        $fieldName = $this->key();
         $elm = 'Text';
-        $description = $this->getDescription();
+        $value = $this->getRawValue();
         $belongsTo = 'params';
+        $fieldName = $this->key();
+        $description = $this->getDescription();
         switch ($fieldName) {
             case 'format':
                 $elm = 'Select';
@@ -121,6 +122,14 @@ class Workbench_Model_Workbench_Params implements Iterator
                 $belongsTo = 'core';
                 break;
             case 'accept':
+                $value = (array) $value;
+                //Make sure that all the accept header available have a format (if the +@format is found that is)
+                $value = array_map(array($this, '_setFormat'), $value);
+                //Make sure that the value is also available for key in array. Select elements use this.
+                $value = array_combine($value, $value);
+                if (is_array($value) && 1 < count($value)) {
+                    $elm = 'Select';
+                }
                 $belongsTo = 'core';
                 break;
             case 'method':
@@ -142,7 +151,7 @@ class Workbench_Model_Workbench_Params implements Iterator
             'id' => $id,
             'belongsTo' => $belongsTo,
         ));
-        $value = $this->getRawValue();
+
         if ($elm instanceof Zend_Form_Element_Multi) {
             if ('format' === $fieldName || 'signing' === $fieldName) {
                 $value = (array) $value;
@@ -153,18 +162,11 @@ class Workbench_Model_Workbench_Params implements Iterator
             }
             $elm->setMultiOptions($value);
         } else {
-            //If the accept header accept any of the previously set formats, append it!
-            if ('accept' === $fieldName && false !== stripos($value, '+@format')) {
-                $format = $this->_fields['format'];
-                if (is_array($format)) {
-                    //Array values, pick first!
-                    $format = array_shift($format);
-                }
-                $value = str_ireplace('@format', $format, $value);
-            }
             if (is_array($value)) {
                 if (array_key_exists('value', $value) && is_string($value['value'])) {
                     $value = $value['value'];
+                } else if (1 === count($value)) {
+                    $value = array_shift($value);
                 } else {
                     $value = '';
                 }
@@ -218,5 +220,16 @@ class Workbench_Model_Workbench_Params implements Iterator
     public function toArray()
     {
         return (array) $this->_fields;
+    }
+
+    protected function _setFormat($value)
+    {
+        $format = $this->_fields['format'];
+        if (is_array($format)) {
+            //Array values, pick first!
+            $format = array_shift($format);
+        }
+        $value = str_ireplace('@format', $format, $value);
+        return $value;
     }
 }
