@@ -137,6 +137,29 @@ License: MIT (http://en.wikipedia.org/wiki/MIT_License)
 jQuery.fn.wiggle=function(o){var d={speed:50,wiggles:3,travel:5,callback:null};var o=jQuery.extend(d,o);return this.each(function(){var cache=this;var wrap=jQuery(this).wrap('<div class="wiggle-wrap"></div>').css("position","relative");var calls=0;for(i=1;i<=o.wiggles;i++){jQuery(this).animate({left:"-="+o.travel},o.speed).animate({left:"+="+o.travel*2},o.speed*2).animate({left:"-="+o.travel},o.speed,function(){calls++;if(jQuery(cache).parent().hasClass('wiggle-wrap')){jQuery(cache).parent().replaceWith(cache);}
 if(calls==o.wiggles&&jQuery.isFunction(o.callback)){o.callback();}});}});};
 
+/*
+* jQuery BBQ: Back Button & Query Library - v1.2.1 - 2/17/2010
+* http://benalman.com/projects/jquery-bbq-plugin/
+*
+* Copyright (c) 2010 "Cowboy" Ben Alman
+* Dual licensed under the MIT and GPL licenses.
+* http://benalman.com/about/license/
+*/
+(function($,p){var i,m=Array.prototype.slice,r=decodeURIComponent,a=$.param,c,l,v,b=$.bbq=$.bbq||{},q,u,j,e=$.event.special,d="hashchange",A="querystring",D="fragment",y="elemUrlAttr",g="location",k="href",t="src",x=/^.*\?|#.*$/g,w=/^.*\#/,h,C={};function E(F){return typeof F==="string"}function B(G){var F=m.call(arguments,1);return function(){return G.apply(this,F.concat(m.call(arguments)))}}function n(F){return F.replace(/^[^#]*#?(.*)$/,"$1")}function o(F){return F.replace(/(?:^[^?#]*\?([^#]*).*$)?.*/,"$1")}function f(H,M,F,I,G){var O,L,K,N,J;if(I!==i){K=F.match(H?/^([^#]*)\#?(.*)$/:/^([^#?]*)\??([^#]*)(#?.*)/);J=K[3]||"";if(G===2&&E(I)){L=I.replace(H?w:x,"")}else{N=l(K[2]);I=E(I)?l[H?D:A](I):I;L=G===2?I:G===1?$.extend({},I,N):$.extend({},N,I);L=a(L);if(H){L=L.replace(h,r)}}O=K[1]+(H?"#":L||!K[1]?"?":"")+L+J}else{O=M(F!==i?F:p[g][k])}return O}a[A]=B(f,0,o);a[D]=c=B(f,1,n);c.noEscape=function(G){G=G||"";var F=$.map(G.split(""),encodeURIComponent);h=new RegExp(F.join("|"),"g")};c.noEscape(",/");$.deparam=l=function(I,F){var H={},G={"true":!0,"false":!1,"null":null};$.each(I.replace(/\+/g," ").split("&"),function(L,Q){var K=Q.split("="),P=r(K[0]),J,O=H,M=0,R=P.split("]["),N=R.length-1;if(/\[/.test(R[0])&&/\]$/.test(R[N])){R[N]=R[N].replace(/\]$/,"");R=R.shift().split("[").concat(R);N=R.length-1}else{N=0}if(K.length===2){J=r(K[1]);if(F){J=J&&!isNaN(J)?+J:J==="undefined"?i:G[J]!==i?G[J]:J}if(N){for(;M<=N;M++){P=R[M]===""?O.length:R[M];O=O[P]=M<N?O[P]||(R[M+1]&&isNaN(R[M+1])?{}:[]):J}}else{if($.isArray(H[P])){H[P].push(J)}else{if(H[P]!==i){H[P]=[H[P],J]}else{H[P]=J}}}}else{if(P){H[P]=F?i:""}}});return H};function z(H,F,G){if(F===i||typeof F==="boolean"){G=F;F=a[H?D:A]()}else{F=E(F)?F.replace(H?w:x,""):F}return l(F,G)}l[A]=B(z,0);l[D]=v=B(z,1);$[y]||($[y]=function(F){return $.extend(C,F)})({a:k,base:k,iframe:t,img:t,input:t,form:"action",link:k,script:t});j=$[y];function s(I,G,H,F){if(!E(H)&&typeof H!=="object"){F=H;H=G;G=i}return this.each(function(){var L=$(this),J=G||j()[(this.nodeName||"").toLowerCase()]||"",K=J&&L.attr(J)||"";L.attr(J,a[I](K,H,F))})}$.fn[A]=B(s,A);$.fn[D]=B(s,D);b.pushState=q=function(I,F){if(E(I)&&/^#/.test(I)&&F===i){F=2}var H=I!==i,G=c(p[g][k],H?I:{},H?F:2);p[g][k]=G+(/#/.test(G)?"":"#")};b.getState=u=function(F,G){return F===i||typeof F==="boolean"?v(F):v(G)[F]};b.removeState=function(F){var G={};if(F!==i){G=u();$.each($.isArray(F)?F:arguments,function(I,H){delete G[H]})}q(G,2)};e[d]=$.extend(e[d],{add:function(F){var H;function G(J){var I=J[D]=c();J.getState=function(K,L){return K===i||typeof K==="boolean"?l(I,K):l(I,L)[K]};H.apply(this,arguments)}if($.isFunction(F)){H=F;return G}else{H=F.handler;F.handler=G}}})})(jQuery,this);
+/*
+* jQuery hashchange event - v1.2 - 2/11/2010
+* http://benalman.com/projects/jquery-hashchange-plugin/
+*
+* Copyright (c) 2010 "Cowboy" Ben Alman
+* Dual licensed under the MIT and GPL licenses.
+* http://benalman.com/about/license/
+*/
+(function($,i,b){var j,k=$.event.special,c="location",d="hashchange",l="href",f=$.browser,g=document.documentMode,h=f.msie&&(g===b||g<8),e="on"+d in i&&!h;function a(m){m=m||i[c][l];return m.replace(/^[^#]*#?(.*)$/,"$1")}$[d+"Delay"]=100;k[d]=$.extend(k[d],{setup:function(){if(e){return false}$(j.start)},teardown:function(){if(e){return false}$(j.stop)}});j=(function(){var m={},r,n,o,q;function p(){o=q=function(s){return s};if(h){n=$('<iframe src="javascript:0"/>').hide().insertAfter("body")[0].contentWindow;q=function(){return a(n.document[c][l])};o=function(u,s){if(u!==s){var t=n.document;t.open().close();t[c].hash="#"+u}};o(a())}}m.start=function(){if(r){return}var t=a();o||p();(function s(){var v=a(),u=q(t);if(v!==t){o(t=v,u);$(i).trigger(d)}else{if(u!==t){i[c][l]=i[c][l].replace(/#.*/,"")+"#"+u}}r=setTimeout(s,$[d+"Delay"])})()};m.stop=function(){if(!n){r&&clearTimeout(r);r=0}};return m})()})(jQuery,this);
+
+
+
+(function(b){b.fn.slideto=function(a){a=b.extend({slide_duration:"slow",highlight_duration:3E3,highlight:true,highlight_color:"#FFFF99"},a);return this.each(function(){obj=b(this);b("body").animate({scrollTop:obj.offset().top},a.slide_duration,function(){a.highlight&&b.ui.version&&obj.effect("highlight",{color:a.highlight_color},a.highlight_duration)})})}})(jQuery);
+
 /**
  * jQuery.ScrollTo - Easy element scrolling using jQuery.
  * Copyright (c) 2007-2009 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com
@@ -167,167 +190,217 @@ return{r:Math.round(rgb.r),g:Math.round(rgb.g),b:Math.round(rgb.b)};};var rgb2he
 hsb.h*=60;if(hsb.h<0){hsb.h+=360;}
 hsb.s*=100/255;hsb.b*=100/255;return hsb;};var hex2hsb=function(hex){var hsb=rgb2hsb(hex2rgb(hex));if(hsb.s===0)hsb.h=360;return hsb;};var hsb2hex=function(hsb){return rgb2hex(hsb2rgb(hsb));};switch(o){case'readonly':$(this).each(function(){$(this).attr('readonly',data);});return $(this);break;case'disabled':$(this).each(function(){if(data){disable($(this));}else{enable($(this));}});return $(this);case'value':$(this).each(function(){$(this).val(data).trigger('keyup');});return $(this);break;case'destroy':$(this).each(function(){destroy($(this));});return $(this);default:if(!o)o={};$(this).each(function(){if($(this)[0].tagName.toLowerCase()!=='input')return;if($(this).data('trigger'))return;create($(this),o,data);});return $(this);}}});})(jQuery);
 
-
+/*
+ * zClip :: jQuery ZeroClipboard v1.1.1
+ * http://steamdev.com/zclip
+ *
+ * Copyright 2011, SteamDev
+ * Released under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * Date: Wed Jun 01, 2011
+ */
+(function(a){a.fn.zclip=function(c){if(typeof c=="object"&&!c.length){var b=a.extend({path:"ZeroClipboard.swf",copy:null,beforeCopy:null,afterCopy:null,clickAfter:true,setHandCursor:true,setCSSEffects:true},c);return this.each(function(){var e=a(this);if(e.is(":visible")&&(typeof b.copy=="string"||a.isFunction(b.copy))){ZeroClipboard.setMoviePath(b.path);var d=new ZeroClipboard.Client();if(a.isFunction(b.copy)){e.bind("zClip_copy",b.copy)}if(a.isFunction(b.beforeCopy)){e.bind("zClip_beforeCopy",b.beforeCopy)}if(a.isFunction(b.afterCopy)){e.bind("zClip_afterCopy",b.afterCopy)}d.setHandCursor(b.setHandCursor);d.setCSSEffects(b.setCSSEffects);d.addEventListener("mouseOver",function(f){e.trigger("mouseenter")});d.addEventListener("mouseOut",function(f){e.trigger("mouseleave")});d.addEventListener("mouseDown",function(f){e.trigger("mousedown");if(!a.isFunction(b.copy)){d.setText(b.copy)}else{d.setText(e.triggerHandler("zClip_copy"))}if(a.isFunction(b.beforeCopy)){e.trigger("zClip_beforeCopy")}});d.addEventListener("complete",function(f,g){if(a.isFunction(b.afterCopy)){e.trigger("zClip_afterCopy", f, g)}else{if(g.length>500){g=g.substr(0,500)+"...\n\n("+(g.length-500)+" characters not shown)"}e.removeClass("hover");alert("Copied text to clipboard:\n\n "+g)}if(b.clickAfter){e.trigger("click")}});d.glue(e[0],e.parent()[0]);a(window).bind("load resize",function(){d.reposition()})}})}else{if(typeof c=="string"){return this.each(function(){var f=a(this);c=c.toLowerCase();var e=f.data("zclipId");var d=a("#"+e+".zclip");if(c=="remove"){d.remove();f.removeClass("active hover")}else{if(c=="hide"){d.hide();f.removeClass("active hover")}else{if(c=="show"){d.show()}}}})}}}})(jQuery);var ZeroClipboard={version:"1.0.7",clients:{},moviePath:"ZeroClipboard.swf",nextId:1,$:function(a){if(typeof(a)=="string"){a=document.getElementById(a)}if(!a.addClass){a.hide=function(){this.style.display="none"};a.show=function(){this.style.display=""};a.addClass=function(b){this.removeClass(b);this.className+=" "+b};a.removeClass=function(d){var e=this.className.split(/\s+/);var b=-1;for(var c=0;c<e.length;c++){if(e[c]==d){b=c;c=e.length}}if(b>-1){e.splice(b,1);this.className=e.join(" ")}return this};a.hasClass=function(b){return !!this.className.match(new RegExp("\\s*"+b+"\\s*"))}}return a},setMoviePath:function(a){this.moviePath=a},dispatch:function(d,b,c){var a=this.clients[d];if(a){a.receiveEvent(b,c)}},register:function(b,a){this.clients[b]=a},getDOMObjectPosition:function(c,a){var b={left:0,top:0,width:c.width?c.width:c.offsetWidth,height:c.height?c.height:c.offsetHeight};if(c&&(c!=a)){b.left+=c.offsetLeft;b.top+=c.offsetTop}return b},Client:function(a){this.handlers={};this.id=ZeroClipboard.nextId++;this.movieId="ZeroClipboardMovie_"+this.id;ZeroClipboard.register(this.id,this);if(a){this.glue(a)}}};ZeroClipboard.Client.prototype={id:0,ready:false,movie:null,clipText:"",handCursorEnabled:true,cssEffects:true,handlers:null,glue:function(d,b,e){this.domElement=ZeroClipboard.$(d);var f=99;if(this.domElement.style.zIndex){f=parseInt(this.domElement.style.zIndex,10)+1}if(typeof(b)=="string"){b=ZeroClipboard.$(b)}else{if(typeof(b)=="undefined"){b=document.getElementsByTagName("body")[0]}}var c=ZeroClipboard.getDOMObjectPosition(this.domElement,b);this.div=document.createElement("div");this.div.className="zclip";this.div.id="zclip-"+this.movieId;$(this.domElement).data("zclipId","zclip-"+this.movieId);var a=this.div.style;a.position="absolute";a.left=""+c.left+"px";a.top=""+c.top+"px";a.width=""+c.width+"px";a.height=""+c.height+"px";a.zIndex=f;if(typeof(e)=="object"){for(addedStyle in e){a[addedStyle]=e[addedStyle]}}b.appendChild(this.div);this.div.innerHTML=this.getHTML(c.width,c.height)},getHTML:function(d,a){var c="";var b="id="+this.id+"&width="+d+"&height="+a;if(navigator.userAgent.match(/MSIE/)){var e=location.href.match(/^https/i)?"https://":"http://";c+='<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="'+e+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+d+'" height="'+a+'" id="'+this.movieId+'" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+ZeroClipboard.moviePath+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+b+'"/><param name="wmode" value="transparent"/></object>'}else{c+='<embed id="'+this.movieId+'" src="'+ZeroClipboard.moviePath+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+d+'" height="'+a+'" name="'+this.movieId+'" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+b+'" wmode="transparent" />'}return c},hide:function(){if(this.div){this.div.style.left="-2000px"}},show:function(){this.reposition()},destroy:function(){if(this.domElement&&this.div){this.hide();this.div.innerHTML="";var a=document.getElementsByTagName("body")[0];try{a.removeChild(this.div)}catch(b){}this.domElement=null;this.div=null}},reposition:function(c){if(c){this.domElement=ZeroClipboard.$(c);if(!this.domElement){this.hide()}}if(this.domElement&&this.div){var b=ZeroClipboard.getDOMObjectPosition(this.domElement);var a=this.div.style;a.left=""+b.left+"px";a.top=""+b.top+"px"}},setText:function(a){this.clipText=a;if(this.ready){this.movie.setText(a)}},addEventListener:function(a,b){a=a.toString().toLowerCase().replace(/^on/,"");if(!this.handlers[a]){this.handlers[a]=[]}this.handlers[a].push(b)},setHandCursor:function(a){this.handCursorEnabled=a;if(this.ready){this.movie.setHandCursor(a)}},setCSSEffects:function(a){this.cssEffects=!!a},receiveEvent:function(d,f){d=d.toString().toLowerCase().replace(/^on/,"");switch(d){case"load":this.movie=document.getElementById(this.movieId);if(!this.movie){var c=this;setTimeout(function(){c.receiveEvent("load",null)},1);return}if(!this.ready&&navigator.userAgent.match(/Firefox/)&&navigator.userAgent.match(/Windows/)){var c=this;setTimeout(function(){c.receiveEvent("load",null)},100);this.ready=true;return}this.ready=true;try{this.movie.setText(this.clipText)}catch(h){}try{this.movie.setHandCursor(this.handCursorEnabled)}catch(h){}break;case"mouseover":if(this.domElement&&this.cssEffects){this.domElement.addClass("hover");$(this.domElement).trigger('hover');if(this.recoverActive){this.domElement.addClass("active")}}break;case"mouseout":if(this.domElement&&this.cssEffects){this.recoverActive=false;if(this.domElement.hasClass("active")){this.domElement.removeClass("active");this.recoverActive=true}this.domElement.removeClass("hover")}break;case"mousedown":if(this.domElement&&this.cssEffects){this.domElement.addClass("active")}break;case"mouseup":if(this.domElement&&this.cssEffects){this.domElement.removeClass("active");this.recoverActive=false}break}if(this.handlers[d]){for(var b=0,a=this.handlers[d].length;b<a;b++){var g=this.handlers[d][b];if(typeof(g)=="function"){g(this,f)}else{if((typeof(g)=="object")&&(g.length==2)){g[0][g[1]](this,f)}else{if(typeof(g)=="string"){window[g](this,f)}}}}}}};
 
 var Docs = {
-        init: function() {
-            var forms = $('form.formtastic').hide();
-            
-            $('.toggler').show().children('a').click(function() {
-                forms.filter(':not(#' +$(this).attr('rel') + ')').hide();
-                $('#' + $(this).attr('rel')).toggle('slow');
-                return false;
-            });
-            $('#showStyles').click(function() {
-                $('#showStylesContainer').toggle('slow');
-                return false;
-            });
-            $('input.color').miniColors();
-            
-            this.shebang();
-            //Work through the open and closed settings
-            var open = $.cookie('explicitlyOpenTogglables') || [];
-            var closed = $.cookie('explicitlyClosedTogglables') || [];
-            
-            var elm = null;
-            for (id in open) {
-                if (0 < id.length) {
-                    elm = $('#' + id);
-                    this.expandOperation(elm);
+    init: function() {
+        $('#copyToClipboard').parent().each(function(){
+            $(this).css('position', 'relative');
+        });
+        $('#copyToClipboard').zclip({
+            path: '/workbenchResources/js/clipboard.swf',
+            setHandCursor: true,
+            copy: function() {
+                return $('#showStylesContainer').html().replace(/(<br>)|(<br\/>)|(<br \/>)/g, "\r\n").replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            },
+            afterCopy: function() {
+                $this = $(this);
+                if (!$this.hasClass('succes')) {
+                    $this.addClass('succes');
                 }
             }
-            for (id in closed) {
-                if (0 < id.length) {
-                    this.collapseEndpointListForResource(id.replace('resource_', ''));
-                }
-            }
-            if (elm instanceof jQuery) {
-                setTimeout(function() {
-                    $.scrollTo(elm.parent('li'), 800, {offset: {left: 0, top: -8}});
-                }, 800);
-            }
-        },
+        });
+
+        var forms = $('form.formtastic').hide();
+        $('.togglers li').show().children('a').click(function(evt) {
+            forms.filter(':not(#' +$(this).attr('rel') + ')').hide();
+            $('#' + $(this).attr('rel')).toggle('slow');
+            return false;
+        });
         
-        shebang: function() {
-            // If shebang has an operation nickname in it..
-            // e.g. /docs/#!/words/get_search
-            var fragments = $.param.fragment();
-            if (fragments.length) {
-                var id = $('a[href="#' + fragments + '"]').first().parents('li').first().slideto({highlight: false}).attr('id');
-                if (0 === id.indexOf('resource')) {
-                    Docs.expandEndpointListForResource(id.replace('resource_', ''));
-                } else {
-                    Docs.expandOperation($('#' + id + '>div'));
-                }
-            }
-        },
-        
-        toggleEndpointListForResource: function(resource) {
-            var elem = $('li#resource_' + resource + ' ul.endpoints');
-            if (elem.is(':visible')) {
-                Docs.collapseEndpointListForResource(resource);
-            } else {
-                Docs.expandEndpointListForResource(resource);
-            }
-        },
-        
-        // Expand resource and remove explicit closure cookie
-        expandEndpointListForResource: function(resource) {
-            var resource = $('#resource_' + resource);
-            var entries = resource.children('ul.endpoints');
-            
-            resource.addClass('active');
-            entries.slideDown();
-            $.removeSubCookie('explicitlyClosedTogglables', resource.attr('id'));
-            $.cookie('explicitlyClosedTogglables');
-            $.scrollTo(entries.siblings('.heading'), 800, {offset: {left: 0, top: 4}});
-        },
-        
-        // Collapse resource and mark as explicitly closed
-        collapseEndpointListForResource: function(resource) {
-            var resource = $('#resource_' + resource);
-            var entries = resource.children('ul.endpoints');
-            
-            resource.removeClass('active');
-            entries.slideUp();
-            $.setSubCookie('explicitlyClosedTogglables', resource.attr('id'), true);
-            $.cookie('explicitlyClosedTogglables');
-        },
-        
-        expandOperationsForResource: function(resource) {
-            // Make sure the resource container is open..
-            Docs.expandEndpointListForResource(resource);
-            $('li#resource_' + resource + ' li.operation div.content').each(function() {
-                Docs.expandOperation($(this));
+        var queries = [
+           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading ul.options li a',
+           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content h4',
+           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content div.sandbox_header a',
+           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li h3 span.http_method a',
+           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content',
+           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading',
+           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li a.expandBody',
+           'a.miniColors-trigger'
+        ];
+        queries = queries.join(', ');
+        $('#resetStyles').click(function() {
+            //Remove all the styles from styled elements
+            $(queries).css({
+                'backgroundColor': '',
+                'borderColor': '',
+                'color': ''
             });
-        },
+            //Clear the output CSS container
+            $('#showStylesContainer').html('');
+            $('#copyToClipboard').removeClass('succes');
+        });
         
-        toggleOperationsForResource: function(resource) {
-            
-        },
+        var elms = $('.expandBody');
+        elms.data('open', false);
+        var origHeight = '300px';
+        $('.sandbox_header .submit').click(function() {
+            elms.data('open', false).html('Full');
+        });
+        elms.click(function() {
+            $this = $(this);
+            $this.data('open', !$this.data('open'));
+            var openClose = 'Full';
+            var height = origHeight;
+            if ($this.data('open')) {
+                height = '100%';
+                openClose = 'Small';
+            }
+            $this.html(openClose);
+            $('.response_body pre').animate({
+                height: height
+            }, 1000);
+            //$('.response_body pre').css('height', height);
+            return false;
+        });
+
+        $('#showStyles').click(function() {
+            $('#showStylesContainer').toggle('slow');
+            return false;
+        });
+        $('input.color').miniColors();
         
-        collapseOperationsForResource: function(resource) {
-            // Make sure the resource container is open..
-            Docs.expandEndpointListForResource(resource);
-            $('li#resource_' + resource + ' li.operation div.content').each(function() {
-                Docs.collapseOperation($(this));
-            });
-        },
+        this.shebang();
+        //Work through the open and closed settings
+        var open = $.cookie('explicitlyOpenTogglables') || [];
+        var closed = $.cookie('explicitlyClosedTogglables') || [];
         
-        expandOperation: function(elem) {
-            elem.slideDown();
-            $.setSubCookie('explicitlyOpenTogglables', elem.attr('id'), true);
-        },
-        
-        collapseOperation: function(elem) {
-            elem.slideUp();
-            $.removeSubCookie('explicitlyOpenTogglables', elem.attr('id'));
-        },
-        
-        toggleOperationContent: function(dom_id) {
-            var elem = $('#' + dom_id);
-            if (elem.is(':visible')) {
-                Docs.collapseOperation(elem);
-            } else {
-                Docs.expandOperation(elem);
-                if (elem) {
-                    $.scrollTo(elem.parent('li'), 800, {offset: {left: 0, top: -8}});
-                }
+        var elm = null;
+        for (id in open) {
+            if (0 < id.length) {
+                elm = $('#' + id);
+                this.expandOperation(elm);
             }
         }
+        for (id in closed) {
+            if (0 < id.length) {
+                this.collapseEndpointListForResource(id.replace('resource_', ''));
+            }
+        }
+        if (elm instanceof jQuery) {
+            setTimeout(function() {
+                $.scrollTo(elm.parent('li'), 800, {offset: {left: 0, top: -8}});
+            }, 800);
+        }
+    },
+    
+    shebang: function() {
+        // If shebang has an operation nickname in it..
+        // e.g. /docs/#!/words/get_search
+        var fragments = $.param.fragment();
+        if (fragments.length) {
+            var id = $('a[href="#' + fragments + '"]').first().parents('li').first().slideto({highlight: false}).attr('id');
+            if (0 === id.indexOf('resource')) {
+                Docs.expandEndpointListForResource(id.replace('resource_', ''));
+            } else {
+                Docs.expandOperation($('#' + id + '>div'));
+            }
+        }
+    },
+    
+    toggleEndpointListForResource: function(resource) {
+        var elem = $('li#resource_' + resource + ' ul.endpoints');
+        if (elem.is(':visible')) {
+            Docs.collapseEndpointListForResource(resource);
+        } else {
+            Docs.expandEndpointListForResource(resource);
+        }
+    },
+    
+    // Expand resource and remove explicit closure cookie
+    expandEndpointListForResource: function(resource) {
+        var resource = $('#resource_' + resource);
+        var entries = resource.children('ul.endpoints');
+        
+        resource.addClass('active');
+        entries.slideDown();
+        $.removeSubCookie('explicitlyClosedTogglables', resource.attr('id'));
+        $.cookie('explicitlyClosedTogglables');
+        $.scrollTo(entries.siblings('.heading'), 800, {offset: {left: 0, top: 4}});
+    },
+    
+    // Collapse resource and mark as explicitly closed
+    collapseEndpointListForResource: function(resource) {
+        var resource = $('#resource_' + resource);
+        var entries = resource.children('ul.endpoints');
+        
+        resource.removeClass('active');
+        entries.slideUp();
+        $.setSubCookie('explicitlyClosedTogglables', resource.attr('id'), true);
+        $.cookie('explicitlyClosedTogglables');
+    },
+    
+    expandOperationsForResource: function(resource) {
+        // Make sure the resource container is open..
+        Docs.expandEndpointListForResource(resource);
+        $('li#resource_' + resource + ' li.operation div.content').each(function() {
+            Docs.expandOperation($(this));
+        });
+    },
+    
+    toggleOperationsForResource: function(resource) {
+        
+    },
+    
+    collapseOperationsForResource: function(resource) {
+        // Make sure the resource container is open..
+        Docs.expandEndpointListForResource(resource);
+        $('li#resource_' + resource + ' li.operation div.content').each(function() {
+            Docs.collapseOperation($(this));
+        });
+    },
+    
+    expandOperation: function(elem) {
+        elem.removeClass('hidden');
+        elem.slideDown();
+        $.setSubCookie('explicitlyOpenTogglables', elem.attr('id'), true);
+    },
+    
+    collapseOperation: function(elem) {
+        elem.slideUp();
+        elem.addClass('hidden');
+        $.removeSubCookie('explicitlyOpenTogglables', elem.attr('id'));
+    },
+    
+    toggleOperationContent: function(dom_id) {
+        var elem = $('#' + dom_id);
+        if (elem.is(':visible')) {
+            Docs.collapseOperation(elem);
+        } else {
+            Docs.expandOperation(elem);
+            if (elem) {
+                $.scrollTo(elem.parent('li'), 800, {offset: {left: 0, top: -8}});
+            }
+        }
+    }
 };
-
-
-/*
-* jQuery BBQ: Back Button & Query Library - v1.2.1 - 2/17/2010
-* http://benalman.com/projects/jquery-bbq-plugin/
-*
-* Copyright (c) 2010 "Cowboy" Ben Alman
-* Dual licensed under the MIT and GPL licenses.
-* http://benalman.com/about/license/
-*/
-(function($,p){var i,m=Array.prototype.slice,r=decodeURIComponent,a=$.param,c,l,v,b=$.bbq=$.bbq||{},q,u,j,e=$.event.special,d="hashchange",A="querystring",D="fragment",y="elemUrlAttr",g="location",k="href",t="src",x=/^.*\?|#.*$/g,w=/^.*\#/,h,C={};function E(F){return typeof F==="string"}function B(G){var F=m.call(arguments,1);return function(){return G.apply(this,F.concat(m.call(arguments)))}}function n(F){return F.replace(/^[^#]*#?(.*)$/,"$1")}function o(F){return F.replace(/(?:^[^?#]*\?([^#]*).*$)?.*/,"$1")}function f(H,M,F,I,G){var O,L,K,N,J;if(I!==i){K=F.match(H?/^([^#]*)\#?(.*)$/:/^([^#?]*)\??([^#]*)(#?.*)/);J=K[3]||"";if(G===2&&E(I)){L=I.replace(H?w:x,"")}else{N=l(K[2]);I=E(I)?l[H?D:A](I):I;L=G===2?I:G===1?$.extend({},I,N):$.extend({},N,I);L=a(L);if(H){L=L.replace(h,r)}}O=K[1]+(H?"#":L||!K[1]?"?":"")+L+J}else{O=M(F!==i?F:p[g][k])}return O}a[A]=B(f,0,o);a[D]=c=B(f,1,n);c.noEscape=function(G){G=G||"";var F=$.map(G.split(""),encodeURIComponent);h=new RegExp(F.join("|"),"g")};c.noEscape(",/");$.deparam=l=function(I,F){var H={},G={"true":!0,"false":!1,"null":null};$.each(I.replace(/\+/g," ").split("&"),function(L,Q){var K=Q.split("="),P=r(K[0]),J,O=H,M=0,R=P.split("]["),N=R.length-1;if(/\[/.test(R[0])&&/\]$/.test(R[N])){R[N]=R[N].replace(/\]$/,"");R=R.shift().split("[").concat(R);N=R.length-1}else{N=0}if(K.length===2){J=r(K[1]);if(F){J=J&&!isNaN(J)?+J:J==="undefined"?i:G[J]!==i?G[J]:J}if(N){for(;M<=N;M++){P=R[M]===""?O.length:R[M];O=O[P]=M<N?O[P]||(R[M+1]&&isNaN(R[M+1])?{}:[]):J}}else{if($.isArray(H[P])){H[P].push(J)}else{if(H[P]!==i){H[P]=[H[P],J]}else{H[P]=J}}}}else{if(P){H[P]=F?i:""}}});return H};function z(H,F,G){if(F===i||typeof F==="boolean"){G=F;F=a[H?D:A]()}else{F=E(F)?F.replace(H?w:x,""):F}return l(F,G)}l[A]=B(z,0);l[D]=v=B(z,1);$[y]||($[y]=function(F){return $.extend(C,F)})({a:k,base:k,iframe:t,img:t,input:t,form:"action",link:k,script:t});j=$[y];function s(I,G,H,F){if(!E(H)&&typeof H!=="object"){F=H;H=G;G=i}return this.each(function(){var L=$(this),J=G||j()[(this.nodeName||"").toLowerCase()]||"",K=J&&L.attr(J)||"";L.attr(J,a[I](K,H,F))})}$.fn[A]=B(s,A);$.fn[D]=B(s,D);b.pushState=q=function(I,F){if(E(I)&&/^#/.test(I)&&F===i){F=2}var H=I!==i,G=c(p[g][k],H?I:{},H?F:2);p[g][k]=G+(/#/.test(G)?"":"#")};b.getState=u=function(F,G){return F===i||typeof F==="boolean"?v(F):v(G)[F]};b.removeState=function(F){var G={};if(F!==i){G=u();$.each($.isArray(F)?F:arguments,function(I,H){delete G[H]})}q(G,2)};e[d]=$.extend(e[d],{add:function(F){var H;function G(J){var I=J[D]=c();J.getState=function(K,L){return K===i||typeof K==="boolean"?l(I,K):l(I,L)[K]};H.apply(this,arguments)}if($.isFunction(F)){H=F;return G}else{H=F.handler;F.handler=G}}})})(jQuery,this);
-/*
-* jQuery hashchange event - v1.2 - 2/11/2010
-* http://benalman.com/projects/jquery-hashchange-plugin/
-*
-* Copyright (c) 2010 "Cowboy" Ben Alman
-* Dual licensed under the MIT and GPL licenses.
-* http://benalman.com/about/license/
-*/
-(function($,i,b){var j,k=$.event.special,c="location",d="hashchange",l="href",f=$.browser,g=document.documentMode,h=f.msie&&(g===b||g<8),e="on"+d in i&&!h;function a(m){m=m||i[c][l];return m.replace(/^[^#]*#?(.*)$/,"$1")}$[d+"Delay"]=100;k[d]=$.extend(k[d],{setup:function(){if(e){return false}$(j.start)},teardown:function(){if(e){return false}$(j.stop)}});j=(function(){var m={},r,n,o,q;function p(){o=q=function(s){return s};if(h){n=$('<iframe src="javascript:0"/>').hide().insertAfter("body")[0].contentWindow;q=function(){return a(n.document[c][l])};o=function(u,s){if(u!==s){var t=n.document;t.open().close();t[c].hash="#"+u}};o(a())}}m.start=function(){if(r){return}var t=a();o||p();(function s(){var v=a(),u=q(t);if(v!==t){o(t=v,u);$(i).trigger(d)}else{if(u!==t){i[c][l]=i[c][l].replace(/#.*/,"")+"#"+u}}r=setTimeout(s,$[d+"Delay"])})()};m.stop=function(){if(!n){r&&clearTimeout(r);r=0}};return m})()})(jQuery,this);
-
-
-
-(function(b){b.fn.slideto=function(a){a=b.extend({slide_duration:"slow",highlight_duration:3E3,highlight:true,highlight_color:"#FFFF99"},a);return this.each(function(){obj=b(this);b("body").animate({scrollTop:obj.offset().top},a.slide_duration,function(){a.highlight&&b.ui.version&&obj.effect("highlight",{color:a.highlight_color},a.highlight_duration)})})}})(jQuery);
-
-
 
 $(function() {
      //Must be first! 
      Docs.init();
      $('#oauth').hide();
      $("#colorchange").change(function(evt) {
+         $('#copyToClipboard').removeClass('succes');
          var $form = $(this);
          $.ajax({
              url: '/workbench/index/color',
@@ -346,13 +419,15 @@ $(function() {
                      active = $form.find('#styleMethod').attr('value');
                  }
                  
+                 var count = 1;
                  for (i in methods) {
                      var method = methods[i];
                      
                      var queries = [
                          'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading ul.options li a',
                          'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content h4',
-                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content div.sandbox_header a'
+                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content div.sandbox_header a',
+                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' a.expandBody'
                      ];
                      queries = queries.join(', ');
                      
@@ -400,9 +475,13 @@ $(function() {
                              'backgroundColor': response[10].hex,
                              'borderColor': response[25].hex
                          };
-                         foo += "<br/>" + queries + ' { background-color: ' + response[10].hex + '; border-color: ' + response[25].hex + '; }<br/><br/>';
+                         foo += "<br/>" + queries + ' { background-color: ' + response[10].hex + '; border-color: ' + response[25].hex + '; }';
+                         if (methods.length != count) {
+                             foo += '<br/><br/>';
+                         }
                      }
                      $(queries).css(val);
+                     ++count;
                  }
                  $('#showStylesContainer').html(foo);
              },
@@ -504,6 +583,7 @@ $(function() {
                      data = el.is('form') ? el.serializeArray() : [];
                  
                  data = data.concat($('#oauth').serializeArray());
+                 data = data.concat($('#misc').serializeArray());
                  $throbber.show();
                  $this.siblings('div.response').css('opacity', '0.1');
                  var startTime = new Date();
