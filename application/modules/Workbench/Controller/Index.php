@@ -181,6 +181,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $client = new Zend_Http_Client();
         $client->setConfig(array(
             'timeout' => $timeout,
+            'adapter' => new Zend_Http_Client_Adapter_Curl(),
         ));
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {
@@ -219,8 +220,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
         }
         $url = trim($url);
-        Glitch_Registry::getLog()->debug($url);
-
         //Done with filtering the URL
         $client->setUri($url);
 
@@ -250,13 +249,69 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                     $signature = new OAuthSignatureMethod_PLAINTEXT();
                     break;
             }
+            //In case of 3 legged OAuth
+            if (isset($auth['requestTokenUrl']) && isset($auth['accessTokenUrl'])) {
+                //@todo via config string
+                $defaultClass = 'Workbench_Model_OAuthTokenParser';
+                $class = $this->view->registry()->query('settings.workbench.oauth.tokenParser', $defaultClass);
+                $tokenParser = new $class;
+                if (!$tokenParser instanceof $defaultClass) {
+                    throw new Exception(sprintf('Invalid class specified to parse OAuth request/access tokens. Extend %s for propper handling.', $defaultClass));
+                }
+                /** @var $tokenParser Workbench_Model_OAuthTokenParser */
+                $request = OAuthRequest::from_consumer_and_token($consumer, $token, 'get', $auth['requestTokenUrl'], null);
+                $request->sign_request($signature, $consumer, $token);
+                switch (strtolower($auth['headerOrUrl'])) {
+                    case 'url':
+                        $client->setUri($request->to_url());
+                        break;
+                    case 'header':
+                        $client->setUri($auth['requestTokenUrl']);
+                        $client->setHeaders((array) $request->to_header($realm));
+                        break;
+                    default:
+                        throw new Exception('Invalid parameter encountered!');
+                }
+                $response = $client->request('GET')->getBody();
+                $requestTokens = $tokenParser->parseTokens($response);
 
+                $request = OAuthRequest::from_consumer_and_token($consumer, $requestTokens, 'get', $auth['accessTokenUrl'], null);
+                $request->sign_request($signature, $consumer, $requestTokens);
+
+                switch (strtolower($auth['headerOrUrl'])) {
+                    case 'url':
+                        $client->setUri($request->to_url());
+                        break;
+                    case 'header':
+                        $client->setUri($auth['accessTokenUrl']);
+                        $client->setHeaders((array) $request->to_header($realm));
+                        break;
+                }
+                $response = $client->request('GET')->getBody();
+                //Build final token used for communication
+                $token = $tokenParser->parseTokens($response);
+
+                //@testing
+                /*$url = 'http://term.ie/oauth/example/echo_api.php';
+                $query = array(
+                    'foo' => 'bar',
+                    'method' => 'test',
+                );
+                $core['http_method'] = 'get';*/
+            }
+            $client->setUri($url);
             // Generate request and sign it
             $request = OAuthRequest::from_consumer_and_token($consumer, $token, $core['http_method'], $url, $query);
             $request->sign_request($signature, $consumer, $token);
-            $headers = $request->to_header($realm);
+            switch (strtolower($auth['headerOrUrl'])) {
+                case 'url':
+                    $client->setUri($request->to_url());
+                    break;
+                case 'header':
+                    $headers = array_merge((array) $request->to_header($realm), $headers);
+                    break;
+            }
         }
-
         $headers = array_merge((array) $headers, array(
             'Accept' => $accept,
             'Accept-Charset' => 'utf-8',
@@ -268,7 +323,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
         $starttime = microtime(true);
         try {
-        	$a = $client->request($core['http_method']);
+        	$a = $client->request(strtoupper($core['http_method']));
         } catch (Exception $e) {
             $last = $client->getLastResponse();
             $code = 500;
@@ -287,6 +342,15 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $this->view->response = $a;
         $this->view->url = $url;
         $this->view->id = $p['misc']['dom_id'];
+    }
+
+    /**
+     *
+     * @param Zend_Http_Client $client
+     */
+    protected function _handleOauth(Zend_Http_Client $client, array $params)
+    {
+
     }
 
     protected function _filterAcceptHeader($accept, $format)
