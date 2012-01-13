@@ -163,8 +163,9 @@ form.formtastic div button {
 
 .togglers {
 	position: fixed;
-	left: 19.8%;
+	left: 50%;
 	top: 0;
+	margin-left: -575px;
 }
 
 .togglers li {
@@ -402,3 +403,87 @@ strong {
     background-color: #F1E9F5;
     border-color: #DDC9E8;
 }
+
+@media only screen and (max-width: 1048px) {
+    #wrapper {
+    	padding: 0;
+    }
+    #wrapper>div {
+    	padding: 0 20px;
+    }
+
+    #wrapper #header {
+        position: fixed;
+        z-index: 1000;
+        padding-bottom: 5px;
+        box-shadow: 0 2px 5px 3px rgba(153,153,153,.8);
+    }
+    
+    #header h1 {
+    	width: 920px;
+    }
+    
+    #wrapper #content {
+        padding-top: 80px;
+    }
+    
+    #content .container,
+    #content .container .fullwidth_column,
+    #footer .container {
+    	width: auto;
+    }
+    
+    #enrise {
+        padding-bottom: 15px;
+    }
+
+    .togglers {
+       position: relative;
+       margin: 0;
+       left: 0;
+       top: 0;
+    }
+    
+    .togglers li {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+        margin: 0 0 0 5px;
+        padding: 0 5px 0 0;
+        box-shadow: none;
+        display: inline;
+        border-right: 1px solid #999595;
+        line-height: 16px;
+    }
+    
+    .togglers li:last-child {
+        border: 0;
+    }
+    
+    .togglers li a {
+        text-decoration: none;
+    }
+    
+    .togglers li a:hover {
+        text-decoration: underline;
+    }
+    
+    #wrapper form#oauth,
+    #wrapper form#misc,
+    #wrapper form#colorchange {
+        margin: 8px 0 0 0;
+    }
+    
+    #wrapper form#oauth {
+    }
+    
+    #wrapper form#misc {
+        margin-left: 130px;
+    }
+    
+    #wrapper form#colorchange {
+       margin-left: 265px;
+    }
+}/*/mediaquery*/

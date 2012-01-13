@@ -11,7 +11,7 @@
             if (0 < strlen($content)) {
                 $this->layout()->assign('forms', $this->render('index/Html/forms.phtml'));
                 echo '<ul id="resources" class="resources">' , $content , '</ul>',
-                     'The API base URL is ', Glitch_Registry::getSettings()->workbench->baseUrl;
+                     'The API base URL is <span class="api-host">', $this->apiHost . '</span>';
             } else {
                 echo '<p>No documentation available</p>';
             }
@@ -21,7 +21,7 @@
                     echo '<h3>Skipped</h3>', $this->htmlList($this->resources->getSkipped());
                 }
                 $todos = array(
-                    'Implement 3 legged OAuth',
+                    'Implement 3 legged OAuth (needs testing!)',
                     'Check if master docblock of a class is required (disabled for now..)',
                     'Implement CSS colors, etc with CSS3 SSAS see http://compass-style.org/ for more info',
                     'Make a HTML5 variant with correct tags, etc..',

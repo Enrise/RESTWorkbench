@@ -1,0 +1,44 @@
+[production]
+;The project name shown in the title
+settings.workbench.layout.projectname = "ATAPI Workbench && docs"
+
+;Additional CSS files for custom rendering, handy for 3rd party colors
+settings.workbench.layout.css[] = "/workbenchResources/css/enrise.css"
+
+;Comma separated string refering to HTML elements which field should be shown after a call to the API and in which order
+settings.workbench.view.responseData = "response_code, response_body, respones_headers, "
+
+;Custom token parser for OAuth.
+settings.workbench.oauth.tokenParser = "Workbench_Model_OAuthTokenParser"
+
+;Array of hosts where to API is available
+settings.workbench.apiHosts[] = "http://api.foo.bar"
+settings.workbench.apiHosts[] = "http://api.foo.dev"
+
+;Default active API host
+settings.workbench.apiHost = "http://api.foo.dev"
+
+;Flag to toggle module scanning
+settings.workbench.modules.scan = true
+
+;Path where the modules are located
+settings.workbench.modules.path = GLITCH_MODULES_PATH
+
+;All paths are sanitized before parsed, do whatever you please with dir separators
+;Additionaly you can add your own paths outside of the modules scan
+settings.workbench.scanPaths[] = "/data/www/foo/bar"
+
+;What needs to be removed from the filepathname in order to keep a valid classname
+settings.workbench.fileToClassStrip[] = GLITCH_MODULES_PATH
+
+;Additional files that are required for classes and to run the documentation scan 
+settings.workbench.additionalIncludes[] = "/data/www/foo/bar/Baz.php"
+
+
+[acceptance : production]
+
+[qa : acceptance]
+
+[testing : qa]
+
+[development : testing]

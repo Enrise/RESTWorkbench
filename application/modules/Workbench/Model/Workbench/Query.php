@@ -118,6 +118,7 @@ class Workbench_Model_Workbench_Query implements Iterator
             'description' => $description,
             'id' => $id,
             'belongsTo' => $belongsTo,
+            'class' => $this->key(),
         ));
         $value = $this->getRawValue();
         if ($elm instanceof Zend_Form_Element_Multi) {
@@ -140,7 +141,7 @@ class Workbench_Model_Workbench_Query implements Iterator
         $placeholder = '(optional)';
         if ($this->isRequired()) {
             $elm->setRequired(true);
-            $elm->setAttrib('class', 'required');
+            $elm->setAttrib('class', $elm->getAttrib('class') . ' required');
             $placeholder = '(required)';
         }
         $elm->setAttrib('placeholder', $placeholder);

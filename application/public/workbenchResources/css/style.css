@@ -535,7 +535,7 @@ pre {
 }
 
 .response_body pre {
-	height: 300px;
+	max-height: 300px;
 	max-width: 916px;
 	min-width: 916px;
 	overflow-y: visible;
