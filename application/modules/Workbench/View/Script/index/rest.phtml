@@ -13,6 +13,7 @@ $body = trim(str_replace($n, '<br/>', $this->escape(print_r($body, true))));
 if ('json' !== $this->format) {
     $body = addslashes($body);
 }
+$body = $this->hateoas($body, $this->format, $this->apiHost);
 
 $headers = trim(str_replace($n, '<br/>', $this->escape(print_r($this->response->getHeadersAsString(), true))));
 $request = trim(str_replace($n, '<br/>', $this->escape(print_r($this->request, true))));
