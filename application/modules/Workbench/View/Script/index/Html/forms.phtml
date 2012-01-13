@@ -74,6 +74,17 @@ $form->addElement('text', 'timeout', array(
         'maxlength' => 2
     ),
 ));
+$baseUrls = $this->apiHosts;
+if (count($baseUrls)) {
+    $form->addElement('select', 'host', array(
+        'label' => 'API host',
+        'multiOptions' => array_combine($baseUrls, $baseUrls),
+        'value' => $this->registry()->query('settings.workbench.apiHost', ''),
+        'attribs' => array(
+            'class' => 'api-host',
+        )
+    ));
+}
 $form->setElementsBelongTo('misc');
 echo $form;
 

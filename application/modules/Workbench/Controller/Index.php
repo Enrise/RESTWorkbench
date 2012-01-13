@@ -51,6 +51,8 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $this->_helper->layout()->setLayoutPath(implode(DIRECTORY_SEPARATOR, array(
             GLITCH_MODULES_PATH, $this->getRequest()->getModuleName(), 'layout'
         )));
+        $this->view->apiHosts = $this->view->registry()->query('settings.workbench.apiHosts', new Zend_Config(array()))->toArray();
+        $this->view->apiHost  = $this->view->registry()->query('settings.workbench.apiHost', '');
     }
 
     public function indexAction()
@@ -157,7 +159,11 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $url = $core['path'];
         //Check if there is http, https or ref to current protocol
         if (!preg_match('~^((http(s|)://)|//)~i', $url)) {
-            $url = Glitch_Registry::getSettings()->workbench->baseUrl . $url;
+            $base = Glitch_Registry::getSettings()->workbench->apiHost;
+            if (isset($p['misc'], $p['misc']['host']) && in_array($p['misc']['host'], $this->view->apiHosts, true)) {
+                $base = rtrim($p['misc']['host'], '/');
+            }
+            $url = $base. $url;
         }
         $url = rtrim($url, '/');
 
@@ -342,6 +348,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $this->view->response = $a;
         $this->view->url = $url;
         $this->view->id = $p['misc']['dom_id'];
+        $this->view->apiHost = $p['misc']['host'];
     }
 
     /**

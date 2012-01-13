@@ -45,6 +45,8 @@
 
 class Workbench_View_Helper_Registry extends Zend_View_Helper_Abstract
 {
+    protected static $_passed = array();
+
     /**
      * @return Workbench_View_Helper_Registry
      */
@@ -63,6 +65,10 @@ class Workbench_View_Helper_Registry extends Zend_View_Helper_Abstract
      */
     public function query($path, $default = null)
     {
+        //Prevent double lookups as it can be quite heavy
+        if (array_key_exists($path, self::$_passed)) {
+            return self::$_passed[$path];
+        }
         $paths = explode('.', $path);
         $prev = null;
         foreach ($paths as $v) {
@@ -83,6 +89,7 @@ class Workbench_View_Helper_Registry extends Zend_View_Helper_Abstract
         if (null === $prev || empty($value)) {
             $value = $default;
         }
+        self::$_passed[$path] = $value;
         return $value;
     }
 }

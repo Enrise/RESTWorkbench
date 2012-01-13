@@ -130,6 +130,9 @@ class Workbench_Model_Workbench_EntryPoints
      */
     public function getResources($paths = array(), $strips = array(), $includePaths = array())
     {
+        if (Workbench_Model_Application::isScanModulesPath()) {
+            $paths = $this->_getControllerDirectoriesFromModules($paths);
+        }
         $paths = $this->_filterPaths($paths);
         $strips = $this->_filterPaths($strips);
         $includePaths = $this->_filterPaths($includePaths);
@@ -137,13 +140,22 @@ class Workbench_Model_Workbench_EntryPoints
         $resources = new Workbench_Model_Workbench_Resources();
         $skipped = array();
         foreach ($paths as $path) {
-            $directory = new RecursiveDirectoryIterator($path);
+            try {
+            	$directory = new RecursiveDirectoryIterator($path);
+            } catch (UnexpectedValueException $e) {
+                $skipped[] = sprintf('Unable to find controllers for %s', $path);
+                continue;
+            }
             $iterator = new RecursiveIteratorIterator($directory);
             $regex = new RegexIterator($iterator, '/^.+\.php$/i', RecursiveRegexIterator::GET_MATCH);
             $files = array();
             foreach ($regex as $info) {
-                $files[] = $info[0];
+                //First strip out double entries, in case of..
+                if (!in_array($info[0], $files)) {
+                    $files[] = $info[0];
+                }
             }
+            //Sort so our tree structure is correct
             sort($files);
 
             $strips = array_merge($strips, array('.php'));
@@ -278,6 +290,31 @@ class Workbench_Model_Workbench_EntryPoints
         }
         $resources->setSkipped($skipped);
         return $resources;
+    }
+
+    /**
+     * Add scanned paths based on the Glitch module structure
+     *
+     * @param mixed $paths
+     * @return Zend_Config
+     */
+    protected function _getControllerDirectoriesFromModules($paths)
+    {
+        $dirs = new DirectoryIterator(Workbench_Model_Application::getModulesPath());
+        $tmp = array();
+        $excludes = array('.svn');
+        foreach ($dirs as $dir) {
+            if (!$dir->isDot() && !in_array($dir->getFilename(), $excludes, true)) {
+                $tmp[] = $dir->getPathname() . DIRECTORY_SEPARATOR . 'Controller';
+            }
+        }
+        $tmp = new Zend_Config($tmp, true);
+        if (!$paths instanceof Zend_Config) {
+            //@todo Might be a bit tricky..
+            $paths = new Zend_Config((array) $paths, true);
+        }
+        $paths = $tmp->merge($paths);
+        return $paths;
     }
 
     /**
