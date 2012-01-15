@@ -38,13 +38,22 @@
  * @package     Workbench_Model_Workbench
  * @author      Enrise <info@enrise.com>
  * @author      dpapadogiannakis@enrise.com
- * @copyright   2010, Enrise
+ * @copyright   2012, Enrise
  * @license     http://www.opensource.org/licenses/bsd-license.php
  * @version     $Id: $
  */
 
 class Workbench_Model_Workbench_Tokens implements Iterator
 {
+    /**
+     * @var array
+     *
+     * Keys:
+     * 0    => Orig lines
+     * 1    => Orig keys
+     * 2    => Keys
+     * 3    => Values
+     */
     protected $_data = array();
 
     protected $_max = 0;
@@ -92,5 +101,16 @@ class Workbench_Model_Workbench_Tokens implements Iterator
     {
         return $this->_counter < $this->_max;
         return null !== $this->key();
+    }
+
+    public function __get($key)
+    {
+        $pos = $this->has($key);
+        if (false === $pos) {
+            throw new OutOfBoundsException(
+                        sprintf('invalid seek position (%s)', $key));
+        }
+
+        return $this->_data[3][$pos];
     }
 }

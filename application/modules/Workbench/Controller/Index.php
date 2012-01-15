@@ -49,7 +49,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
     public function init()
     {
         $this->_helper->layout()->setLayoutPath(implode(DIRECTORY_SEPARATOR, array(
-            GLITCH_MODULES_PATH, $this->getRequest()->getModuleName(), 'layout'
+            GLITCH_MODULES_PATH, ucfirst($this->getRequest()->getModuleName()), 'Layout'
         )));
         $this->view->apiHosts = $this->view->registry()->query('settings.workbench.apiHosts', new Zend_Config(array()))->toArray();
         $this->view->apiHost  = $this->view->registry()->query('settings.workbench.apiHost', '');
