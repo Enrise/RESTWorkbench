@@ -130,6 +130,7 @@ class Workbench_Model_Workbench_EntryPoints
      */
     public function getResources($paths = array(), $strips = array(), $includePaths = array())
     {
+
         if (Workbench_Model_Application::isScanModulesPath()) {
             $paths = $this->_getControllerDirectoriesFromModules($paths);
         }
@@ -193,16 +194,24 @@ class Workbench_Model_Workbench_EntryPoints
                     if ($method->class !== $reflection->name) {
                         continue;
                     }
+
                     //Finaly check the method name for a certain format, we know what is valid?
                     $isValid = preg_match(self::ACTION_REGEX, $method->name, $methodMatches);
-                    if (!$isValid) {
-                        if (!in_array($method->name, $this->_skipMethods)) {
-                            $skipped[$method->class][$method->name] = $method->name . ' invalid method for REST';
-                        }
-                        continue;
-                    }
                     //Trim all the crap of descriptions
                     $doc = str_replace(array(implode(array('/', '*', '*')), implode(array('*', '/'))), '', $method->getDocComment());
+                    $matches = $this->_getTokensFromDocblock($doc);
+
+                    if (!$isValid) {
+                        if($matches->has('isRest') && filter_var($matches->isRest, FILTER_VALIDATE_BOOLEAN)) {
+                            $isValid = true;
+                        } else {
+                            if (!in_array($method->name, $this->_skipMethods)) {
+                                $skipped[$method->class][$method->name] = $method->name . ' invalid method for REST';
+                            }
+                            continue;
+                        }
+                    }
+
                     if (!$doc) {
                         $skipped[$method->class][$method->name] = $method->class . ' ' . $method->name . ' no valid docblock detected';
                         continue;
@@ -247,6 +256,9 @@ class Workbench_Model_Workbench_EntryPoints
                                     break;
                                 //All params
                                 case self::ACCEPT:
+                                    if ($value == 'any') {
+                                        $value = '*/*';
+                                    }
                                     $params[$k][] = $value;
                                     break;
                                 case self::FORMAT:
@@ -325,7 +337,7 @@ class Workbench_Model_Workbench_EntryPoints
      */
     protected function _getTokensFromDocblock($doc)
     {
-        preg_match_all('~(@([a-z]+)) (.+)~', $doc, $matches);
+        preg_match_all('~(@([a-zA-Z]+)) (.+)~', $doc, $matches);
         return new Workbench_Model_Workbench_Tokens($matches);
     }
 }
