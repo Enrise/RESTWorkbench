@@ -107,7 +107,8 @@ class Workbench_Model_Workbench_Tokens implements Iterator
     {
         $pos = $this->has($key);
         if (false === $pos) {
-            throw new OutOfBoundsException("invalid seek position ($pos)");
+            throw new OutOfBoundsException(
+                        sprintf('invalid seek position (%s)', $key);
         }
 
         return $this->_data[3][$pos];

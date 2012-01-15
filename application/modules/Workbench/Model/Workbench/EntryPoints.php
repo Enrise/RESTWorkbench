@@ -177,7 +177,6 @@ class Workbench_Model_Workbench_EntryPoints
                 }
                 //First only public methods are valid
                 $methods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
-                //No? NEXT!
                 if (0 === count($methods)) {
                     $skipped[$reflection->name] = $reflection->name . ' no methods';
                     continue;
