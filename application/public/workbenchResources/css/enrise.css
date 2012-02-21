@@ -350,6 +350,24 @@ strong {
     border-color: #C3E8D1;
 }
 
+/** PATCH Specifics **/
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.patch div.heading ul.options li a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.patch div.content h4,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.patch div.content div.sandbox_header a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.patch a.expandBody {
+    color: #21C4B1;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.patch h3 span.http_method a {
+    background-color: #21C4B1;
+}
+
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.patch div.content,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.patch div.heading {
+    background-color: #E7F6EC;
+    border-color: #C3E8D1;
+}
+
 /** PUT Specifics **/
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.put div.content h4,

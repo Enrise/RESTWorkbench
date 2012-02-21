@@ -58,7 +58,7 @@ class Workbench_Model_Workbench_EntryPoints
     const QUERY = 'query';
     const URL = 'url';
     const DISABLED = 'disabled';
-    const ACTION_REGEX = '~^(resource|collection)(Delete|Get|Head|Options|Put|Post)Action~';
+    const ACTION_REGEX = '~^(resource|collection)(Delete|Get|Head|Options|Put|Post|Patch)Action~';
     /*#@-*/
 
     /**
@@ -302,12 +302,16 @@ class Workbench_Model_Workbench_EntryPoints
     {
         $dirs = new DirectoryIterator(Workbench_Model_Application::getModulesPath());
         $tmp = array();
-        $excludes = array('.svn');
+        $excludes = array('.svn', 'Workbench');
         foreach ($dirs as $dir) {
-            if (!$dir->isDot() && !in_array($dir->getFilename(), $excludes, true)) {
-                $tmp[] = $dir->getPathname() . DIRECTORY_SEPARATOR . 'Controller';
+            $dirName = $dir->getPathname() . DIRECTORY_SEPARATOR . 'Controller';
+            if (!$dir->isDot() && !in_array($dir->getFilename(), $excludes, true) &&
+                file_exists($dirName) // Not all modules have one or more controllers
+            ) {
+                $tmp[] = $dirName;
             }
         }
+
         $tmp = new Zend_Config($tmp, true);
         if (!$paths instanceof Zend_Config) {
             //@todo Might be a bit tricky..
