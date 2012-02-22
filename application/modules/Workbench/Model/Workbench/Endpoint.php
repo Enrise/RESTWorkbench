@@ -150,7 +150,7 @@ class Workbench_Model_Workbench_Endpoint
             $oauth = self::getOauth();
             $fields = array_merge($fields, $oauth);
         }
-        if (in_array($this->getMethod(), array('put', 'post'))) {
+        if (in_array($this->getMethod(), array('put', 'post', 'patch'))) {
             $fields['body'] = array(
                 'required' => true,
                 'description' => 'API request body',

@@ -160,6 +160,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
         //@todo: remove me!
         if (!Workbench_Model_Application::isDevelopment() && 'get' !== $core['http_method']) {
+
             throw new Exception('Something went horribly wrong!');
         }
 
@@ -195,7 +196,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $client = new Zend_Http_Client();
         $client->setConfig(array(
             'timeout' => $timeout,
-            'adapter' => new Zend_Http_Client_Adapter_Curl(),
+//             'adapter' => new Zend_Http_Client_Adapter_Curl(),
         ));
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {
