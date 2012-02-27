@@ -127,8 +127,8 @@ class Workbench_Model_Workbench_Endpoint
     {
         $this->_method = strtolower($method);
         //@todo: remove me!
-        $settings = Glitch_Registry::getInstance(Glitch_Registry::KEY_SETTINGS);
-        if (!$settings->settings->workbench->enablecommit && 'get' !== $this->_method) {
+        $settings = Glitch_Registry::get(Glitch_Registry::KEY_SETTINGS);
+        if (!$settings->workbench->enablecommit && 'get' !== $this->_method) {
             $this->setDisableCommit(true);
         }
         return $this;
