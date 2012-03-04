@@ -126,10 +126,6 @@ class Workbench_Model_Workbench_Endpoint
     public function setMethod($method)
     {
         $this->_method = strtolower($method);
-        //@todo: remove me!
-        if (!Workbench_Model_Application::isDevelopment() && 'get' !== $this->_method) {
-            $this->setDisableCommit(true);
-        }
         return $this;
     }
 
