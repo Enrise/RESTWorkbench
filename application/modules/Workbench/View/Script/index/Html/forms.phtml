@@ -114,7 +114,7 @@ if (Workbench_Model_Application::isDevelopment()) {
         'label' => 'font color',
         'attribs' => array('class' => 'color'),
     ));
-    $methods = array('GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD');
+    $methods = array('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD');
     $methods = array_change_key_case(array_combine($methods, $methods), CASE_LOWER);
 
     $form->addElement('select', 'styleMethod', array(

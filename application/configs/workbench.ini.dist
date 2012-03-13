@@ -34,6 +34,7 @@ settings.workbench.fileToClassStrip[] = GLITCH_MODULES_PATH
 ;Additional files that are required for classes and to run the documentation scan 
 settings.workbench.additionalIncludes[] = "/data/www/foo/bar/Baz.php"
 
+settings.workbench.enablecommit = false
 
 [acceptance : production]
 
