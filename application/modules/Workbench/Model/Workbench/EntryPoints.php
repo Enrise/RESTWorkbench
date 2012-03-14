@@ -126,7 +126,7 @@ class Workbench_Model_Workbench_EntryPoints
      * @param $paths
      * @param $strips
      * @param $includePaths
-     * @return Workbench_Model_Workbench_Resources
+     * @return Workbench_Model_Workbench_Resources 
      */
     public function getResources($paths = array(), $strips = array(), $includePaths = array())
     {
