@@ -117,7 +117,7 @@ class Workbench_Model_Workbench_EntryPoints
         if (!is_array($paths)) {
             return array();
         }
-        return array_map(array($this, '_sanitizePath'), $paths);
+        return array_unique(array_map('realpath', array_map(array($this, '_sanitizePath'), $paths)));
     }
 
     /**
