@@ -100,7 +100,7 @@ class Workbench_Model_Workbench_EntryPoints
      */
     protected function _sanitizePath($path)
     {
-        return str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $path);
+        return realpath(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $path));
     }
 
     /**
@@ -117,7 +117,7 @@ class Workbench_Model_Workbench_EntryPoints
         if (!is_array($paths)) {
             return array();
         }
-        return array_map(array($this, '_sanitizePath'), $paths);
+        return array_unique(array_map(array($this, '_sanitizePath'), $paths));
     }
 
     /**

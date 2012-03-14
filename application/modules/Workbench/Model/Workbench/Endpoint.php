@@ -126,6 +126,9 @@ class Workbench_Model_Workbench_Endpoint
     public function setMethod($method)
     {
         $this->_method = strtolower($method);
+        if (!Glitch_Registry::getSettings()->workbench->enablecommit && 'get' !== $this->_method) {
+            $this->setDisableCommit(true);
+        }
         return $this;
     }
 
