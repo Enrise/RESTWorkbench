@@ -1,19 +1,25 @@
 <?php
 $body = $this->response->getBody();
-if ('json' === $this->format) {
-    //Woohoo!
-    $body = Zend_Json::prettyPrint($body, array(
-        'indent' => str_repeat(' ', 4),
-    ));
-}
+$contentType = $this->response->getHeader('Content-type');
 $n = array(PHP_EOL, "\r\n", "\r", "\n");
-//Escape single quotes for JS
-$body = trim(str_replace($n, '<br/>', $this->escape(print_r($body, true))));
-//Zend_Json::prettyPrint takes care of addslashes
-if ('json' !== $this->format) {
-    $body = addslashes($body);
+if (0 === stripos($contentType, 'image/')) {
+    $body = sprintf('<img src="data:image/%s;base64,%s" alt="%s" />', $contentType, base64_encode($body), 'image');
+} else {
+    if ('json' === $this->format) {
+        //Woohoo!
+        $body = Zend_Json::prettyPrint($body, array(
+            'indent' => str_repeat(' ', 4),
+        ));
+    }
+
+    //Escape single quotes for JS
+    $body = trim(str_replace($n, '<br/>', $this->escape(print_r($body, true))));
+    //Zend_Json::prettyPrint takes care of addslashes
+    if ('json' !== $this->format) {
+        $body = addslashes($body);
+    }
+    $body = $this->hateoas($body, $this->format, $this->apiHost);
 }
-$body = $this->hateoas($body, $this->format, $this->apiHost);
 
 $headers = trim(str_replace($n, '<br/>', $this->escape(print_r($this->response->getHeadersAsString(), true))));
 $request = trim(str_replace($n, '<br/>', $this->escape(print_r($this->request, true))));
