@@ -65,6 +65,8 @@ class Workbench_View_Helper_Hateoas extends Zend_View_Helper_Abstract
                 $search = "~\\\'([a-zA-Z]+?\\\' =&gt; \\\')(" . $host . ".+?)\\\'~";
                 $replace = '$1<a class="ref" title="HATEOAS" href="$2">$2</a>\\\'';
                 break;
+            default:
+                return $body;
         }
         //preg_match_all($search, $body, $matches);
         //var_dump($matches, $search);
