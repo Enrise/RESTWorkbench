@@ -158,12 +158,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $p = $r->getPost();
         $core = $p['core'];
 
-        //@todo: remove me!
-        if (!Workbench_Model_Application::isDevelopment() && 'get' !== $core['http_method']) {
-
-            throw new Exception('Something went horribly wrong!');
-        }
-
         $auth = array_filter($r->getPost('oauth', array()));
         $url = $core['path'];
         //Check if there is http, https or ref to current protocol
