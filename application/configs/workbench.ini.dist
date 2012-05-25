@@ -36,6 +36,9 @@ settings.workbench.additionalIncludes[] = "/data/www/foo/bar/Baz.php"
 
 settings.workbench.enablecommit = false
 
+; HTTP timeout in seconds
+settings.workbench.http.timeout = 10
+
 [acceptance : production]
 
 [qa : acceptance]

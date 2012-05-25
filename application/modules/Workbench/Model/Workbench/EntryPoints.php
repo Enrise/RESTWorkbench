@@ -73,8 +73,13 @@ class Workbench_Model_Workbench_EntryPoints
         'realm',
         self::HINT => '~(.+)~',
         self::PARAM => '~([a-z_]+) ([()0-9-a-z:\.,/_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
-        self::QUERY => '~([a-z_]+) ([()0-9-a-z:\.,/_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
-        //self::QUERY => '~([a-z_]+)(.+|) ({optional}|)~i',
+
+        //test strings:
+        // * @query temperature klm destination finder (<minTemp>([+C|F])(..<maxTemp>([+C|F]))) {optional}
+        // * @query media  klm destination ( [+none | ';' photo | ';' video] ))) {optional}
+        // * @query departureCity City from which is being departed ("destination" url) {optional}
+        self::QUERY => '~([a-z_]+) ([()0-9-a-z:\.,/\|\[\]\"\\\'\;\<\>\+\_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
+
         self::FORMAT => '~(.+)(\+@format)~',
         self::ACCEPT => '~(.+)~',
         self::URL => '(.+)',
@@ -269,7 +274,7 @@ class Workbench_Model_Workbench_EntryPoints
                                 case self::QUERY:
                                     //Check for description
                                     if (!empty($tmp[2])) {
-                                        $query[$tmp[1]]['description'] = trim($tmp[2]);
+                                        $query[$tmp[1]]['description'] = htmlentities(trim($tmp[2]));
                                     }
                                     //Check for optional value
                                     if (empty($tmp[3])) {

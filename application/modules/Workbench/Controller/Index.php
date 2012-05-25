@@ -181,7 +181,12 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $this->view->format = $format;
 
-        $timeout = 10; //10 seconds should be enough
+        if (isset(Glitch_Registry::getSettings()->workbench->http->timeout)) {
+            $timeout = Glitch_Registry::getSettings()->workbench->http->timeout;
+         } else {
+            $timeout = 10; //10 seconds should be enough
+        }
+
         if (isset($p['misc'], $p['misc']['timeout'])) {
             $tmp = Zend_Filter::filterStatic($p['misc']['timeout'], 'Digits');
             if (!empty($tmp)) {
