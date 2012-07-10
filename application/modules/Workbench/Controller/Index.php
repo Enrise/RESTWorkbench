@@ -336,9 +336,23 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $client->setHeaders($headers);
 
+        if ('1' == $p['misc']['debug']) {
+            $client->getAdapter()->setConfig(array('timeout' => -1));
+            $client->setCookie('debug_session_id', rand(10000000, 99999999));
+            $client->setCookie('debug_start_session', 1);
+            $client->setCookie('debug_host', $p['misc']['debughost']);
+            $client->setCookie('debug_port', $p['misc']['debugport']);
+            $client->setCookie('no_remote', 1);
+            $client->setCookie('send_debug_header', 1);
+            $client->setCookie('original_url', $client->getUri(true));
+            $client->setCookie('start_debug', 1);
+            $client->setCookie('debug_jit', 1);
+            $client->setCookie('send_sess_end', 1);
+        }
+
         $starttime = microtime(true);
         try {
-        	$a = $client->request(strtoupper($core['http_method']));
+            $a = $client->request(strtoupper($core['http_method']));
         } catch (Exception $e) {
             $last = $client->getLastResponse();
             $code = 500;
