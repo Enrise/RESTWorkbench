@@ -1,0 +1,32 @@
+<?php
+$t = $this->resource->getName();
+$nodeId = lcfirst(str_replace(' ', '', ucwords(str_ireplace(array('\\', '\\\\', '/'), ' ', $t))));
+
+$content = '';
+foreach ($this->resource as $data) {
+    $this->endpoint = $data;
+    $content .= $this->render('index/Html/resource.phtml');
+}
+$id = 'resource_' . $nodeId;
+
+//We do not need extra html if we do not have all elements available
+if (0 < strlen($content)) {
+?>
+<li class="resource" id="<?php echo $id ?>">
+    <div class="heading">
+        <h2>
+            <a onclick="Docs.toggleEndpointListForResource('<?php echo $nodeId ?>');" href="#!/<?php echo $nodeId ?>">/<?php echo $t ?></a>
+        </h2>
+        <ul class="options">
+            <li><a onclick="Docs.toggleEndpointListForResource('<?php echo $nodeId ?>');" id="endpointListTogger_<?php echo $nodeId ?>" href="#!/<?php echo $nodeId ?>">Show/Hide</a></li>
+            <li><a onclick="Docs.collapseOperationsForResource('<?php echo $nodeId ?>'); return false;" href="#">List Operations</a></li>
+            <li><a onclick="Docs.expandOperationsForResource('<?php echo $nodeId ?>'); return false;" href="#">Expand Operations</a></li>
+        </ul>
+    </div>
+    <ul class="endpoints">
+        <?php echo $content; ?>
+    </ul>
+</li>
+<?php
+}
+?>

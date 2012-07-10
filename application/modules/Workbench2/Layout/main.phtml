@@ -1,0 +1,116 @@
+<?php
+/**
+ * Glitch
+ *
+ * Copyright (c) 2010, Enrise BV (www.enrise.com).
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   * Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *   * Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *
+ *   * Neither the name of Enrise nor the names of his contributors
+ *     may be used to endorse or promote products derived from this
+ *     software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author      Enrise <info@enrise.com>
+ * @author      dpapadogiannakis@enrise.com
+ * @copyright   2010, Enrise
+ * @license     http://www.opensource.org/licenses/bsd-license.php
+ * @version     $Id: $
+ */
+$layout = $this->layout();
+
+$projectname = $this->registry()->query('settings.workbench.layout.projectname', 'Enrise Workbench');
+$isEnrise = false !== stripos($projectname, 'enrise');
+$this->headTitle($projectname)->enableTranslation();
+
+$this->headLink()->appendStylesheet('/workbenchResources/css/style.css');
+$this->headLink()->appendStylesheet('/workbenchResources/css/jquery.miniColors.css');
+if ($isEnrise) {
+    //$this->headLink()->appendStylesheet('/workbenchResources/css/enrise.css');
+}
+$cssFiles = $this->registry()->query('settings.workbench.layout.css', array());
+foreach ($cssFiles as $file) {
+    $this->headLink()->appendStylesheet($file);
+}
+//$this->headLink()->appendStylesheet('/workbenchResources/css/test.css');
+$this->headScript()->appendFile('//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js');
+$this->headScript()->appendFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js');
+$this->headScript()->appendFile('/workbenchResources/js/main.js');
+
+echo $this->doctype() . PHP_EOL;
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                   -->
+<!--  Powered by Enrise.com | creative web technology  -->
+<!--      handicraft coding & scripting since 1883     -->
+<!--            Amersfoort - The Netherlands           -->
+<!--                 david@enrise.com                  -->
+<!--                                                   -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<head>
+<?php
+echo $this->headMeta() . PHP_EOL,
+     $this->headTitle() . PHP_EOL,
+     $this->headLink() . PHP_EOL,
+     $this->headStyle() . PHP_EOL,
+     $this->headScript() . PHP_EOL;
+?>
+<link href="/favicon.ico" rel="shortcut icon" />
+</head>
+<body<?php if (isset($layout->bodyId)){ echo ' id="'.$layout->bodyId.'"'; } if (isset($layout->bodyClass)){ echo ' class="'.$layout->bodyClass.'"'; } ?>>
+    <div id="wrapper">
+        <div id="header">
+            <h1><?php echo $this->escape($projectname) ?></h1>
+            <noscript><p>This application works best and only for now with Javascript enabled</p></noscript>
+            <?php echo $layout->forms ?>
+        </div>
+        <?php echo $layout->content ?>
+        <div id="footer">
+            <div class="container">
+                <?php
+                if ($isEnrise) {
+                ?>
+                <ul>
+                    <li><a target="_blank" href="http://twitter.com/#!/enrise" title="Follow us on twitter!">@Enrise</a></li>
+                    <li><a target="_blank" href="http://php.net/manual/en/index.php" title="We are masters in PHP, check us out!">PHP</a></li>
+                    <li><a target="_blank" href="http://jquery.com/" title="We use jQuery">jQuery</a>
+                    <li><a target="_blank" href="https://www.varnish-cache.org/" title="We use Varnish">Varnish</a></li>
+                    <li><a target="_blank" href="http://en.wikipedia.org/wiki/Representational_State_Transfer" title="We build RESTful API's">RESTful API's</a></li>
+                    <li><a target="_blank" href="http://en.wikipedia.org/wiki/HATEOAS" title="We understand HATEOAS">HATEOAS</a></li>
+                </ul>
+                <div id="enrise">
+                    Powered by <a title="Creative Web Technology" href="http://www.enrise.com/">Enrise</a>
+                </div>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php echo $this->inlineScript() ?>
+</body>
+</html>

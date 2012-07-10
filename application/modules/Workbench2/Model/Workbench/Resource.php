@@ -35,7 +35,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @category    Workbench
- * @package     Workbench_View_Helper
+ * @package     Workbench_Model_Workbench
  * @author      Enrise <info@enrise.com>
  * @author      dpapadogiannakis@enrise.com
  * @copyright   2010, Enrise
@@ -43,53 +43,42 @@
  * @version     $Id: $
  */
 
-class Workbench_View_Helper_Registry extends Zend_View_Helper_Abstract
+class Workbench_Model_Workbench_Resource extends ArrayIterator
 {
-    protected static $_passed = array();
+    protected $_resourceName;
 
     /**
-     * @return Workbench_View_Helper_Registry
+     * @param $name
+     * @return Workbench_Model_Workbench_Resource
      */
-    public function registry()
+    public function setName($name)
     {
+        $this->_resourceName = $name;
         return $this;
     }
 
-    /**
-     * Try to find the config setting provided by $path
-     * WARNING: For now only works with .ini files and a dot (.) separator
-     *
-     * @param string $path
-     * @param mixed $default
-     * @return mixed
-     */
-    public function query($path, $default = null)
+    public function getName()
     {
-        //Prevent double lookups as it can be quite heavy
-        if (array_key_exists($path, self::$_passed)) {
-            return self::$_passed[$path];
+        return $this->_resourceName;
+    }
+
+    public function current()
+    {
+        $current = parent::current();
+        $current->setParent($this);
+        return $current;
+    }
+
+    /**
+     * @param Workbench_Model_Workbench_Endpoints $e
+     * @return Workbench_Model_Workbench_Resource
+     */
+    public function append($e)
+    {
+        if (!$e instanceof Workbench_Model_Workbench_Endpoint) {
+            throw new InvalidArgumentException('Invalid endpoints object given!');
         }
-        $paths = explode('.', $path);
-        $prev = null;
-        foreach ($paths as $v) {
-            if ($prev instanceof Zend_Config) {
-                $value = $prev->{$v};
-                $prev = $value;
-            } else if (!isset($prev)) {
-                if (Zend_Registry::getInstance()->isRegistered($v)) {
-                    $value = Zend_Registry::getInstance()->{$v};
-                    if ($value instanceof Zend_Config) {
-                        $prev = $value;
-                    }
-                }
-            } else {
-                break;
-            }
-        }
-        if (null === $prev || empty($value)) {
-            $value = $default;
-        }
-        self::$_passed[$path] = $value;
-        return $value;
+        parent::append($e);
+        return $this;
     }
 }

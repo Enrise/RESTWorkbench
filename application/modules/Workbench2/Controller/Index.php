@@ -158,6 +158,11 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $p = $r->getPost();
         $core = $p['core'];
 
+        //@todo: remove me!
+        if (!Workbench_Model_Application::isDevelopment() && 'get' !== $core['http_method']) {
+
+            throw new Exception('Something went horribly wrong!');
+        }
 
         $auth = array_filter($r->getPost('oauth', array()));
         $url = $core['path'];
@@ -181,7 +186,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $this->view->format = $format;
 
-        $timeout = $this->view->registry()->query('settings.workbench.httpClient.options.timeout', 10); //10 seconds should be enough
+        $timeout = 10; //10 seconds should be enough
         if (isset($p['misc'], $p['misc']['timeout'])) {
             $tmp = Zend_Filter::filterStatic($p['misc']['timeout'], 'Digits');
             if (!empty($tmp)) {
@@ -189,15 +194,10 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
         }
         $client = new Zend_Http_Client();
-        if (($config = $this->view->registry()->query('settings.workbench.httpClient.options'))) {
-            if ($config instanceof Zend_Config) {
-                $config = $config->toArray();
-            } else if (is_string($config)) {
-                $config = (array) $config;
-            }
-            $config['timeout'] = $timeout;
-            $client->setConfig($config);
-        }
+        $client->setConfig(array(
+            'timeout' => $timeout,
+//             'adapter' => new Zend_Http_Client_Adapter_Curl(),
+        ));
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {
             $hasBody = false;
@@ -336,23 +336,9 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $client->setHeaders($headers);
 
-        if ('1' == $p['misc']['debug']) {
-            $client->getAdapter()->setConfig(array('timeout' => -1));
-            $client->setCookie('debug_session_id', rand(10000000, 99999999));
-            $client->setCookie('debug_start_session', 1);
-            $client->setCookie('debug_host', $p['misc']['debughost']);
-            $client->setCookie('debug_port', $p['misc']['debugport']);
-            $client->setCookie('no_remote', 1);
-            $client->setCookie('send_debug_header', 1);
-            $client->setCookie('original_url', $client->getUri(true));
-            $client->setCookie('start_debug', 1);
-            $client->setCookie('debug_jit', 1);
-            $client->setCookie('send_sess_end', 1);
-        }
-
         $starttime = microtime(true);
         try {
-            $a = $client->request(strtoupper($core['http_method']));
+        	$a = $client->request(strtoupper($core['http_method']));
         } catch (Exception $e) {
             $last = $client->getLastResponse();
             $code = 500;

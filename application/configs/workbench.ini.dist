@@ -31,7 +31,7 @@ settings.workbench.scanPaths[] = "/data/www/foo/bar"
 ;What needs to be removed from the filepathname in order to keep a valid classname
 settings.workbench.fileToClassStrip[] = GLITCH_MODULES_PATH
 
-;Additional files that are required for classes and to run the documentation scan 
+;Additional files that are required for classes and to run the documentation scan
 settings.workbench.additionalIncludes[] = "/data/www/foo/bar/Baz.php"
 
 settings.workbench.enablecommit = false
@@ -48,3 +48,5 @@ settings.workbench.httpClient.options.timeout = 30
 [testing : qa]
 
 [development : testing]
+settings.workbench.debug.host = "192.168.56.1"
+settings.workbench.debug.port = 10137

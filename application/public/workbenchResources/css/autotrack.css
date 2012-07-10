@@ -14,3 +14,51 @@
 	text-align: right;
 	width: auto;
 }
+
+#header .handles a,
+#content .handles a,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header input.submit {
+    background: rgb(138,195,252); /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzhhYzNmYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxZTdkZGIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, rgba(138,195,252,1) 0%, rgba(30,125,219,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(138,195,252,1)), color-stop(100%,rgba(30,125,219,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(138,195,252,1) 0%,rgba(30,125,219,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(138,195,252,1) 0%,rgba(30,125,219,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(138,195,252,1) 0%,rgba(30,125,219,1) 100%); /* IE10+ */
+    background: linear-gradient(top, rgba(138,195,252,1) 0%,rgba(30,125,219,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ac3fc', endColorstr='#1e7ddb',GradientType=0 ); /* IE6-8 */
+
+    border: 1px solid #47a3ff;
+    border-radius: 5px;
+    color: #FFFFFF;
+    /*display: block;*/
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Arial;
+    line-height: 29px;
+    height: 29px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#header .handles a:hover,
+#content .handles a:hover,
+#content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header input.submit:hover {
+	text-decoration: underline;	
+}
+
+/** GET override **/
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading ul.options li a, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content h4, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content div.sandbox_header a, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get a.expandBody { color: #1E7DDB; }
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get h3 span.http_method a { background-color: #1E7DDB; color: #ffffff; }
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.content, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.get div.heading { background-color: #E8F2FB; border-color: #C6DEF6; }
+
+/** POST override **/
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading ul.options li a, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content h4, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content div.sandbox_header a, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post a.expandBody { color: #99CC00; }
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post h3 span.http_method a { background-color: #99CC00; color: #ffffff; }
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.content, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.post div.heading { background-color: #F4F9E5; border-color: #E5F2BF; }
+
+/** DELETE override **/
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading ul.options li a, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content h4, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content div.sandbox_header a, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete a.expandBody { color: #CC3333; }
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete h3 span.http_method a { background-color: #CC3333; color: #ffffff; }
+#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.content, ul#resources li.resource ul.endpoints li.endpoint ul.operations li.delete div.heading { background-color: #F9EAEA; border-color: #F2CCCC; }
