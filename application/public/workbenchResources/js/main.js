@@ -215,6 +215,17 @@ hsb.s*=100/255;hsb.b*=100/255;return hsb;};var hex2hsb=function(hex){var hsb=rgb
 
 var Docs = {
     init: function() {
+        /*$('form.config').keydown(function(evt) {
+            console.warn(evt);
+            console.warn(this);
+            console.warn($(this));
+        });*/
+        $('form.config').bind('submit', function(e) {
+            $(this).hide('slow');
+            e.preventDefault();
+            return false;
+        });
+        //$('form.config button.close').click('closeParentForm');
         $('#copyToClipboard').parent().each(function(){
             $(this).css('position', 'relative');
         });
@@ -240,13 +251,13 @@ var Docs = {
         });
         
         var queries = [
-           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading ul.options li a',
-           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content h4',
-           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content div.sandbox_header a',
-           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li h3 span.http_method a',
-           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content',
-           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading',
-           'ul#resources li.resource ul.endpoints li.endpoint ul.operations li a.expandBody',
+           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading ul.options li a',
+           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content h4',
+           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content div.sandbox_header a',
+           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li h3 span.http_method a',
+           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content',
+           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading',
+           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li a.expandBody',
            'a.miniColors-trigger'
         ];
         queries = queries.join(', ');
@@ -320,6 +331,20 @@ var Docs = {
         $('form .api-host').change(function(evt) {
             $('.api-host').not($(this)).html(this.value);
         });
+        $('.closeAll').click(function(evt) {
+            evt.preventDefault();
+            $('#resources>li').each(function() {
+                Docs.collapseEndpointListForResource($(this).attr('id').split('_')[1] || '');
+            });
+            return false;
+        });
+        $('.openAll').click(function(evt) {
+            evt.preventDefault();
+            $('#resources>li').each(function() {
+                Docs.expandEndpointListForResource($(this).attr('id').split('_')[1] || '', false);
+            });
+            return false;
+        });
     },
     
     shebang: function() {
@@ -346,7 +371,10 @@ var Docs = {
     },
     
     // Expand resource and remove explicit closure cookie
-    expandEndpointListForResource: function(resource) {
+    expandEndpointListForResource: function(resource, scroll) {
+        if (undefined == scroll) {
+            scroll = true;
+        }
         var resource = $('#resource_' + resource);
         var entries = resource.children('ul.endpoints');
         
@@ -354,7 +382,9 @@ var Docs = {
         entries.slideDown();
         $.removeSubCookie('explicitlyClosedTogglables', resource.attr('id'));
         $.cookie('explicitlyClosedTogglables');
-        $.scrollTo(entries.siblings('.heading'), 800, {offset: {left: 0, top: 4}});
+        if (scroll) {
+            $.scrollTo(entries.siblings('.heading'), 800, {offset: {left: 0, top: 4}});
+        }
     },
     
     // Collapse resource and mark as explicitly closed
@@ -389,6 +419,7 @@ var Docs = {
     },
     
     expandOperation: function(elem) {
+        elem.parents('ul.endpoints').slideDown();
         elem.removeClass('hidden');
         elem.slideDown();
         $.setSubCookie('explicitlyOpenTogglables', elem.attr('id'), true);
@@ -442,10 +473,10 @@ $(function() {
                      var method = methods[i];
                      
                      var queries = [
-                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading ul.options li a',
-                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content h4',
-                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content div.sandbox_header a',
-                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' a.expandBody'
+                         '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading ul.options li a',
+                         '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content h4',
+                         '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content div.sandbox_header a',
+                         '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' a.expandBody'
                      ];
                      queries = queries.join(', ');
                      
@@ -458,7 +489,7 @@ $(function() {
                      $(queries).css('color', val);
                      
                      queries = [
-                         'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' h3 span.http_method a'
+                         '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' h3 span.http_method a'
                      ];
                      queries = queries.join(', ');
                      val = {
@@ -480,8 +511,8 @@ $(function() {
                      $(queries).css(val);
                      
                      queries = [
-                          'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content',
-                          'ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading'
+                          '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content',
+                          '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading'
                      ];
                      queries = queries.join(', ');
                      val = {

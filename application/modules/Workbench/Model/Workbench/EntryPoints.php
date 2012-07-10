@@ -156,6 +156,7 @@ class Workbench_Model_Workbench_EntryPoints
             $files = array();
             foreach ($regex as $info) {
                 //First strip out double entries, in case of..
+                //@todo might not be needed
                 if (!in_array($info[0], $files)) {
                     $files[] = $info[0];
                 }
