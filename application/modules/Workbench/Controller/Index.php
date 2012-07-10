@@ -158,7 +158,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $p = $r->getPost();
         $core = $p['core'];
 
-
         $auth = array_filter($r->getPost('oauth', array()));
         $url = $core['path'];
         //Check if there is http, https or ref to current protocol
@@ -189,6 +188,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
         }
         $client = new Zend_Http_Client();
+        $config = array();
         if (($config = $this->view->registry()->query('settings.workbench.httpClient.options'))) {
             if ($config instanceof Zend_Config) {
                 $config = $config->toArray();
@@ -196,8 +196,12 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                 $config = (array) $config;
             }
             $config['timeout'] = $timeout;
-            $client->setConfig($config);
         }
+        if (isset($p['misc'], $p['misc']['proxy_host'], $p['misc']['proxy_port'])) {
+            $config['proxy_host'] = $p['misc']['proxy_host'];
+            $config['proxy_port'] = $p['misc']['proxy_port'];
+        }
+        $client->setConfig($config);
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {
             $hasBody = false;
