@@ -85,6 +85,23 @@ if (count($baseUrls)) {
         )
     ));
 }
+
+if ('development' == GLITCH_APP_ENV) {
+    $form->addElement('checkbox', 'debug', array(
+        'label' => 'Debug API call',
+        'checkedValue' => '1'
+    ));
+
+    $form->addElement('text', 'debughost', array(
+        'label' => 'Debug host',
+        'value' => $this->registry()->query('settings.workbench.debug.host')
+    ));
+    $form->addElement('text', 'debugport', array(
+        'label' => 'Debug port',
+        'value' => $this->registry()->query('settings.workbench.debug.port')
+    ));
+}
+
 $form->setElementsBelongTo('misc');
 echo $form;
 
