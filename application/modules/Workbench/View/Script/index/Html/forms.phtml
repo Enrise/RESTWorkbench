@@ -54,6 +54,12 @@ $form->addElement('select', 'signing', array(
 $form->setElementsBelongTo('oauth');
 $form->addElement('text', 'realm', array('label' => 'OAuth Realm (Optional)'));
 $form->populate(Workbench_Model_Workbench_Endpoint::getOauth());
+
+$form->addElement('submit', 'closeOauth', array(
+    'label' => '✓',
+    'class' => 'close'
+))->getElement('closeOauth')->removeDecorator('Label');
+
 echo $form;
 
 $form = new Zend_Form(array(
@@ -85,14 +91,14 @@ if (count($baseUrls)) {
         )
     ));
 }
+$form->addElement('submit', 'closeMisc', array(
+    'label' => '✓',
+    'class' => 'close'
+))->getElement('closeMisc')->removeDecorator('Label');
 $form->setElementsBelongTo('misc');
 echo $form;
 
 if (Workbench_Model_Application::isDevelopment()) {
-    $links = array(
-        '<a id="copyToClipboard" href="">Copy to clipboard</a>',
-        '<a id="showStyles" href="">Toggle stylesheet rules</a><div id="showStylesContainer" class="hidden"></div>',
-    );
     $form = new Zend_Form(array(
         'decorators' => array('FormElements', array(array('colorchange' => 'ViewHelper'), array('helper' => 'placeholder')), 'Fieldset', 'Form'),
         'legend' => 'Colors!',
@@ -103,7 +109,6 @@ if (Workbench_Model_Application::isDevelopment()) {
         ),
         'name' => 'colorchange',
     ));
-    $this->placeholder('colorchange')->set($this->htmlList($links, false, array('id' => 'colorchange-links'), false));
     $form->getDecorator('Fieldset')->setOption('id', null);
 
     $form->addElement('text', 'styleColor', array(
@@ -129,24 +134,26 @@ if (Workbench_Model_Application::isDevelopment()) {
 
     $form->addElement('reset', 'resetStyles', array(
         'label' => 'Reset colors',
-    ));
+    ))->removeDecorator('Label');
 
-    /*$form->addElement('button', 'copyToClipboard', array(
-        'label' => 'Copy stylesheet to clipboard',
-    ));
+    $form->addElement('button', 'copyToClipboard', array(
+        'label' => 'Copy to clipboard',
+    ))->getElement('copyToClipboard')->removeDecorator('Label');
 
     $form->addElement('button', 'showStyles', array(
         'label' => 'Toggle stylesheet rules',
-        'description' => '&nbsp;',
-    ));*/
-
-    //$form->getElement('copyToClipboard')->removeDecorator('Label');
-    $form->getElement('resetStyles')->removeDecorator('Label');
-    /*$form->getElement('showStyles')->removeDecorator('Label')->getDecorator('Description')->setOptions(array(
-        'escape' => false,
-        'id' => 'showStylesContainer',
+    ))->getElement('showStyles')->addDecorator(array(
+        'container' => 'HtmlTag')
+    , array(
+        'placement' => 'append',
         'class' => 'hidden',
-    ));*/
+        'id' => 'showStylesContainer'
+    ))->removeDecorator('Label');
+
+    $form->addElement('submit', 'closeStyles', array(
+        'label' => '✓',
+        'class' => 'close'
+    ))->getElement('closeStyles')->removeDecorator('Label');
 
     echo $form;
 }
