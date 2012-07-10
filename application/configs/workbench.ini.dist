@@ -36,6 +36,11 @@ settings.workbench.additionalIncludes[] = "/data/www/foo/bar/Baz.php"
 
 settings.workbench.enablecommit = false
 
+settings.workbench.httpClient.options.adapter = "Curl"
+settings.workbench.httpClient.options.proxy_host = "192.168.56.10"
+settings.workbench.httpClient.options.proxy_port = 8888
+settings.workbench.httpClient.options.timeout = 30
+
 [acceptance : production]
 
 [qa : acceptance]
