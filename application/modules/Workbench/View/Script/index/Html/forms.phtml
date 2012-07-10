@@ -54,6 +54,13 @@ $form->addElement('select', 'signing', array(
 $form->setElementsBelongTo('oauth');
 $form->addElement('text', 'realm', array('label' => 'OAuth Realm (Optional)'));
 $form->populate(Workbench_Model_Workbench_Endpoint::getOauth());
+
+$form->addElement('submit', 'closeOauth', array(
+    'label' => '✓',
+    'class' => 'close',
+    'order' => 9999,
+))->getElement('closeOauth')->removeDecorator('Label');
+
 echo $form;
 
 $form = new Zend_Form(array(
@@ -69,28 +76,44 @@ $form = new Zend_Form(array(
 $form->addElement('text', 'timeout', array(
     'label' => 'Connection timeout',
     'description' => 'seconds',
+    'value' => $this->registry()->query('settings.workbench.httpClient.options.timeout'),
     'attribs' => array(
         'class' => 'small',
         'maxlength' => 2
     ),
 ));
-$baseUrls = $this->apiHosts;
-if (count($baseUrls)) {
+if (isset($this->apiHosts) && count($this->apiHosts)) {
     $form->addElement('select', 'host', array(
         'label' => 'API host',
-        'multiOptions' => array_combine($baseUrls, $baseUrls),
+        'multiOptions' => array_combine($this->apiHosts, $this->apiHosts),
         'value' => $this->registry()->query('settings.workbench.apiHost', ''),
         'attribs' => array(
             'class' => 'api-host',
         )
     ));
 }
+$form->addElement('text', 'proxy_host', array(
+    'label' => 'Proxy host',
+    'value' => $this->registry()->query('settings.workbench.httpClient.options.proxy_host')
+));
+$form->addElement('text', 'proxy_port', array(
+    'label' => 'Proxy port',
+    'value' => $this->registry()->query('settings.workbench.httpClient.options.proxy_port')
+));
 
-if ('development' == GLITCH_APP_ENV) {
+$form->addElement('submit', 'closeMisc', array(
+    'label' => '✓',
+    'class' => 'close',
+    'order' => 9999,
+))->getElement('closeMisc')->removeDecorator('Label');
+
+if (Workbench_Model_Application::isDevelopment()) {
     $form->addElement('checkbox', 'debug', array(
         'label' => 'Debug API call',
         'checkedValue' => '1'
     ));
+    $form->getElement('debug')->getDecorator('Label')->setOption('placement', 'APPEND');
+    $form->getElement('debug')->getDecorator('ViewHelper')->setOption('placement', 'PREPEND');
 
     $form->addElement('text', 'debughost', array(
         'label' => 'Debug host',
@@ -106,10 +129,6 @@ $form->setElementsBelongTo('misc');
 echo $form;
 
 if (Workbench_Model_Application::isDevelopment()) {
-    $links = array(
-        '<a id="copyToClipboard" href="">Copy to clipboard</a>',
-        '<a id="showStyles" href="">Toggle stylesheet rules</a><div id="showStylesContainer" class="hidden"></div>',
-    );
     $form = new Zend_Form(array(
         'decorators' => array('FormElements', array(array('colorchange' => 'ViewHelper'), array('helper' => 'placeholder')), 'Fieldset', 'Form'),
         'legend' => 'Colors!',
@@ -120,7 +139,6 @@ if (Workbench_Model_Application::isDevelopment()) {
         ),
         'name' => 'colorchange',
     ));
-    $this->placeholder('colorchange')->set($this->htmlList($links, false, array('id' => 'colorchange-links'), false));
     $form->getDecorator('Fieldset')->setOption('id', null);
 
     $form->addElement('text', 'styleColor', array(
@@ -146,24 +164,27 @@ if (Workbench_Model_Application::isDevelopment()) {
 
     $form->addElement('reset', 'resetStyles', array(
         'label' => 'Reset colors',
-    ));
+    ))->removeDecorator('Label');
 
-    /*$form->addElement('button', 'copyToClipboard', array(
-        'label' => 'Copy stylesheet to clipboard',
-    ));
+    $form->addElement('button', 'copyToClipboard', array(
+        'label' => 'Copy to clipboard',
+    ))->getElement('copyToClipboard')->removeDecorator('Label');
 
     $form->addElement('button', 'showStyles', array(
         'label' => 'Toggle stylesheet rules',
-        'description' => '&nbsp;',
-    ));*/
-
-    //$form->getElement('copyToClipboard')->removeDecorator('Label');
-    $form->getElement('resetStyles')->removeDecorator('Label');
-    /*$form->getElement('showStyles')->removeDecorator('Label')->getDecorator('Description')->setOptions(array(
-        'escape' => false,
-        'id' => 'showStylesContainer',
+    ))->getElement('showStyles')->addDecorator(array(
+        'container' => 'HtmlTag')
+    , array(
+        'placement' => 'append',
         'class' => 'hidden',
-    ));*/
+        'id' => 'showStylesContainer'
+    ))->removeDecorator('Label');
+
+    $form->addElement('submit', 'closeStyles', array(
+        'label' => '✓',
+        'class' => 'close',
+        'order' => 9999,
+    ))->getElement('closeStyles')->removeDecorator('Label');
 
     echo $form;
 }
