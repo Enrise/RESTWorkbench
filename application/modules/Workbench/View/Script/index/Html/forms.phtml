@@ -57,7 +57,8 @@ $form->populate(Workbench_Model_Workbench_Endpoint::getOauth());
 
 $form->addElement('submit', 'closeOauth', array(
     'label' => '✓',
-    'class' => 'close'
+    'class' => 'close',
+    'order' => 9999,
 ))->getElement('closeOauth')->removeDecorator('Label');
 
 echo $form;
@@ -75,25 +76,35 @@ $form = new Zend_Form(array(
 $form->addElement('text', 'timeout', array(
     'label' => 'Connection timeout',
     'description' => 'seconds',
+    'value' => $this->registry()->query('settings.workbench.httpClient.options.timeout'),
     'attribs' => array(
         'class' => 'small',
         'maxlength' => 2
     ),
 ));
-$baseUrls = $this->apiHosts;
-if (count($baseUrls)) {
+if (isset($this->apiHosts) && count($this->apiHosts)) {
     $form->addElement('select', 'host', array(
         'label' => 'API host',
-        'multiOptions' => array_combine($baseUrls, $baseUrls),
+        'multiOptions' => array_combine($this->apiHosts, $this->apiHosts),
         'value' => $this->registry()->query('settings.workbench.apiHost', ''),
         'attribs' => array(
             'class' => 'api-host',
         )
     ));
 }
+$form->addElement('text', 'proxy_host', array(
+    'label' => 'Proxy host',
+    'value' => $this->registry()->query('settings.workbench.httpClient.options.proxy_host')
+));
+$form->addElement('text', 'proxy_port', array(
+    'label' => 'Proxy port',
+    'value' => $this->registry()->query('settings.workbench.httpClient.options.proxy_port')
+));
+
 $form->addElement('submit', 'closeMisc', array(
     'label' => '✓',
-    'class' => 'close'
+    'class' => 'close',
+    'order' => 9999,
 ))->getElement('closeMisc')->removeDecorator('Label');
 
 if (Workbench_Model_Application::isDevelopment()) {
@@ -101,6 +112,8 @@ if (Workbench_Model_Application::isDevelopment()) {
         'label' => 'Debug API call',
         'checkedValue' => '1'
     ));
+    $form->getElement('debug')->getDecorator('Label')->setOption('placement', 'APPEND');
+    $form->getElement('debug')->getDecorator('ViewHelper')->setOption('placement', 'PREPEND');
 
     $form->addElement('text', 'debughost', array(
         'label' => 'Debug host',
@@ -168,7 +181,8 @@ if (Workbench_Model_Application::isDevelopment()) {
 
     $form->addElement('submit', 'closeStyles', array(
         'label' => '✓',
-        'class' => 'close'
+        'class' => 'close',
+        'order' => 9999,
     ))->getElement('closeStyles')->removeDecorator('Label');
 
     echo $form;
