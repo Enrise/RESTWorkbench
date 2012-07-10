@@ -186,7 +186,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $this->view->format = $format;
 
-        $timeout = 10; //10 seconds should be enough
+        $timeout = $this->view->registry()->query('settings.workbench.httpClient.options.timeout', 10); //10 seconds should be enough
         if (isset($p['misc'], $p['misc']['timeout'])) {
             $tmp = Zend_Filter::filterStatic($p['misc']['timeout'], 'Digits');
             if (!empty($tmp)) {
@@ -194,10 +194,15 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
         }
         $client = new Zend_Http_Client();
-        $client->setConfig(array(
-            'timeout' => $timeout,
-//             'adapter' => new Zend_Http_Client_Adapter_Curl(),
-        ));
+        if (($config = $this->view->registry()->query('settings.workbench.httpClient.options'))) {
+            if ($config instanceof Zend_Config) {
+                $config = $config->toArray();
+            } else if (is_string($config)) {
+                $config = (array) $config;
+            }
+            $config['timeout'] = $timeout;
+            $client->setConfig($config);
+        }
 
         if (array_key_exists('params', $p) && is_array($p['params']) && 0 < count($p['params'])) {
             $hasBody = false;
