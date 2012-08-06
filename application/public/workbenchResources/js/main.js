@@ -531,8 +531,19 @@ $(function() {
      $('ul.downplayed li div.content p').vAlign();
      
      $('form.sandbox select[name="core[format]"]').change(function(evt) {
-         var accept = $(evt.target).parents('table').find('input[name="core[accept]"]');
-         accept.val(accept.val().replace(/(\+[a-z]+)/, '+' + evt.target.value));
+         var accept = $(evt.target).parents('table').find('.accept');
+         switch (accept.context.nodeName.toLowerCase()) {
+             case 'select':
+                 $(accept).find('option').each(function(index, elm) {
+                     var $elm = $(elm),
+                         value = $elm.val().replace(/(\+[a-z]+)/, '+' + evt.target.value);
+                     $elm.val(value).html(value);
+                 });
+                 break;
+             case 'input':
+                 accept.val(accept.val().replace(/(\+[a-z]+)/, '+' + evt.target.value));
+                 break;
+         }
      });
      
      // When a sandbox form is submitted..
