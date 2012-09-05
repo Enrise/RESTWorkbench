@@ -71,7 +71,14 @@ $listClass = array($method, 'operation');
                                 }
                                 ?>
                                 <tr>
-                                    <td width="100"><?php echo $fieldName ?></td>
+                                    <td width="100">
+                                    <?php
+                                    echo $fieldName;
+                                    if ($field->isArray()) {
+                                        echo ' <a title="Add field" class="addInputField arrayParamControl" href="#addInputField">+</a>',
+                                             ' <a title="Remove field" class="removeInputField arrayParamControl" href="#removeInputField">-</a>';
+                                    }
+                                    ?></td>
                                     <td width="100" class="<?php echo implode(' ', $tdCssClasses) ?>">
                                         <?php echo $field ?>
                                     </td>

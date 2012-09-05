@@ -249,6 +249,16 @@ var Docs = {
             $('#' + $(this).attr('rel')).toggle('slow');
             return false;
         });
+
+        $('a.addInputField').live('click', function(evt) {
+        	evt.preventDefault();
+        	var $elm = $(evt.currentTarget).parents('tr');
+        	$elm.after($elm.clone());
+        });
+        $('a.removeInputField').live('click', function(evt) {
+        	evt.preventDefault();
+        	$(evt.currentTarget).parents('tr').remove();
+        });
         
         var queries = [
            '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading ul.options li a',
