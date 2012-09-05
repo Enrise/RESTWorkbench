@@ -112,13 +112,25 @@ class Workbench_Model_Workbench_Query implements Iterator
         $elm = 'Zend_Form_Element_' . $elm;
         $id = implode('_', array('parameters', $this->getParent()->getUseageUrl(), $fieldName));
         $name = $fieldName;
+        $cssClass = array($this->key());
+        $isArray = false;
+        if (false !== strpos($name, '[')) {
+            $isArray = true;
+            if (false !== strpos($name, '[]')) {
+                $cssClass[] = 'multiArrayParam';
+            }
+        }
+        $filter = new Zend_Filter();
+        $filter->addFilter(new Zend_Filter_Alnum());
+        $cssClass = array_map(array($filter, 'filter'), $cssClass);
         $elm = new $elm($name, array(
             'label' => $fieldName,
             'decorators' => array('ViewHelper'),
             'description' => $description,
             'id' => $id,
             'belongsTo' => $belongsTo,
-            'class' => $this->key(),
+            'class' => implode(' ', $cssClass),
+            'isArray' => $isArray,
         ));
         $value = $this->getRawValue();
         if ($elm instanceof Zend_Form_Element_Multi) {
