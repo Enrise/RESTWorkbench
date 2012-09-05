@@ -249,6 +249,24 @@ var Docs = {
             $('#' + $(this).attr('rel')).toggle('slow');
             return false;
         });
+
+        $('a.addInputField').live('click', function(evt) {
+            evt.preventDefault();
+            var $cur = $(evt.currentTarget);
+            var $elm = $cur.parents('tr');
+            $elm.after($elm.clone());
+            $cur.parents('table').find('a.removeInputField').show();
+        });
+        $('a.removeInputField').live('click', function(evt) {
+            evt.preventDefault();
+            var $cur = $(evt.currentTarget);
+            var $anchorSiblings = $cur.parents('table').find('a[rel="' + $cur.attr('rel') + '"]');
+            $anchorSiblings.show();
+            if (1 >= ($anchorSiblings.length - 1)) {
+            	$anchorSiblings.hide();
+            }
+            $cur.parents('tr').remove();
+        });
         
         var queries = [
            '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading ul.options li a',

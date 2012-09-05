@@ -644,6 +644,13 @@ table tbody tr td {
   vertical-align: middle;
   line-height: 1.3em;
 }
+table tbody tr td a.arrayParamControl {
+	font-weight: bold;
+	text-decoration: none;
+}
+table tbody tr td a.arrayParamControl img {
+	vertical-align: middle;
+}
 /* line 162, ../../../app/stylesheets/_global.sass */
 table tbody tr:last-child td {
   border-bottom: none;
