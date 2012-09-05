@@ -147,8 +147,10 @@ class Workbench_Model_Workbench_Params implements Iterator
         $cssClass = array($this->key());
         $isArray = false;
         if (false !== strpos($name, '[')) {
-            $cssClass[] = 'arrayParam';
             $isArray = true;
+            if (false !== strpos($name, '[]')) {
+                $cssClass[] = 'multiArrayParam';
+            }
         }
         $filter = new Zend_Filter();
         $filter->addFilter(new Zend_Filter_Alnum());

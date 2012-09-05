@@ -252,12 +252,20 @@ var Docs = {
 
         $('a.addInputField').live('click', function(evt) {
         	evt.preventDefault();
-        	var $elm = $(evt.currentTarget).parents('tr');
+        	var $cur = $(evt.currentTarget);
+        	var $elm = $cur.parents('tr');
         	$elm.after($elm.clone());
+    		$cur.parents('table').find('a.removeInputField').show();
         });
         $('a.removeInputField').live('click', function(evt) {
         	evt.preventDefault();
-        	$(evt.currentTarget).parents('tr').remove();
+        	var $cur = $(evt.currentTarget);
+        	var $anchorSiblings = $cur.parents('table').find('a[rel="' + $cur.attr('rel') + '"]');
+        	$anchorSiblings.show();
+        	if (1 >= ($anchorSiblings.length - 1)) {
+        		$anchorSiblings.hide();
+        	}
+        	$cur.parents('tr').remove();
         });
         
         var queries = [
