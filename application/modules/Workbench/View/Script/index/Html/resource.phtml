@@ -71,7 +71,14 @@ $listClass = array($method, 'operation');
                                 }
                                 ?>
                                 <tr>
-                                    <td width="100"><?php echo $fieldName ?></td>
+                                    <td width="100">
+                                    <?php
+                                    echo $fieldName;
+                                    if (false !== stripos($field->getAttrib('class'), 'multiArrayParam')) {
+                                        echo ' <a title="Add row" class="addInputField arrayParamControl" href="/#!/addInputField"><img src="/workbenchResources/gfx/insert.png" alt="Add row" /></a>',
+                                             ' <a title="Remove row" class="removeInputField arrayParamControl hidden" href="/#!/removeInputField/" rel="', $field->getFullyQualifiedName(), '"><img src="/workbenchResources/gfx/remove.png" alt="Remove row" /></a>';
+                                    }
+                                    ?></td>
                                     <td width="100" class="<?php echo implode(' ', $tdCssClasses) ?>">
                                         <?php echo $field ?>
                                     </td>

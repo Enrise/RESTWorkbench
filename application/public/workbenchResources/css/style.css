@@ -285,16 +285,85 @@ form.formtastic fieldset > ol > li.date fieldset ol li label input, form.formtas
   padding: 0;
 }
 
+form#oauth legend,
+form#misc legend,
+form#colorchange legend {
+	color: white;
+}
+
 form#oauth {
 	background: url(/workbenchResources/gfx/oauth-logo.png) no-repeat scroll 0 0 transparent;
 }
 
 form#oauth fieldset {
-    padding-left: 160px;
+    padding-left: 210px;
 }
 
 form#oauth legend {
     display: none;
+}
+
+form#misc {
+    background: url("/workbenchResources/gfx/settings.png") no-repeat scroll 0 0 transparent;
+}
+
+form#misc fieldset,
+form#colorchange fieldset {
+    padding-left: 80px;
+}
+
+form#misc #misc-timeout {
+    width: 30px;
+    display: inline-block;
+}
+
+form#misc #misc-timeout+p.hint {
+    display: inline-block;
+}
+
+#styleMethod,
+#resetStyles {
+    width: 95px;
+}
+
+form#colorchange {
+    background: url("/workbenchResources/gfx/colors.png") no-repeat scroll 0 0 transparent;
+}
+
+form#colorchange input.miniColors {
+    width: 68px;
+    display: inline;
+    height: 20px;
+    line-height: 20px;
+}
+
+form#colorchange #colorchange-links {
+    list-style: disc outside none;
+    margin-left: 17px;
+}
+
+form#colorchange #colorchange-links li {
+    margin-bottom: 5px;
+}
+
+form#colorchange #colorchange-links li:last-child {
+    margin: 0;
+}
+
+form#colorchange #colorchange-links a {
+    color: #FFA600;
+    text-decoration: none;
+}
+
+form#colorchange #colorchange-links a:hover,
+form#colorchange #colorchange-links a.hover,
+.zclip,
+.zclip:hover,
+.zclip embed,
+.zclip object {
+    text-decoration: underline;
+    cursor: pointer;
+    outline: 0;
 }
 
 form.formtastic legend {
@@ -575,6 +644,13 @@ table tbody tr td {
   vertical-align: middle;
   line-height: 1.3em;
 }
+table tbody tr td a.arrayParamControl {
+	font-weight: bold;
+	text-decoration: none;
+}
+table tbody tr td a.arrayParamControl img {
+	vertical-align: middle;
+}
 /* line 162, ../../../app/stylesheets/_global.sass */
 table tbody tr:last-child td {
   border-bottom: none;
@@ -738,10 +814,14 @@ body {
 	-o-box-shadow: #999999 0 2px 5px 3px;
 	box-shadow: #999999 0 2px 5px 3px;
 	position: relative;
+	padding-bottom: 10px;
 }
 
 #header h1,
-noscript p {
+noscript p,
+#header .togglers,
+#header .handles,
+#header form {
 	width: 960px;
 	margin: 0 auto;
 	color: white;
@@ -753,6 +833,50 @@ noscript p {
     z-index: 1000;
     bottom: 0;
     width: 100%;
+}
+
+#header .togglers,
+.handles {
+	padding-bottom: 5px;
+}
+
+#header .togglers li,
+.handles li {
+    display: inline;
+}
+
+#header form {
+	margin-top: 10px;
+}
+
+#header form,
+#header form p {
+    color: white;
+}
+
+.handles {
+	text-align: right;
+}
+
+.togglers li a,
+.handles li a {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	color: #999;
+	padding: 8px;
+    text-decoration: none;
+}
+
+.togglers li a:hover,
+.handles li a:hover {
+	background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0%, #ff5401), color-stop(100%, #ffa014));
+    background-image: -moz-linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
+    background-image: linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
+    color: white;
 }
 
 noscript p {
@@ -803,7 +927,9 @@ noscript p {
   text-decoration: none;
 }
 /* line 87, ../../../app/stylesheets/screen.sass */
-#header .container ul#nav li a:active, #header .container ul#nav li a.active, #header .container ul#nav li a:hover {
+#header .container ul#nav li a:active,
+#header .container ul#nav li a.active,
+#header .container ul#nav li a:hover {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -o-border-radius: 4px;
@@ -831,7 +957,7 @@ noscript p {
   padding: 0px;
   position: relative;
   width: 960px;
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 80px;
 }
 /* line 105, ../../../app/stylesheets/screen.sass */
@@ -1299,7 +1425,7 @@ div.admin_menu ul li a:hover {
 #footer {
   clear: both;
   display: block;
-  margin: 100px 0 100px 0;
+  margin: 30px 0;
 }
 /* line 356, ../../../app/stylesheets/screen.sass */
 #footer .container {
