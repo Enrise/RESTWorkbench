@@ -31,8 +31,8 @@ Documentation details:
 First piece till the first @<field> will be shown as extended documentation.
 @hint: small descriptive text visible when the resource/collection is in listed style.
 @disabled: disable the REST entrypoint so no communication will be possible. Documentation will still be available.
-@param: <fieldname> <field description> <{optional}> <{example: 18489}>. By default each field is required unless the {optional} string is found.
-@query: <fieldname> <field description> <{optional}> <{example: 18489}>. By default each field is required unless the {optional} string is found.
+@param: <fieldname> <field description> <{optional}> <{example: 18489}>. By default each field is required unless the {optional} string is found. Array notation is also supported.
+@query: <fieldname> <field description> <{optional}> <{example: 18489}>. By default each field is required unless the {optional} string is found. Array notation is also supported.
 @accept: the accept header the REST service accepts. If you have specific formats that you accept you can pass those along by using +@format at the end of the accept header
 @format: Pipe | separated list of formats the REST service accepts.
 @url: the full URL to the location where the resource/collection can be found. Dynamic fields can be inserted by using the @param fieldname in the url wrapped with {}. Ex supplier/{supplier_id}.
@@ -46,10 +46,16 @@ Sample docblock
      *
      * @hint Get a single supplier
      * @param supplier_id The supplier (aanbieder) id
+     * @query consumer_id The consumer (afnemer) id
+     * @query foo Lorum ipsum {optional}
+     * @query bat[] Lorum ipsum {optional} //This becomes an array and can be duplicated
+     * @query abc[from] Lorum ipsum {optional} //This becomes an assoc array and CANT be duplicated
+     * @query abc[to] Lorum ipsum {optional} //This becomes an assoc array and CANT be duplicated
      * @accept application/vnd.autotrack.supplier+@format
      * @format xml|json
      * @url /cardata/supplier/{supplier_id}
      */
-    public function resourceGetAction() {
+    public function resourceGetAction()
+    {
         //do stuff
     }

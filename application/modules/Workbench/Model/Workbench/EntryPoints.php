@@ -72,12 +72,14 @@ class Workbench_Model_Workbench_EntryPoints
         'signing' => '~(.+)~',
         'realm',
         self::HINT => '~(.+)~',
+
         self::PARAM => '~([0-9-a-z_\[\]]+) ([()0-9-a-z:\.,/_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
 
         //test strings:
         // * @query temperature klm destination finder (<minTemp>([+C|F])(..<maxTemp>([+C|F]))) {optional}
         // * @query media  klm destination ( [+none | ';' photo | ';' video] ))) {optional}
         // * @query departureCity City from which is being departed ("destination" url) {optional}
+
         self::QUERY => '~([0-9-a-z_\[\]]+) ([()0-9-a-z:\.,/\|\[\]\"\\\'\;\<\>\+\_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
 
         self::FORMAT => '~(.+)(\+@format)~',
