@@ -73,7 +73,7 @@ class Workbench_Model_Workbench_EntryPoints
         'realm',
         self::HINT => '~(.+)~',
 
-        self::PARAM => '~([0-9-a-z_\[\]]+) ([()0-9-a-z:\.,/_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
+        self::PARAM => '~([0-9-a-z_]+) ([()0-9-a-z:\.,/_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
 
         //test strings:
         // * @query temperature klm destination finder (<minTemp>([+C|F])(..<maxTemp>([+C|F]))) {optional}
