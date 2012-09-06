@@ -145,13 +145,6 @@ class Workbench_Model_Workbench_Params implements Iterator
         $id = implode('_', array('parameters', $this->getParent()->getUseageUrl(), $fieldName));
         $name = $fieldName;
         $cssClass = array($this->key());
-        $isArray = false;
-        if (false !== strpos($name, '[')) {
-            $isArray = true;
-            if (false !== strpos($name, '[]')) {
-                $cssClass[] = 'multiArrayParam';
-            }
-        }
         $filter = new Zend_Filter();
         $filter->addFilter(new Zend_Filter_Alnum());
         $cssClass = array_map(array($filter, 'filter'), $cssClass);
@@ -162,7 +155,6 @@ class Workbench_Model_Workbench_Params implements Iterator
             'id' => $id,
             'belongsTo' => $belongsTo,
             'class' => implode(' ', $cssClass),
-            'isArray' => $isArray,
         ));
 
         if ($elm instanceof Zend_Form_Element_Multi) {
