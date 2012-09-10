@@ -114,10 +114,14 @@ class Workbench_Model_Workbench_Query implements Iterator
         $name = $fieldName;
         $cssClass = array($this->key());
         $isArray = false;
-        if (false !== strpos($name, '[')) {
+        if (false !== ($pos = strpos($name, '['))) {
             $isArray = true;
             if (false !== strpos($name, '[]')) {
                 $cssClass[] = 'multiArrayParam';
+            } else {
+                $belongsTo .= '[' . substr($name, 0, $pos) . ']';
+                $name = substr($name, $pos);
+                $isArray = false;
             }
         }
         $filter = new Zend_Filter();
