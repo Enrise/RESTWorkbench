@@ -233,7 +233,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         //Query is need also for OAuth in hashing
         $query = array();
         if (array_key_exists('query', $p) && is_array($p['query'])) {
-            $query = array_filter($p['query']);
+            $query = $this->_filterEmptyQueryParams($p['query']);
             if (0 < count($query)) {
                 $url .= '?' . http_build_query($query);
             }
@@ -385,6 +385,24 @@ class Workbench_Controller_Index extends Zend_Controller_Action
     protected function _handleOauth(Zend_Http_Client $client, array $params)
     {
 
+    }
+
+    protected function _filterEmptyQueryParams(array $params)
+    {
+        $validate = new Zend_Validate_NotEmpty(Zend_Validate_NotEmpty::STRING | Zend_Validate_NotEmpty::EMPTY_ARRAY);
+        $ret = array();
+        foreach ($params as $k => $v) {
+            if (is_array($v) || $v instanceof Traversable) {
+                $tmp = $this->_filterEmptyQueryParams($v);
+                if (0 < count($tmp)) {
+                    $v = array_filter($v, array($validate, 'isValid'));
+                    $ret[$k] = $v;
+                }
+            } else if ($validate->isValid($v)) {
+                $ret[$k] = $v;
+            }
+        }
+        return $ret;
     }
 
     protected function _filterAcceptHeader($accept, $format)
