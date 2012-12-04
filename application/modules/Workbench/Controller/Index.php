@@ -221,6 +221,10 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                     $client->setParameterPost($k, $v);
                     $modifyClient = true;
                 }
+                if ($count) {
+                    //If we replaced something we don't need it in the signing
+                    unset($p['params'][$k]);
+                }
             }
             if ($modifyClient) {
                 $client->setMethod($core['http_method']);
@@ -235,7 +239,8 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         if (array_key_exists('query', $p) && is_array($p['query'])) {
             $query = $this->_filterEmptyQueryParams($p['query']);
             if (0 < count($query)) {
-                $url .= '?' . http_build_query($query);
+                //Stupid RFC3986
+                $url .= '?' . OAuthUtil::build_http_query($query);
             }
         }
         $url = trim($url);
@@ -319,8 +324,16 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                 $core['http_method'] = 'get';*/
             }
             $client->setUri($url);
+            //Apparently you need to provide all values that you send to do signing
+            $signParams = array_merge($query, $p['params']);
             // Generate request and sign it
-            $request = OAuthRequest::from_consumer_and_token($consumer, $token, $core['http_method'], $url, $query);
+            $request = OAuthRequest::from_consumer_and_token(
+                $consumer,
+                $token,
+                $core['http_method'],
+                $url,
+                $signParams
+            );
             $request->sign_request($signature, $consumer, $token);
             switch (strtolower($auth['headerOrUrl'])) {
                 case 'url':
