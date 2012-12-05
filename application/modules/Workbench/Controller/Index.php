@@ -325,7 +325,10 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
             $client->setUri($url);
             //Apparently you need to provide all values that you send to do signing
-            $signParams = array_merge($query, (array) $p['params']);
+            $signParams = $query;
+            if (isset($p['params']) && is_array($p['params'])) {
+                $signParams = array_merge($query, $p['params']);
+            }
             // Generate request and sign it
             $request = OAuthRequest::from_consumer_and_token(
                 $consumer,
