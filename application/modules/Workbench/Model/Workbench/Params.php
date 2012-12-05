@@ -146,7 +146,14 @@ class Workbench_Model_Workbench_Params implements Iterator
         $name = $fieldName;
         $cssClass = array($this->key());
         $filter = new Zend_Filter();
-        $filter->addFilter(new Zend_Filter_Alnum());
+        $filter->addFilter(
+            new Zend_Filter_PregReplace(
+                array(
+                    'match' => '/[^a-zA-Z0-9_\s]/u',
+                    'replace' => '',
+                )
+            )
+        );
         $cssClass = array_map(array($filter, 'filter'), $cssClass);
         $elm = new $elm($name, array(
             'label' => $fieldName,
