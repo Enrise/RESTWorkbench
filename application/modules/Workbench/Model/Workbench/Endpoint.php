@@ -154,7 +154,12 @@ class Workbench_Model_Workbench_Endpoint
                 'required' => true,
                 'description' => 'API request body',
             );
-        } /*else if ('delete' === $this->getMethod()) {
+        } elseif ($this->getMethod() == 'options') {
+            $fields['body'] = array(
+                'required' => false,
+                'description' => 'API request body',
+            );
+        }/*else if ('delete' === $this->getMethod()) {
             //Should we protect deletes?
             $this->setDisableCommit(true);
         }*/
