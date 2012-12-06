@@ -240,9 +240,10 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             $query = $this->_filterEmptyQueryParams($p['query']);
             if (0 < count($query)) {
                 //Stupid RFC3986
-                $url .= '?' . OAuthUtil::build_http_query($query);
+                $url .= '?' . $this->cr_post($query);
             }
         }
+
         $url = trim($url);
         //Done with filtering the URL
         $client->setUri($url);
@@ -323,10 +324,11 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                 );
                 $core['http_method'] = 'get';*/
             }
-            $client->setUri($url);
+            //$client->setUri($url);
             //Apparently you need to provide all values that you send to do signing
-            $signParams = $query;
-            if (isset($p['params']) && is_array($p['params'])) {
+            //$signParams = $query;
+            $signParams = null;
+            if ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params'])) {
                 $signParams = array_merge($query, $p['params']);
             }
             // Generate request and sign it
@@ -393,6 +395,28 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $this->view->id = $p['misc']['dom_id'];
         $this->view->apiHost = $p['misc']['host'];
     }
+
+    function cr_post($a, $b='',$c=0)
+    {
+        if (!is_array($a)) {
+            return false;
+        }
+        $r = array();
+        foreach ((array) $a as $k => $v) {
+            if ($c) {
+                $k = $b . "[]";
+            } elseif (is_int($k)) {
+                $k = $b . $k;
+            }
+            if (is_array($v) || is_object($v)) {
+                $r[] = $this->cr_post($v,$k,1);
+                continue;
+            }
+            $r[] = rawurlencode($k) . "=" . rawurlencode($v);
+        }
+        return implode("&", $r);
+    }
+
 
     /**
      *
