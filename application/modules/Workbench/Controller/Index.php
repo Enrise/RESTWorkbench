@@ -240,7 +240,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             $query = $this->_filterEmptyQueryParams($p['query']);
             if (0 < count($query)) {
                 //Stupid RFC3986
-                $url .= '?' . $this->cr_post($query);
+                $url .= '?' . $this->httpBuildQuery($query);
             }
         }
 
@@ -396,7 +396,15 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $this->view->apiHost = $p['misc']['host'];
     }
 
-    function cr_post($a, $b='',$c=0)
+    /**
+     * As PHP's http_build_query function is broken (badly!) we do it ourselves
+     *
+     * @param array $a
+     * @param scalar $b
+     * @param int $c
+     * @return boolean
+     */
+    protected function httpBuildQuery($a, $b = '', $c = 0)
     {
         if (!is_array($a)) {
             return false;
@@ -409,14 +417,13 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                 $k = $b . $k;
             }
             if (is_array($v) || is_object($v)) {
-                $r[] = $this->cr_post($v,$k,1);
+                $r[] = $this->httpBuildQuery($v, $k, 1);
                 continue;
             }
             $r[] = rawurlencode($k) . "=" . rawurlencode($v);
         }
         return implode("&", $r);
     }
-
 
     /**
      *
