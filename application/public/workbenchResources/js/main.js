@@ -253,14 +253,14 @@ var Docs = {
         $('a.addInputField').live('click', function(evt) {
             evt.preventDefault();
             var $cur = $(evt.currentTarget);
-            var $elm = $cur.parents('tr');
+            $cur.parents('tr').find('a.removeInputField').show();
+            var $elm = $cur.closest('tr');
             $elm.after($elm.clone());
-            $cur.parents('table').find('a.removeInputField').show();
         });
         $('a.removeInputField').live('click', function(evt) {
             evt.preventDefault();
             var $cur = $(evt.currentTarget);
-            var $anchorSiblings = $cur.parents('table').find('a[rel="' + $cur.attr('rel') + '"]');
+            var $anchorSiblings = $cur.closest('table').find('a[rel="' + $cur.attr('rel') + '"]');
             $anchorSiblings.show();
             if (1 >= ($anchorSiblings.length - 1)) {
             	$anchorSiblings.hide();
