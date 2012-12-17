@@ -23,6 +23,7 @@ if (0 === stripos($contentType, 'image/')) {
 
 $headers = trim(str_replace($n, '<br/>', $this->escape(print_r($this->response->getHeadersAsString(), true))));
 $request = trim(str_replace($n, '<br/>', $this->escape(print_r($this->request, true))));
+$body = trim(str_replace($n, '<br/>', $body));
 ?>
 
 $('#<?php echo $this->id ?> .request_url').html('<pre><?php echo $this->escape($this->url) ?></pre>');
