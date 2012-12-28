@@ -46,15 +46,17 @@
 class Workbench_Model_Workbench_Endpoint
 {
     protected $_name = array(),
-              $_method,
-              $_url,
-              $_fields,
-              $_query,
-              $_hint,
-              $_description,
-              $_useageUrl,
-              $_parent,
-              $_disabledCommit = false;
+        $_method,
+        $_url,
+        $_fields,
+        $_query,
+        $_hint,
+        $_description,
+        $_useageUrl,
+        $_parent,
+        $_disabledCommit = false;
+
+    protected $filters;
 
     protected static $_oauth = array();
 
@@ -103,7 +105,7 @@ class Workbench_Model_Workbench_Endpoint
         return $this->getUrl();
     }
 
-	/**
+    /**
      * @param $name the $name to set
      */
     /*public function setName($name)
@@ -112,7 +114,7 @@ class Workbench_Model_Workbench_Endpoint
         return $this;
     }*/
 
-	/**
+    /**
      * @return the $method
      */
     public function getMethod()
@@ -120,7 +122,7 @@ class Workbench_Model_Workbench_Endpoint
         return $this->_method;
     }
 
-	/**
+    /**
      * @param $method the $method to set
      */
     public function setMethod($method)
@@ -132,7 +134,7 @@ class Workbench_Model_Workbench_Endpoint
         return $this;
     }
 
-	/**
+    /**
      * @return the $fields
      */
     public function getFields()
@@ -140,7 +142,7 @@ class Workbench_Model_Workbench_Endpoint
         return $this->_fields;
     }
 
-	/**
+    /**
      * @param $fields the $fields to set
      */
     public function setFields($fields)
@@ -187,7 +189,7 @@ class Workbench_Model_Workbench_Endpoint
         return $this->_query;
     }
 
-	/**
+    /**
      * @return the $description
      */
     public function getDescription()
@@ -198,7 +200,7 @@ class Workbench_Model_Workbench_Endpoint
         return $this->_description;
     }
 
-	/**
+    /**
      * @param $description the $description to set
      */
     public function setDescription($description)
@@ -273,10 +275,42 @@ class Workbench_Model_Workbench_Endpoint
         return true === $this->getDisableCommit();
     }
 
-	public function isValid()
+    public function isValid()
     {
         return true;
     }
+
+    public function setFilters(array $filters)
+    {
+        foreach ($filters as $filter) {
+            if (! $filter instanceof Glitch_Controller_Action_Rest_Annotation_ResourceFilter) {
+                throw new \InvalidArgumentException(
+                    'One of the filters that you provided is not of type ' .
+                        '"Glitch_Controller_Action_Rest_Annotation_ResourceFilter".'
+                );
+            }
+        }
+
+        $this->filters = $filters;
+        return $this;
+    }
+
+    /**
+     * @param Glitch_Controller_Action_Rest_Annotation_ResourceFilter $filter
+     * @return Workbench_Model_Workbench_Endpoint
+     */
+    public function addFilter(Glitch_Controller_Action_Rest_Annotation_ResourceFilter $filter)
+    {
+        $this->filters[] = $filter;
+        return $this;
+    }
+
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+
 
     /*public function fromDocBlock($object)
     {
