@@ -235,13 +235,21 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
 
         //Query is need also for OAuth in hashing
-        $query = array();
+        $queryStringParts = array();
         if (array_key_exists('query', $p) && is_array($p['query'])) {
-            $query = $this->_filterEmptyQueryParams($p['query']);
-            if (0 < count($query)) {
-                //Stupid RFC3986
-                $url .= '?' . $this->httpBuildQuery($query);
-            }
+            $queryStringParts = $this->_filterEmptyQueryParams($p['query']);
+
+        }
+
+        // REST resource filters are also part of the query string
+        if (array_key_exists('filters', $p) && is_array($p['filters'])) {
+            $filters = $this->_filterEmptyQueryParams($p['filters']);
+            $queryStringParts = array_merge($queryStringParts, $filters);
+        }
+
+        if (0 < count($queryStringParts)) {
+            //Stupid RFC3986
+            $url .= '?' . $this->httpBuildQuery($queryStringParts);
         }
 
         $url = trim($url);
@@ -329,7 +337,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             //$signParams = $query;
             $signParams = null;
             if ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params'])) {
-                $signParams = array_merge($query, $p['params']);
+                $signParams = array_merge($queryStringParts, $p['params']);
             }
             // Generate request and sign it
             $request = OAuthRequest::from_consumer_and_token(

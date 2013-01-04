@@ -62,7 +62,6 @@ $listClass = array($method, 'operation');
                                 </tr>
                                 <?php
                             }
-
                             $fields = $this->endpoint->getQuery();
                             foreach ($fields as $fieldName => $field) {
                                 $tdCssClasses = array('code');
@@ -91,6 +90,59 @@ $listClass = array($method, 'operation');
                             ?>
                         </tbody>
                     </table>
+
+                    <?php
+                    $filters = $this->endpoint->getFilters();
+                    if (count($filters)): ?>
+                    <h4>Filters</h4>
+                    <table class="fullwidth">
+                        <thead>
+                            <tr>
+                                <th width="132">Name</th>
+                                <th width="132">Value</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+
+                        <?php foreach ($filters as $filter): ?>
+                            <tr>
+                                <td><?php echo $this->escape($filter->getName()) ?></td>
+                                <td>
+<?php
+switch ($filter->getConstraint()) {
+    case $filter::FILTER_CONSTRAINT_NONE:
+        echo $this->formText('filters[' . $filter->getName() . ']', null, array(
+            'placeholder' => ''
+        ));
+        break;
+    case $filter::FILTER_CONSTRAINT_VALUES:
+
+        $values = array();
+        foreach ($filter->getAllowedValues() as $value) {
+            $values[$value] = $value;
+        }
+        echo $this->formSelect('filters[' . $filter->getName() . ']', null, null, $values);
+        break;
+    case $filter::FILTER_CONSTRAINT_RANGE:
+        echo $this->formText('filters[' . $filter->getName() . '][from]', null, array(
+            'placeholder' => 'min. ' . $filter->getRangeMinimum()
+        ));
+        echo ' to ';
+        echo $this->formText('filters[' . $filter->getName() . '][to]', null, array(
+            'placeholder' => 'max. ' . $filter->getRangeMaximum()
+        ));
+        break;
+}
+?>
+                                </td>
+                                <td>
+                                    <strong><?php echo $this->escape($filter->getDescription()) ?></strong>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                    <?php endif; ?>
+
                     <?php
                     if (!$this->endpoint->isDisabledCommit()) {
                     ?>

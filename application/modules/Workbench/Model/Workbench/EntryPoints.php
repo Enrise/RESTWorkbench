@@ -293,6 +293,17 @@ class Workbench_Model_Workbench_EntryPoints
                     }
                     $endpoint->setFields($params);
                     $endpoint->setQuery($query);
+
+                    // Parse RESTful action information
+                    $actionInfoReader = new Glitch_Controller_Action_Rest_ActionInfoReader();
+                    $resourceInfo = $actionInfoReader->getResourceInfo($method->class, $method->name);
+
+
+                    $filters = array_filter($resourceInfo, function($info) {
+                        return ($info instanceof Glitch_Controller_Action_Rest_Annotation_ResourceFilter);
+                    });
+                    $endpoint->setFilters($filters);
+
                 } //End methods foreach
             } //End file foreach
         }
