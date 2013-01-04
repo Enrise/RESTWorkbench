@@ -37,6 +37,7 @@ First piece till the first @<field> will be shown as extended documentation.
 @format: Pipe | separated list of formats the REST service accepts.
 @url: the full URL to the location where the resource/collection can be found. Dynamic fields can be inserted by using the @param fieldname in the url wrapped with {}. Ex supplier/{supplier_id}.
 Querystring data will be appended to this URL
+@filter: defines a RESTful filter instance, of type Glitch_Controller_Action_Rest_Annotation_ResourceFilter
 
 Sample docblock
 
@@ -54,6 +55,9 @@ Sample docblock
      * @accept application/vnd.autotrack.supplier+@format
      * @format xml|json
      * @url /cardata/supplier/{supplier_id}
+     * @filter bar * A bar parameter description
+     * @filter foo[] foo|bar|baz Fixed parameter values
+     * @filter foo range(1,45) Fixed parameter values
      */
     public function resourceGetAction()
     {
