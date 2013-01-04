@@ -298,13 +298,13 @@ class Workbench_Model_Workbench_EntryPoints
                     $actionInfoReader = new Glitch_Controller_Action_Rest_ActionInfoReader();
                     $resourceInfo = $actionInfoReader->getResourceInfo($method->class, $method->name);
 
-                    $filters = array();
-                    foreach ($resourceInfo as $info) {
+
+                    $filters = array_filter($resourceInfo, function($info) {
                         if (! $info instanceof Glitch_Controller_Action_Rest_Annotation_ResourceFilter) {
-                            continue;
+                            return false;
                         }
-                        $filters[] = $info;
-                    }
+                        return true;
+                    });
                     $endpoint->setFilters($filters);
 
                 } //End methods foreach
