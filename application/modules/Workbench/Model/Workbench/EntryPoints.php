@@ -300,7 +300,7 @@ class Workbench_Model_Workbench_EntryPoints
 
 
                     $filters = array_filter($resourceInfo, function($info) {
-                        return (! $info instanceof Glitch_Controller_Action_Rest_Annotation_ResourceFilter);
+                        return ($info instanceof Glitch_Controller_Action_Rest_Annotation_ResourceFilter);
                     });
                     $endpoint->setFilters($filters);
 
