@@ -68,6 +68,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $r = Glitch_Registry::getSettings()->workbench;
         $m = new Workbench_Model_Workbench_EntryPoints();
 
+        $this->getResponse()->setHeader('Content-Type', 'text/html');
         $this->view->resources = $m->getResources($r->scanPaths, $r->fileToClassStrip, $r->additionalIncludes);
     }
 
