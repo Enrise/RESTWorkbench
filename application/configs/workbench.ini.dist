@@ -1,6 +1,6 @@
 [production]
 ;The project name shown in the title
-settings.workbench.layout.projectname = "ATAPI Workbench && docs"
+settings.workbench.layout.projectname = "Enrise Workbench && docs"
 
 ;Additional CSS files for custom rendering, handy for 3rd party colors
 settings.workbench.layout.css[] = "/workbenchResources/css/enrise.css"
