@@ -383,7 +383,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
         $starttime = microtime(true);
         try {
-            $config['timeout'] = $timeout;
             $client->setConfig($config);
             $a = $client->request(strtoupper($core['http_method']));
         } catch (Exception $e) {
