@@ -189,7 +189,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
         }
         $client = new Zend_Http_Client();
-        $config = array();
+        $config = array('timeout' => $timeout);
         if (($config = $this->view->registry()->query('settings.workbench.httpClient.options'))) {
             if ($config instanceof Zend_Config) {
                 $config = $config->toArray();
@@ -367,7 +367,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $client->setHeaders($headers);
 
-        if ('1' == $p['misc']['debug']) {
+        if (isset($p['misc']['debug']) && '1' == $p['misc']['debug']) {
             $client->getAdapter()->setConfig(array('timeout' => -1));
             $client->setCookie('debug_session_id', rand(10000000, 99999999));
             $client->setCookie('debug_start_session', 1);
@@ -383,6 +383,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
         $starttime = microtime(true);
         try {
+            $client->setConfig($config);
             $a = $client->request(strtoupper($core['http_method']));
         } catch (Exception $e) {
             $last = $client->getLastResponse();
