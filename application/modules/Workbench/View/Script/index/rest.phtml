@@ -15,9 +15,8 @@ if (0 === stripos($contentType, 'image/')) {
     //Escape single quotes for JS
     $body = trim(str_replace($n, '<br/>', $this->escape(print_r($body, true))));
     //Zend_Json::prettyPrint takes care of addslashes
-    if ('json' !== $this->format) {
-        $body = addslashes($body);
-    }
+    $body = addslashes($body);
+
     $body = $this->hateoas($body, $this->format, $this->apiHost);
 }
 

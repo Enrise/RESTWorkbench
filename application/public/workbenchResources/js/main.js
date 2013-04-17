@@ -581,7 +581,7 @@ $(function() {
      
      $('form.sandbox select[name="core[format]"]').change(function(evt) {
          var accept = $(evt.target).parents('table').find('.accept');
-         switch (accept.context.nodeName.toLowerCase()) {
+         switch (accept[0].nodeName.toLowerCase()) {
              case 'select':
                  $(accept).find('option').each(function(index, elm) {
                      var $elm = $(elm),
