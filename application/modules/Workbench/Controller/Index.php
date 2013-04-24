@@ -189,7 +189,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
         }
         $client = new Zend_Http_Client();
-        $config = array('timeout' => $timeout);
+        $config = array();
         if (($config = $this->view->registry()->query('settings.workbench.httpClient.options'))) {
             if ($config instanceof Zend_Config) {
                 $config = $config->toArray();
@@ -234,6 +234,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             //Trim of excess slashes
             $url = rtrim($url, '/');
         }
+        $url = trim($url);
 
         //Query is need also for OAuth in hashing
         $queryStringParts = array();
@@ -261,8 +262,14 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
         $headers = array();
         if (2 < count($auth)) {
-            $consumerkey = $auth['consumerkey'];
-            $consumersecret = $auth['consumersecret'];
+            $consumerkey = '';
+            if (array_key_exists('consumerkey', $auth)) {
+                $consumerkey = $auth['consumerkey'];
+            }
+            $consumersecret = '';
+            if (array_key_exists('consumersecret', $auth)) {
+                $consumersecret = $auth['consumersecret'];
+            }
             $signing = $auth['signing'];
             $realm = '';
             if (array_key_exists('realm', $auth)) {
@@ -290,7 +297,12 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                 $class = $this->view->registry()->query('settings.workbench.oauth.tokenParser', $defaultClass);
                 $tokenParser = new $class;
                 if (!$tokenParser instanceof $defaultClass) {
-                    throw new Exception(sprintf('Invalid class specified to parse OAuth request/access tokens. Extend %s for propper handling.', $defaultClass));
+                    throw new Exception(
+                        sprintf(
+                            'Invalid class specified to parse OAuth request/access tokens. Extend %s for propper handling.',
+                            $defaultClass
+                        )
+                    );
                 }
                 /** @var $tokenParser Workbench_Model_OAuthTokenParser */
                 $request = OAuthRequest::from_consumer_and_token($consumer, $token, 'get', $auth['requestTokenUrl'], null);
@@ -367,7 +379,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
         $client->setHeaders($headers);
 
-        if (isset($p['misc']['debug']) && '1' == $p['misc']['debug']) {
+        if (isset($p['misc'], $p['misc']['debug']) && '1' == $p['misc']['debug']) {
             $client->getAdapter()->setConfig(array('timeout' => -1));
             $client->setCookie('debug_session_id', rand(10000000, 99999999));
             $client->setCookie('debug_start_session', 1);
@@ -383,7 +395,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
         $starttime = microtime(true);
         try {
-            $client->setConfig($config);
             $a = $client->request(strtoupper($core['http_method']));
         } catch (Exception $e) {
             $last = $client->getLastResponse();
@@ -433,15 +444,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             $r[] = rawurlencode($k) . "=" . rawurlencode($v);
         }
         return implode("&", $r);
-    }
-
-    /**
-     *
-     * @param Zend_Http_Client $client
-     */
-    protected function _handleOauth(Zend_Http_Client $client, array $params)
-    {
-
     }
 
     protected function _filterEmptyQueryParams(array $params)
