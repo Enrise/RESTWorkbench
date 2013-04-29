@@ -131,19 +131,23 @@ form.formtastic div button {
 #header .togglers {
     position: fixed;
     left: 50%;
-    top: 0;
-    margin-left: -575px;
+    top: 30px;
+    margin-left: -522px;
 }
 
 #header .togglers li {
     background: none repeat scroll 0 0 white;
     box-shadow: 0 -8px 10px 0 #999;
     border: 0;
+    -webkit-transform-origin: top left;
+       -moz-transform-origin: top left;
+        -ms-transform-origin: top left;
+            transform-origin: top left;
     -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    transform: rotate(-90deg);
+       -moz-transform: rotate(-90deg);
+         -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+            transform: rotate(-90deg);
     padding: 5px 10px;
     margin: 120px 0 0 0;
     text-align: center;
@@ -161,6 +165,8 @@ form.formtastic div button {
     color: #FFA600;
     padding: 0;
     background: none;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
 }
 
 .togglers li a:hover {
