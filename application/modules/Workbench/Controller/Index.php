@@ -56,11 +56,21 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $this->view->addHelperPath(__DIR__ . '/../View/Helper', 'Workbench_View_Helper');
         $this->view->addScriptPath(__DIR__ . '/../View/Script');
 
-        $this->_helper->layout()->setLayoutPath(implode(DIRECTORY_SEPARATOR, array(
-            GLITCH_MODULES_PATH, ucfirst($this->getRequest()->getModuleName()), 'Layout'
-        )));
+        $this->_helper->layout()->setLayoutPath(
+            implode(
+                DIRECTORY_SEPARATOR,
+                array(
+                    GLITCH_MODULES_PATH,
+                    ucfirst($this->getRequest()->getModuleName()),
+                    'Layout'
+                )
+            )
+        );
+        $r = $this->getRequest();
+        $host = Zend_Uri_Http::fromString($r->getScheme() . '://' . $r->getHttpHost());
+        $this->view->apiHost  = $this->view->registry()->query('settings.workbench.apiHost', $host);
         $this->view->apiHosts = $this->view->registry()->query('settings.workbench.apiHosts', new Zend_Config(array()))->toArray();
-        $this->view->apiHost  = $this->view->registry()->query('settings.workbench.apiHost', '');
+        $this->view->apiHosts[] = $host;
     }
 
     public function indexAction()
@@ -240,7 +250,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $queryStringParts = array();
         if (array_key_exists('query', $p) && is_array($p['query'])) {
             $queryStringParts = $this->_filterEmptyQueryParams($p['query']);
-
         }
 
         // REST resource filters are also part of the query string
@@ -349,7 +358,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             //Apparently you need to provide all values that you send to do signing
             //$signParams = $query;
             $signParams = null;
-            if ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params'])) {
+            if ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params']) && !$modifyClient) {
                 $signParams = array_merge($queryStringParts, $p['params']);
             }
             // Generate request and sign it

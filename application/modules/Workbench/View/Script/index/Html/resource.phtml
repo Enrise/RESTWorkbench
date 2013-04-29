@@ -20,7 +20,7 @@ $listClass = array($method, 'operation');
                 </h3>
                 <ul class="options">
                     <li>
-                        <a onclick="Docs.toggleOperationContent('<?php echo $nodeId ?>');" href="<?php echo $jslink ?>"><?php echo $this->endpoint->getHint() ?></a>
+                        <a title="<?php echo $this->endpoint->getHint() ?>" onclick="Docs.toggleOperationContent('<?php echo $nodeId ?>');" href="<?php echo $jslink ?>"><?php echo $this->endpoint->getHint() ?></a>
                     </li>
                 </ul>
             </div>

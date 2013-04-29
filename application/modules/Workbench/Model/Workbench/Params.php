@@ -139,6 +139,10 @@ class Workbench_Model_Workbench_Params implements Iterator
             case 'body':
                 $elm = 'Textarea';
                 break;
+            case 'password':
+            case 'wachtwoord':
+                $elm = 'Password';
+                break;
         }
 
         $elm = 'Zend_Form_Element_' . $elm;

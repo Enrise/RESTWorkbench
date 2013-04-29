@@ -12,20 +12,20 @@
 }
 
 body {
-	background: #EBECEB;
+    background: #EBECEB;
 }
 
 #wrapper {
-	background: white;
+    background: white;
     box-shadow: 0 2px 5px 3px #999999;
-	width: 960px;
-	margin: 0 auto;
-	padding: 0px 20px 50px;
+    width: 960px;
+    margin: 0 auto;
+    padding: 0px 20px 50px;
 }
 
 #wrapper form.config {
-	position: fixed;
-	background-color: white;
+    position: fixed;
+    background-color: white;
     background-position: 12px 12px;
     width: auto;
     padding: 20px;
@@ -36,20 +36,20 @@ body {
 
 #header .togglers,
 #header .handles {
-	width: auto;
-	margin: 0;
+    width: auto;
+    margin: 0;
 }
 
 #header form,
 #header form p {
-	color: black;
+    color: black;
 }
 
 .handles li a {
-	color: #999595;
-	font-family: EnriseLight;
-	font-size: 1.1em;
-	text-decoration: none;
+    color: #999595;
+    font-family: EnriseLight;
+    font-size: 1.1em;
+    text-decoration: none;
 }
 
 form#oauth legend,
@@ -59,7 +59,7 @@ form#colorchange legend {
 }
 
 form#oauth {
-	margin-top: 0;
+    margin-top: 0;
 }
 
 form#oauth fieldset {
@@ -73,9 +73,9 @@ form#misc {
 
 form#misc fieldset,
 form#colorchange fieldset {
-	padding-left: 0;
+    padding-left: 0;
     padding-top: 30px;
-	overflow: hidden;
+    overflow: hidden;
 }
 
 form#misc legend,
@@ -89,11 +89,11 @@ form#colorchange {
 }
 
 body form.formtastic {
-	max-width: 50%;
+    max-width: 50%;
 }
 
 form.formtastic div {
-	margin: 0;
+    margin: 0;
 }
 
 form.formtastic > p.hint,
@@ -102,48 +102,52 @@ form.formtastic > div,
 fieldset.formtastic > div,
 form.formtastic > ul,
 fieldset.formtastic > ul {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 form.formtastic > *:last-child,
 fieldset.formtastic > *:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 form.formtastic div label {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 form.formtastic div label,
 form.formtastic div input,
 form.formtastic div button {
-	width: 260px;
-	display: block;
+    width: 260px;
+    display: block;
 }
 
 form.formtastic div input[type="button"],
 form.formtastic div input[type="reset"],
 form.formtastic div button {
-	/*height: 20px;*/
-	line-height: 20px;
+    /*height: 20px;*/
+    line-height: 20px;
 }
 
 #header .togglers {
-	position: fixed;
-	left: 50%;
-	top: 0;
-	margin-left: -575px;
+    position: fixed;
+    left: 50%;
+    top: 30px;
+    margin-left: -522px;
 }
 
 #header .togglers li {
-	background: none repeat scroll 0 0 white;
+    background: none repeat scroll 0 0 white;
     box-shadow: 0 -8px 10px 0 #999;
     border: 0;
+    -webkit-transform-origin: top left;
+       -moz-transform-origin: top left;
+        -ms-transform-origin: top left;
+            transform-origin: top left;
     -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    transform: rotate(-90deg);
+       -moz-transform: rotate(-90deg);
+         -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+            transform: rotate(-90deg);
     padding: 5px 10px;
     margin: 120px 0 0 0;
     text-align: center;
@@ -151,49 +155,51 @@ form.formtastic div button {
 }
 
 .togglers li a, .handles li a {
-	padding: 6px;
+    padding: 6px;
 }
 
 .togglers li a,
 .togglers li a:hover,
 .togglers li a:active,
 .togglers li a:visited {
-	color: #FFA600;
-	padding: 0;
-	background: none;
+    color: #FFA600;
+    padding: 0;
+    background: none;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
 }
 
 .togglers li a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 #header .handles,
 #content .handles {
-	margin: 10px 0 8px;
-	padding: 0;
+    margin: 10px 0 8px;
+    padding: 0;
 }
 
 #copyToClipboard.succes:after {
-	content: " ✓";
+    content: " ✓";
 }
 
 #styleToggler {
-	margin: 245px -94px 0;
+    margin: 245px -94px 0;
 }
 
 #showStylesContainer {
-	margin-top: 5px;
-	overflow: auto;
-	max-height: 100px;
+    margin-top: 5px;
+    overflow: auto;
+    max-height: 100px;
 }
 
 #header {
-	border: 0;
-	margin: 0;
-	padding: 0;
-	box-shadow: 0 0 0 0 white;
-	background: white;
-	overflow: hidden;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 0 0 0 white;
+    background: white;
+    overflow: hidden;
 }
 
 #header h1 {
@@ -207,28 +213,28 @@ form.formtastic div button {
 }
 
 #content .container {
-	padding: 0 0 50px;
-	margin-top: 0;
-	margin-bottom: 0;
-	/** Needed for the rotated OAuth toggler **/
-	min-height: 200px;
+    padding: 0 0 50px;
+    margin-top: 0;
+    margin-bottom: 0;
+    /** Needed for the rotated OAuth toggler **/
+    min-height: 200px;
 }
 
 #footer {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #footer .container {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	background-image: url(/workbenchResources/gfx/double-line.gif);
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background-image: url(/workbenchResources/gfx/double-line.gif);
     background-repeat: repeat-x;
 }
 
 #footer .container ul {
-	padding-top: 10px;
+    padding-top: 10px;
 }
 
 #enrise {
@@ -248,20 +254,20 @@ form.formtastic div button {
 }
 
 strong {
-	font-family: inherit;
+    font-family: inherit;
     font-size: 100%;
     font-style: inherit;
     font-weight: bold;
 }
 
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.content div.sandbox_header input.submit {
-	font-family: EnriseSemibold;
+    font-family: EnriseSemibold;
 }
 
 #content .container ul.resources li.resource div.heading h2 a,
 #content .container ul.resources li.resource.active div.heading h2 a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.path a {
-	/** Donkergrijs **/
+    /** Donkergrijs **/
     color: #999595;
     font-family: EnriseLight;
 }
@@ -269,17 +275,17 @@ strong {
 #content .container ul.resources li.resource:hover div.heading h2 a,
 #content .container ul.resources li.resource div.heading h2 a:hover,
 #content .container ul.resources li.resource:hover div.heading ul.options li a:hover {
-	/** Pretty dark **/
-	color: #4d4d4f;
+    /** Pretty dark **/
+    color: #4d4d4f;
 }
 
 #content .container ul.resources li.resource:hover div.heading ul.options li a,
 #content .container ul.resources li.resource.active div.heading ul.options li a,
 #content .container ul.resources li.resource div.heading ul.options li a,
 #content .container ul.resources li.resource ul.endpoints li.endpoint ul.operations li.operation div.heading h3 span.http_method a {
-	font-family: EnriseSemibold;
-	padding: 7px 0 5px;
-	width: 60px;
+    font-family: EnriseSemibold;
+    padding: 7px 0 5px;
+    width: 60px;
 }
 
 /** GET Specifics **/
@@ -410,10 +416,10 @@ strong {
 
 @media only screen and (max-width: 1048px) {
     #wrapper {
-    	padding: 0;
+        padding: 0;
     }
     #wrapper>div {
-    	padding: 0 20px;
+        padding: 0 20px;
     }
 
     #wrapper #header {
@@ -424,7 +430,7 @@ strong {
     }
     
     #header h1 {
-    	width: 920px;
+        width: 920px;
     }
     
     #wrapper #content {
@@ -434,7 +440,7 @@ strong {
     #content .container,
     #content .container .fullwidth_column,
     #footer .container {
-    	width: auto;
+        width: auto;
     }
     
     #enrise {
@@ -462,17 +468,17 @@ strong {
     }
 
     #header .togglers li a {
-    	color: #999595;
+        color: #999595;
         text-decoration: none;
         padding: 6px;
     }
         
-	#header .togglers li a:hover {
-	    background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0%, #ff5401), color-stop(100%, #ffa014));
-	    background-image: -moz-linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
-	    background-image: linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
-	    color: white;
-	}
+    #header .togglers li a:hover {
+        background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0%, #ff5401), color-stop(100%, #ffa014));
+        background-image: -moz-linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
+        background-image: linear-gradient(bottom, #ff5401 0%, #ffa014 100%);
+        color: white;
+    }
     
     #wrapper form#oauth,
     #wrapper form#misc,
