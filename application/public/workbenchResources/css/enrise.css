@@ -131,8 +131,8 @@ form.formtastic div button {
 #header .togglers {
     position: fixed;
     left: 50%;
-    top: 30px;
-    margin-left: -522px;
+    top: 100px;
+    margin-left: -520px;
 }
 
 #header .togglers li {
@@ -143,7 +143,7 @@ form.formtastic div button {
        -moz-transform-origin: top left;
         -ms-transform-origin: top left;
             transform-origin: top left;
-    -webkit-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg) translate3d( 0, 0, 0);
        -moz-transform: rotate(-90deg);
          -o-transform: rotate(-90deg);
         -ms-transform: rotate(-90deg);
@@ -165,7 +165,7 @@ form.formtastic div button {
     color: #FFA600;
     padding: 0;
     background: none;
-    font-family: Arial, sans-serif;
+    font-family: Georgia, Arial, sans-serif;
     font-size: 12px;
 }
 
