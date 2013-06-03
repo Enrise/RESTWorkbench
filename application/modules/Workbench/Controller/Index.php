@@ -264,9 +264,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
 
         $url = trim($url);
-        //Done with filtering the URL
-        $client->setUri($url);
-
         $accept = $this->_filterAcceptHeader($accept, $format);
 
         $headers = array();
@@ -345,16 +342,10 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                 $response = $client->request('GET')->getBody();
                 //Build final token used for communication
                 $token = $tokenParser->parseTokens($response);
-
-                //@testing
-                /*$url = 'http://term.ie/oauth/example/echo_api.php';
-                $query = array(
-                    'foo' => 'bar',
-                    'method' => 'test',
-                );
-                $core['http_method'] = 'get';*/
             }
-            //$client->setUri($url);
+            // Set the url of the orginal request (can be changed by
+            // oauth-related calls)
+            $client->setUri($url);
             //Apparently you need to provide all values that you send to do signing
             //$signParams = $query;
             $signParams = null;
