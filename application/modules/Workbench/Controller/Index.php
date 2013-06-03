@@ -397,7 +397,6 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
 
         $starttime = microtime(true);
-        //var_dump($client);die(__FILE__ . '@' . __LINE__);
         try {
             $a = $client->request(strtoupper($core['http_method']));
         } catch (Exception $e) {
