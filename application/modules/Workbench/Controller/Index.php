@@ -264,10 +264,13 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         }
 
         $url = trim($url);
+        $client->setUri($url);
         $accept = $this->_filterAcceptHeader($accept, $format);
 
         $headers = array();
         if (2 < count($auth)) {
+            $oauthClient = new Zend_Http_Client();
+            $oauthClient->setConfig($config);
             $consumerkey = '';
             if (array_key_exists('consumerkey', $auth)) {
                 $consumerkey = $auth['consumerkey'];
@@ -315,16 +318,16 @@ class Workbench_Controller_Index extends Zend_Controller_Action
                 $request->sign_request($signature, $consumer, $token);
                 switch (strtolower($auth['headerOrUrl'])) {
                     case 'url':
-                        $client->setUri($request->to_url());
+                        $oauthClient->setUri($request->to_url());
                         break;
                     case 'header':
-                        $client->setUri($auth['requestTokenUrl']);
-                        $client->setHeaders((array) $request->to_header($realm));
+                        $oauthClient->setUri($auth['requestTokenUrl']);
+                        $oauthClient->setHeaders((array) $request->to_header($realm));
                         break;
                     default:
                         throw new Exception('Invalid parameter encountered!');
                 }
-                $response = $client->request('GET')->getBody();
+                $response = $oauthClient->request('GET')->getBody();
                 $requestTokens = $tokenParser->parseTokens($response);
 
                 $request = OAuthRequest::from_consumer_and_token($consumer, $requestTokens, 'get', $auth['accessTokenUrl'], null);
@@ -332,20 +335,20 @@ class Workbench_Controller_Index extends Zend_Controller_Action
 
                 switch (strtolower($auth['headerOrUrl'])) {
                     case 'url':
-                        $client->setUri($request->to_url());
+                        $oauthClient->setUri($request->to_url());
                         break;
                     case 'header':
-                        $client->setUri($auth['accessTokenUrl']);
-                        $client->setHeaders((array) $request->to_header($realm));
+                        $oauthClient->setUri($auth['accessTokenUrl']);
+                        $oauthClient->setHeaders((array) $request->to_header($realm));
                         break;
                 }
-                $response = $client->request('GET')->getBody();
+                $response = $oauthClient->request('GET')->getBody();
                 //Build final token used for communication
                 $token = $tokenParser->parseTokens($response);
             }
             // Set the url of the orginal request (can be changed by
             // oauth-related calls)
-            $client->setUri($url);
+            $oauthClient->setUri($url);
             //Apparently you need to provide all values that you send to do signing
             //$signParams = $query;
             $signParams = null;
