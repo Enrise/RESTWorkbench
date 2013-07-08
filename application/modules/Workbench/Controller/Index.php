@@ -301,50 +301,60 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
             //In case of 3 legged OAuth
             if (isset($auth['requestTokenUrl']) && isset($auth['accessTokenUrl'])) {
-                //@todo via config string
-                $defaultClass = 'Workbench_Model_OAuthTokenParser';
-                $class = $this->view->registry()->query('settings.workbench.oauth.tokenParser', $defaultClass);
-                $tokenParser = new $class;
-                if (!$tokenParser instanceof $defaultClass) {
-                    throw new Exception(
-                        sprintf(
-                            'Invalid class specified to parse OAuth request/access tokens. Extend %s for propper handling.',
-                            $defaultClass
-                        )
-                    );
-                }
-                /** @var $tokenParser Workbench_Model_OAuthTokenParser */
-                $request = OAuthRequest::from_consumer_and_token($consumer, $token, 'get', $auth['requestTokenUrl'], null);
-                $request->sign_request($signature, $consumer, $token);
-                switch (strtolower($auth['headerOrUrl'])) {
-                    case 'url':
-                        $oauthClient->setUri($request->to_url());
-                        break;
-                    case 'header':
-                        $oauthClient->setUri($auth['requestTokenUrl']);
-                        $oauthClient->setHeaders((array) $request->to_header($realm));
-                        break;
-                    default:
-                        throw new Exception('Invalid parameter encountered!');
-                }
-                $response = $oauthClient->request('GET')->getBody();
-                $requestTokens = $tokenParser->parseTokens($response);
+                if (isset($auth['emulateSession']) && $auth['emulateSession'] === '1' && isset($_COOKIE['workbenchOauthSession'])) {
+                    $token = json_decode($_COOKIE['workbenchOauthSession']);
+                } else {
+                    //@todo via config string
+                    $defaultClass = 'Workbench_Model_OAuthTokenParser';
+                    $class = $this->view->registry()->query('settings.workbench.oauth.tokenParser', $defaultClass);
+                    $tokenParser = new $class;
+                    if (!$tokenParser instanceof $defaultClass) {
+                        throw new Exception(
+                            sprintf(
+                                'Invalid class specified to parse OAuth request/access tokens. Extend %s for propper handling.',
+                                $defaultClass
+                            )
+                        );
+                    }
+                    /** @var $tokenParser Workbench_Model_OAuthTokenParser */
+                    $request = OAuthRequest::from_consumer_and_token($consumer, $token, 'get', $auth['requestTokenUrl'], null);
+                    $request->sign_request($signature, $consumer, $token);
+                    switch (strtolower($auth['headerOrUrl'])) {
+                        case 'url':
+                            $oauthClient->setUri($request->to_url());
+                            break;
+                        case 'header':
+                            $oauthClient->setUri($auth['requestTokenUrl']);
+                            $oauthClient->setHeaders((array) $request->to_header($realm));
+                            break;
+                        default:
+                            throw new Exception('Invalid parameter encountered!');
+                    }
+                    $response = $oauthClient->request('GET')->getBody();
+                    $requestTokens = $tokenParser->parseTokens($response);
 
-                $request = OAuthRequest::from_consumer_and_token($consumer, $requestTokens, 'get', $auth['accessTokenUrl'], null);
-                $request->sign_request($signature, $consumer, $requestTokens);
+                    $request = OAuthRequest::from_consumer_and_token($consumer, $requestTokens, 'get', $auth['accessTokenUrl'], null);
+                    $request->sign_request($signature, $consumer, $requestTokens);
 
-                switch (strtolower($auth['headerOrUrl'])) {
-                    case 'url':
-                        $oauthClient->setUri($request->to_url());
-                        break;
-                    case 'header':
-                        $oauthClient->setUri($auth['accessTokenUrl']);
-                        $oauthClient->setHeaders((array) $request->to_header($realm));
-                        break;
+                    switch (strtolower($auth['headerOrUrl'])) {
+                        case 'url':
+                            $oauthClient->setUri($request->to_url());
+                            break;
+                        case 'header':
+                            $oauthClient->setUri($auth['accessTokenUrl']);
+                            $oauthClient->setHeaders((array) $request->to_header($realm));
+                            break;
+                    }
+                    $response = $oauthClient->request('GET')->getBody();
+                    //Build final token used for communication
+                    $token = $tokenParser->parseTokens($response);
+
+                    if (isset($auth['emulateSession']) && $auth['emulateSession'] === '1') {
+                        setcookie('workbenchOauthSession', json_encode($token));
+                    } else {
+                        setcookie('workbenchOauthSession', '', time() - 3600);
+                    }
                 }
-                $response = $oauthClient->request('GET')->getBody();
-                //Build final token used for communication
-                $token = $tokenParser->parseTokens($response);
             }
             // Set the url of the orginal request (can be changed by
             // oauth-related calls)
