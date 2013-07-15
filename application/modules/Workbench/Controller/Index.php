@@ -446,7 +446,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $r = array();
         foreach ((array) $a as $k => $v) {
             if ($c) {
-                $k = $b . "[]";
+                $k = $b . "[$k]";
             } elseif (is_int($k)) {
                 $k = $b . $k;
             }
