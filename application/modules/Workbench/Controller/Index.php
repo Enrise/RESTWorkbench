@@ -362,9 +362,13 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             //Apparently you need to provide all values that you send to do signing
             //$signParams = $query;
             $signParams = null;
-            if ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params']) && !$modifyClient) {
+            if (
+                ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params']) && !$modifyClient) ||
+                ('post' == $core['http_method'] && 'application/x-www-form-urlencoded' == $r->getServer('CONTENT_TYPE'))
+            ) {
                 $signParams = array_merge($queryStringParts, $p['params']);
             }
+
             // Generate request and sign it
             $request = OAuthRequest::from_consumer_and_token(
                 $consumer,
