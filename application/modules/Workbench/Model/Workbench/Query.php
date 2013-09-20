@@ -105,7 +105,18 @@ class Workbench_Model_Workbench_Query implements Iterator
     public function current()
     {
         $fieldName = $this->key();
+        $value = $this->getRawValue();
+
         $elm = 'Text';
+
+        if (array_key_exists('value', $value) && is_array($value['value'])) {
+            $elm = 'Select';
+            foreach ($value['value'] as $key => $val) {
+                $value[$val] = $val;
+                unset($value['value'][$key]);
+            }
+        }
+
         $description = $this->getDescription();
         $belongsTo = 'query';
 
@@ -143,7 +154,7 @@ class Workbench_Model_Workbench_Query implements Iterator
             'class' => implode(' ', $cssClass),
             'isArray' => $isArray,
         ));
-        $value = $this->getRawValue();
+
         if ($elm instanceof Zend_Form_Element_Multi) {
             if ('format' === $fieldName || 'signing' === $fieldName) {
                 $value = (array) $value;

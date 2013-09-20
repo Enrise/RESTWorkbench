@@ -80,7 +80,7 @@ class Workbench_Model_Workbench_EntryPoints
         // * @query media  klm destination ( [+none | ';' photo | ';' video] ))) {optional}
         // * @query departureCity City from which is being departed ("destination" url) {optional}
 
-        self::QUERY => '~([0-9-a-z_\[\]]+) ([()0-9-a-z:\.,/\|\[\]\"\\\'\;\<\>\+\_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})?~i',
+        self::QUERY => '~([0-9-a-z_\[\]]+) ([()0-9-a-z:\.,/\|\[\]\"\\\'\;\<\>\+\_ -]+)(\{optional\})? ?(?:\{example: (.*?)\})??(?:\{allowed: (.*?)\})?~i',
 
         self::FORMAT => '~(.+)(\+@format)~',
         self::ACCEPT => '~(.+)~',
@@ -286,6 +286,14 @@ class Workbench_Model_Workbench_EntryPoints
                                     //Check for example value
                                     if (!empty($tmp[4])) {
                                         $query[$tmp[1]]['value'] = trim($tmp[4]);
+                                    }
+                                    //Check for allowed values
+                                    if (!empty($tmp[5])) {
+                                        $vals = explode(',', $tmp[5]);
+                                        foreach (array_keys($vals) as $key) {
+                                            $vals[$key] = trim($vals[$key]);
+                                        }
+                                        $query[$tmp[1]]['value'] = $vals;
                                     }
                                     break;
                             }
