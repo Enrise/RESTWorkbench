@@ -55,6 +55,7 @@ class Workbench_Model_Workbench_EntryPoints
     const PARAM = 'param';
     const FORMAT = 'format';
     const ACCEPT = 'accept';
+    const ACCEPT_LANG = 'accept-language';
     const QUERY = 'query';
     const URL = 'url';
     const DISABLED = 'disabled';
@@ -84,6 +85,7 @@ class Workbench_Model_Workbench_EntryPoints
 
         self::FORMAT => '~(.+)(\+@format)~',
         self::ACCEPT => '~(.+)~',
+        self::ACCEPT_LANG => '~(.+)~',
         self::URL => '(.+)',
         self::DISABLED => '(true)',
     );
@@ -258,6 +260,7 @@ class Workbench_Model_Workbench_EntryPoints
                                     $params[$k][] = $value;
                                     break;
                                 case self::FORMAT:
+                                case self::ACCEPT_LANG:
                                     $params[$k] = array_filter(explode('|', trim($value)));
                                     break;
                                 case self::PARAM:
@@ -337,7 +340,7 @@ class Workbench_Model_Workbench_EntryPoints
      */
     protected function _getTokensFromDocblock($doc)
     {
-        preg_match_all('~(@([a-z]+)) (.+)~', $doc, $matches);
+        preg_match_all('~(@([a-z-]+)) (.+)~', $doc, $matches);
         return new Workbench_Model_Workbench_Tokens($matches);
     }
 }

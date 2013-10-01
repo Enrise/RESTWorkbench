@@ -390,7 +390,14 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $headers = array_merge((array) $headers, array(
             'Accept' => $accept,
             'Accept-Charset' => 'utf-8',
+            'Accept-Language' => null,
         ));
+        if (array_key_exists('acceptlanguage', $core)) {
+            $core['Accept-Language'] = $core['acceptlanguage'];
+            unset($core['acceptlanguage']);
+        }
+        $headers = array_replace($headers, array_intersect_key($core, $headers));
+        $headers = array_filter($headers, 'strlen');
         if (!empty($format)) {
            $headers['Content-Type'] = 'text/' . $format . '; charset=utf-8';
         }
