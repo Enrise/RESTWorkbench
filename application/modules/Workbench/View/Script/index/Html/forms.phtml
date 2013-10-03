@@ -36,6 +36,10 @@ $form->addElement('text', 'accessTokenUrl', array(
     'label' => 'OAuth Access token URL',
     'description' => 'http://term.ie/oauth/example/access_token.php'
 ));
+$form->addElement('checkbox', 'emulateSession', array(
+    'label' => 'Emulate access token storage in session?',
+    'checkedValue' => '1'
+));
 $form->addElement('select', 'headerOrUrl', array(
     'label' => 'OAuth Signing build',
     'multiOptions' => array(

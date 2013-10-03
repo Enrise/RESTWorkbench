@@ -132,6 +132,10 @@ class Workbench_Model_Workbench_Params implements Iterator
                 }
                 $belongsTo = 'core';
                 break;
+            case 'accept-language':
+                $elm = 'Select';
+                $belongsTo = 'core';
+                break;
             case 'method':
             case 'http_method':
                 $belongsTo = 'core';
@@ -169,7 +173,8 @@ class Workbench_Model_Workbench_Params implements Iterator
         ));
 
         if ($elm instanceof Zend_Form_Element_Multi) {
-            if ('format' === $fieldName || 'signing' === $fieldName) {
+            if (in_array($fieldName, array('format', 'signing', 'accept-language'))) {
+            //if ('format' === $fieldName || 'signing' === $fieldName) {
                 $value = (array) $value;
                 $value = array_combine($value, $value);
                 if (1 === count($value)) {
