@@ -301,50 +301,60 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             }
             //In case of 3 legged OAuth
             if (isset($auth['requestTokenUrl']) && isset($auth['accessTokenUrl'])) {
-                //@todo via config string
-                $defaultClass = 'Workbench_Model_OAuthTokenParser';
-                $class = $this->view->registry()->query('settings.workbench.oauth.tokenParser', $defaultClass);
-                $tokenParser = new $class;
-                if (!$tokenParser instanceof $defaultClass) {
-                    throw new Exception(
-                        sprintf(
-                            'Invalid class specified to parse OAuth request/access tokens. Extend %s for propper handling.',
-                            $defaultClass
-                        )
-                    );
-                }
-                /** @var $tokenParser Workbench_Model_OAuthTokenParser */
-                $request = OAuthRequest::from_consumer_and_token($consumer, $token, 'get', $auth['requestTokenUrl'], null);
-                $request->sign_request($signature, $consumer, $token);
-                switch (strtolower($auth['headerOrUrl'])) {
-                    case 'url':
-                        $oauthClient->setUri($request->to_url());
-                        break;
-                    case 'header':
-                        $oauthClient->setUri($auth['requestTokenUrl']);
-                        $oauthClient->setHeaders((array) $request->to_header($realm));
-                        break;
-                    default:
-                        throw new Exception('Invalid parameter encountered!');
-                }
-                $response = $oauthClient->request('GET')->getBody();
-                $requestTokens = $tokenParser->parseTokens($response);
+                if (isset($auth['emulateSession']) && $auth['emulateSession'] === '1' && isset($_COOKIE['workbenchOauthSession'])) {
+                    $token = json_decode($_COOKIE['workbenchOauthSession']);
+                } else {
+                    //@todo via config string
+                    $defaultClass = 'Workbench_Model_OAuthTokenParser';
+                    $class = $this->view->registry()->query('settings.workbench.oauth.tokenParser', $defaultClass);
+                    $tokenParser = new $class;
+                    if (!$tokenParser instanceof $defaultClass) {
+                        throw new Exception(
+                            sprintf(
+                                'Invalid class specified to parse OAuth request/access tokens. Extend %s for propper handling.',
+                                $defaultClass
+                            )
+                        );
+                    }
+                    /** @var $tokenParser Workbench_Model_OAuthTokenParser */
+                    $request = OAuthRequest::from_consumer_and_token($consumer, $token, 'get', $auth['requestTokenUrl'], null);
+                    $request->sign_request($signature, $consumer, $token);
+                    switch (strtolower($auth['headerOrUrl'])) {
+                        case 'url':
+                            $oauthClient->setUri($request->to_url());
+                            break;
+                        case 'header':
+                            $oauthClient->setUri($auth['requestTokenUrl']);
+                            $oauthClient->setHeaders((array) $request->to_header($realm));
+                            break;
+                        default:
+                            throw new Exception('Invalid parameter encountered!');
+                    }
+                    $response = $oauthClient->request('GET')->getBody();
+                    $requestTokens = $tokenParser->parseTokens($response);
 
-                $request = OAuthRequest::from_consumer_and_token($consumer, $requestTokens, 'get', $auth['accessTokenUrl'], null);
-                $request->sign_request($signature, $consumer, $requestTokens);
+                    $request = OAuthRequest::from_consumer_and_token($consumer, $requestTokens, 'get', $auth['accessTokenUrl'], null);
+                    $request->sign_request($signature, $consumer, $requestTokens);
 
-                switch (strtolower($auth['headerOrUrl'])) {
-                    case 'url':
-                        $oauthClient->setUri($request->to_url());
-                        break;
-                    case 'header':
-                        $oauthClient->setUri($auth['accessTokenUrl']);
-                        $oauthClient->setHeaders((array) $request->to_header($realm));
-                        break;
+                    switch (strtolower($auth['headerOrUrl'])) {
+                        case 'url':
+                            $oauthClient->setUri($request->to_url());
+                            break;
+                        case 'header':
+                            $oauthClient->setUri($auth['accessTokenUrl']);
+                            $oauthClient->setHeaders((array) $request->to_header($realm));
+                            break;
+                    }
+                    $response = $oauthClient->request('GET')->getBody();
+                    //Build final token used for communication
+                    $token = $tokenParser->parseTokens($response);
+
+                    if (isset($auth['emulateSession']) && $auth['emulateSession'] === '1') {
+                        setcookie('workbenchOauthSession', json_encode($token));
+                    } else {
+                        setcookie('workbenchOauthSession', '', time() - 3600);
+                    }
                 }
-                $response = $oauthClient->request('GET')->getBody();
-                //Build final token used for communication
-                $token = $tokenParser->parseTokens($response);
             }
             // Set the url of the orginal request (can be changed by
             // oauth-related calls)
@@ -352,9 +362,13 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             //Apparently you need to provide all values that you send to do signing
             //$signParams = $query;
             $signParams = null;
-            if ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params']) && !$modifyClient) {
+            if (
+                ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params']) && !$modifyClient) ||
+                ('post' == $core['http_method'] && 'application/x-www-form-urlencoded' == $r->getServer('CONTENT_TYPE'))
+            ) {
                 $signParams = array_merge($queryStringParts, $p['params']);
             }
+
             // Generate request and sign it
             $request = OAuthRequest::from_consumer_and_token(
                 $consumer,
@@ -376,7 +390,14 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $headers = array_merge((array) $headers, array(
             'Accept' => $accept,
             'Accept-Charset' => 'utf-8',
+            'Accept-Language' => null,
         ));
+        if (array_key_exists('acceptlanguage', $core)) {
+            $core['Accept-Language'] = $core['acceptlanguage'];
+            unset($core['acceptlanguage']);
+        }
+        $headers = array_replace($headers, array_intersect_key($core, $headers));
+        $headers = array_filter($headers, 'strlen');
         if (!empty($format)) {
            $headers['Content-Type'] = 'text/' . $format . '; charset=utf-8';
         }
@@ -436,7 +457,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
         $r = array();
         foreach ((array) $a as $k => $v) {
             if ($c) {
-                $k = $b . "[]";
+                $k = $b . "[$k]";
             } elseif (is_int($k)) {
                 $k = $b . $k;
             }
