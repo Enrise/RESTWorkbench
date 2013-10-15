@@ -364,7 +364,7 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             $signParams = null;
             if (
                 ('post' === $core['http_method'] && isset($p['params']) && is_array($p['params']) && !$modifyClient) ||
-                ('post' == $core['http_method'] && 'application/x-www-form-urlencoded' == $r->getServer('CONTENT_TYPE'))
+                ('post' == $core['http_method'] && false !== stripos($r->getServer('CONTENT_TYPE'), 'application/x-www-form-urlencoded'))
             ) {
                 $signParams = array_merge($queryStringParts, $p['params']);
             }
