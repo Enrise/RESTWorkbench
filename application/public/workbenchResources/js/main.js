@@ -1,13 +1,13 @@
 // ###############################################
 //
-// AUTHOR: Nick LaPrell (http://nick.laprell.org)  
+// AUTHOR: Nick LaPrell (http://nick.laprell.org)
 //
 // Project Home: http://code.google.com/p/ezcookie/
 //
 // ###############################################
 
 (function($){
-  
+
   // Default options
   dOptions = {
     expires : 365,
@@ -37,13 +37,13 @@
         return value;
     }
   }
-  
+
   $.subCookie = function(cookie,key){
     var cookie = $.cookie(cookie);
     if(!cookie || typeof cookie != 'object'){return null;}
     return cookie[key];
   }
-  
+
   // Write the defined value to the given cookie
   $.setCookie = function(cookieName,cookieValue,options){
     // Combine defaults and passed options, if any
@@ -68,7 +68,7 @@
     // Write the cookie
     document.cookie = [cookieName, '=', cookieValue, expires, path, domain, secure].join('');
   }
-  
+
   $.setSubCookie = function(cookie,key,value,options){
     var options = typeof options != 'undefined' ? $.extend(dOptions, options) : dOptions;
     var existingCookie = $.cookie(cookie);
@@ -76,7 +76,7 @@
     cookieObject[key] = value;
     $.setCookie(cookie,cookieObject,options);
   }
-  
+
   $.removeSubCookie = function(cookie,key){
     var cookieObject = $.cookie(cookie);
     if(cookieObject && typeof cookieObject == 'object' && typeof cookieObject[key] != 'undefined'){
@@ -92,7 +92,7 @@
   $.clearCookie = function(cookie){
     $.setCookie(cookie,'');
   }
-  
+
 })(jQuery);
 
 // Begin minified json2.js library from json.org
@@ -214,12 +214,8 @@ hsb.s*=100/255;hsb.b*=100/255;return hsb;};var hex2hsb=function(hex){var hsb=rgb
 })(jQuery);
 
 var Docs = {
+
     init: function() {
-        /*$('form.config').keydown(function(evt) {
-            console.warn(evt);
-            console.warn(this);
-            console.warn($(this));
-        });*/
         $('form.config').bind('submit', function(e) {
             $(this).hide('slow');
             e.preventDefault();
@@ -256,6 +252,7 @@ var Docs = {
             $cur.parents('tr').find('a.removeInputField').show();
             var $elm = $cur.closest('tr');
             $elm.after($elm.clone());
+			return $elm;
         });
         $('a.removeInputField').live('click', function(evt) {
             evt.preventDefault();
@@ -267,7 +264,7 @@ var Docs = {
             }
             $cur.parents('tr').remove();
         });
-        
+
         var queries = [
            '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.heading ul.options li a',
            '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li div.content h4',
@@ -290,7 +287,7 @@ var Docs = {
             $('#showStylesContainer').html('');
             $('#copyToClipboard').removeClass('succes');
         });
-        
+
         var elms = $('.expandBody');
         elms.data('open', false);
         $('.sandbox_header .submit').click(function() {
@@ -308,7 +305,7 @@ var Docs = {
                 $ref.data('maxHeight', max);
             }
             $ref.css('maxHeight', $ref.data('maxHeight'));
-            
+
             var openClose = 'Full';
             if ($this.data('open')) {
                 openClose = 'Small';
@@ -323,12 +320,15 @@ var Docs = {
             return false;
         });
         $('input.color').miniColors();
-        
+
         this.shebang();
         //Work through the open and closed settings
         var open = $.cookie('explicitlyOpenTogglables') || [];
+		if (-1 != document.location.hash.search(/#!\/([^\?]+)/)) {
+			var hashBangId = document.location.hash.match(/#!\/([^\?]+)/)[1];
+            open[hashBangId] = hashBangId;
+        }
         var closed = $.cookie('explicitlyClosedTogglables') || [];
-        
         var elm = null;
         for (id in open) {
             if (0 < id.length) {
@@ -364,21 +364,40 @@ var Docs = {
             return false;
         });
     },
-    
+
     shebang: function() {
         // If shebang has an operation nickname in it..
         // e.g. /docs/#!/words/get_search
         var fragments = $.param.fragment();
+        fragments = fragments.split('?');
+		var queryValues = [];
+		if (fragments[1]) {
+			queryValues = fragments[1].split('&');
+		}
+        fragments = fragments[0];
         if (fragments.length) {
             var id = $('a[href="#' + fragments + '"]').first().parents('li').first().slideto({highlight: false}).attr('id');
             if (0 === id.indexOf('resource')) {
                 Docs.expandEndpointListForResource(id.replace('resource_', ''));
             } else {
-                Docs.expandOperation($('#' + id + '>div'));
+                var $div = $('#' + id + '>div');
+                Docs.expandOperation($div);
+                var $form = $div.find('form');
+                for (i in queryValues) {
+                    var key = queryValues[i].split('=');
+                    var value = key[1];
+                    key = decodeURIComponent(key[0]);
+					var elm = $form.find('input[name="' + key + '"]').last();
+					if (-1 != key.match('][]')) {
+						elm.parents('tr').find('a.addInputField').first().click();
+					}
+					elm.val(value);
+                }
             }
+
         }
     },
-    
+
     toggleEndpointListForResource: function(resource) {
         var elem = $('li#resource_' + resource + ' ul.endpoints');
         if (elem.is(':visible')) {
@@ -387,7 +406,7 @@ var Docs = {
             Docs.expandEndpointListForResource(resource);
         }
     },
-    
+
     // Expand resource and remove explicit closure cookie
     expandEndpointListForResource: function(resource, scroll) {
         if (undefined == scroll) {
@@ -395,7 +414,7 @@ var Docs = {
         }
         var resource = $('#resource_' + resource);
         var entries = resource.children('ul.endpoints');
-        
+
         resource.addClass('active');
         entries.slideDown();
         $.removeSubCookie('explicitlyClosedTogglables', resource.attr('id'));
@@ -404,18 +423,18 @@ var Docs = {
             $.scrollTo(entries.siblings('.heading'), 800, {offset: {left: 0, top: 4}});
         }
     },
-    
+
     // Collapse resource and mark as explicitly closed
     collapseEndpointListForResource: function(resource) {
         var resource = $('#resource_' + resource);
         var entries = resource.children('ul.endpoints');
-        
+
         resource.removeClass('active');
         entries.slideUp();
         $.setSubCookie('explicitlyClosedTogglables', resource.attr('id'), true);
         $.cookie('explicitlyClosedTogglables');
     },
-    
+
     expandOperationsForResource: function(resource) {
         // Make sure the resource container is open..
         Docs.expandEndpointListForResource(resource);
@@ -423,11 +442,11 @@ var Docs = {
             Docs.expandOperation($(this));
         });
     },
-    
+
     toggleOperationsForResource: function(resource) {
-        
+
     },
-    
+
     collapseOperationsForResource: function(resource) {
         // Make sure the resource container is open..
         Docs.expandEndpointListForResource(resource);
@@ -435,20 +454,20 @@ var Docs = {
             Docs.collapseOperation($(this));
         });
     },
-    
+
     expandOperation: function(elem) {
         elem.parents('ul.endpoints').slideDown();
         elem.removeClass('hidden');
         elem.slideDown();
         $.setSubCookie('explicitlyOpenTogglables', elem.attr('id'), true);
     },
-    
+
     collapseOperation: function(elem) {
         elem.slideUp();
         elem.addClass('hidden');
         $.removeSubCookie('explicitlyOpenTogglables', elem.attr('id'));
     },
-    
+
     toggleOperationContent: function(dom_id) {
         var elem = $('#' + dom_id);
         if (elem.is(':visible')) {
@@ -463,7 +482,7 @@ var Docs = {
 };
 
 $(function() {
-     //Must be first! 
+     //Must be first!
      Docs.init();
      $('#oauth').hide();
      $("#colorchange").change(function(evt) {
@@ -485,11 +504,11 @@ $(function() {
                  if (!$form.find('#styleAll').attr('checked')) {
                      active = $form.find('#styleMethod').attr('value');
                  }
-                 
+
                  var count = 1;
                  for (i in methods) {
                      var method = methods[i];
-                     
+
                      var queries = [
                          '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading ul.options li a',
                          '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content h4',
@@ -497,15 +516,15 @@ $(function() {
                          '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' a.expandBody'
                      ];
                      queries = queries.join(', ');
-                     
+
                      val = '';
                      if (response[100] && (null === active || active === method)) {
-                         val = response[100].hex; 
+                         val = response[100].hex;
                          foo += '/** ' + method.toUpperCase() + ' override **/<br/>';
                          foo += queries + ' { color: ' + response[100].hex + '; }';
                      }
                      $(queries).css('color', val);
-                     
+
                      queries = [
                          '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' h3 span.http_method a'
                      ];
@@ -527,7 +546,7 @@ $(function() {
                          foo += "<br/>" + queries + ' { ' + cssString + ' }';
                      }
                      $(queries).css(val);
-                     
+
                      queries = [
                           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.content',
                           '#content ul#resources li.resource ul.endpoints li.endpoint ul.operations li.' + method + ' div.heading'
@@ -555,7 +574,7 @@ $(function() {
              error: function (xhr, status, error) { }
          });
      });
-     
+
      // Helper function for vertically aligning DOM elements
      // http://www.seodenver.com/simple-vertical-align-plugin-for-jquery/
      $.fn.vAlign = function() {
@@ -578,7 +597,7 @@ $(function() {
      // Vertically center these paragraphs
      // Parent may need a min-height for this to work..
      $('ul.downplayed li div.content p').vAlign();
-     
+
      $('form.sandbox select[name="core[format]"]').change(function(evt) {
          var accept = $(evt.target).parents('table').find('.accept');
          switch (accept[0].nodeName.toLowerCase()) {
@@ -594,7 +613,7 @@ $(function() {
                  break;
          }
      });
-     
+
      // When a sandbox form is submitted..
      $("form.sandbox").submit(function() {
          var error_free = true;
@@ -628,7 +647,7 @@ $(function() {
  jQuery(function ($) {
      var csrf_token = $('meta[name=csrf-token]').attr('content'),
      csrf_param = $('meta[name=csrf-param]').attr('content');
-     
+
      $.fn.extend({
          /**
          * Triggers a custom event on an element and returns the event result
@@ -659,7 +678,7 @@ $(function() {
                  var $this = $(this),
                      $throbber = $this.find('.throbber'),
                      data = el.is('form') ? el.serializeArray() : [];
-                 
+
                  data = data.concat($('#oauth').serializeArray());
                  data = data.concat($('#misc').serializeArray());
                  $throbber.show();
@@ -671,14 +690,27 @@ $(function() {
                      dataType: dataType,
                      type: method.toUpperCase(),
                      beforeSend: function (xhr) {
-                         if ($this.triggerHandler('ajax:beforeSend') === false) {
-                             return false;
-                         }
-                         // if user has used jQuery.ajaxSetup then call beforeSend callback
-                         var beforeSendGlobalCallback = $.ajaxSettings && $.ajaxSettings.beforeSend;
-                         if (beforeSendGlobalCallback !== undefined) {
-                             beforeSendGlobalCallback(xhr);
-                         }
+						var elements = $(el).find('*[name^="params"][value!=""], *[name^="query"][value!=""], *[name^="core"]');
+						elements = elements.filter(function(k, v) {
+							var attr = $(v).attr('name');
+							if ('core[path]' === attr) {
+								return null;
+							}
+							if ('core[http_method]' === attr) {
+								return null;
+							}
+							return v;
+						});
+						elements = elements.serialize();
+						document.location.hash = '#!/' + el.parent('div').attr('id') + '?' + elements;
+                        if ($this.triggerHandler('ajax:beforeSend') === false) {
+                            return false;
+                        }
+                        // if user has used jQuery.ajaxSetup then call beforeSend callback
+                        var beforeSendGlobalCallback = $.ajaxSettings && $.ajaxSettings.beforeSend;
+                        if (beforeSendGlobalCallback !== undefined) {
+                            beforeSendGlobalCallback(xhr);
+                        }
                      },
                      success: function (response, status, xhr) {
                          el.trigger('ajax:success', [response, status, xhr]);
@@ -798,7 +830,7 @@ $(function() {
              method = link.attr('data-method'),
              form = $('<form method="post" action="'+href+'"></form>'),
              metadata_input = '<input name="_method" value="'+method+'" type="hidden" />';
-         
+
          if (csrf_param !== undefined && csrf_token !== undefined) {
              metadata_input += '<input name="'+csrf_param+'" value="'+csrf_token+'" type="hidden" />';
          }
@@ -814,7 +846,7 @@ $(function() {
      var disable_with_input_selector = 'input[data-disable-with]',
          disable_with_form_remote_selector = 'form[data-remote]:has(' + disable_with_input_selector + ')',
          disable_with_form_not_remote_selector = 'form:not([data-remote]):has(' + disable_with_input_selector + ')';
-     
+
      var disable_with_input_function = function () {
          $(this).find(disable_with_input_selector).each(function () {
          var input = $(this);
@@ -833,4 +865,3 @@ $(function() {
          });
      });
 });
- 
