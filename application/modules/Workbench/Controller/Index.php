@@ -391,11 +391,17 @@ class Workbench_Controller_Index extends Zend_Controller_Action
             'Accept' => $accept,
             'Accept-Charset' => 'utf-8',
             'Accept-Language' => null,
+            'X-Preferred-Asset-Scheme' => null,
         ));
         if (array_key_exists('acceptlanguage', $core)) {
             $core['Accept-Language'] = $core['acceptlanguage'];
             unset($core['acceptlanguage']);
         }
+        if (array_key_exists('xpreferredassetscheme', $core)) {
+            $core['X-Preferred-Asset-Scheme'] = $core['xpreferredassetscheme'];
+            unset($core['xpreferredassetscheme']);
+        }
+
         $headers = array_replace($headers, array_intersect_key($core, $headers));
         $headers = array_filter($headers, 'strlen');
         if (!empty($format)) {

@@ -133,6 +133,7 @@ class Workbench_Model_Workbench_Params implements Iterator
                 $belongsTo = 'core';
                 break;
             case 'accept-language':
+            case 'x-preferred-asset-scheme':
                 $elm = 'Select';
                 $belongsTo = 'core';
                 break;
@@ -173,7 +174,7 @@ class Workbench_Model_Workbench_Params implements Iterator
         ));
 
         if ($elm instanceof Zend_Form_Element_Multi) {
-            if (in_array($fieldName, array('format', 'signing', 'accept-language'))) {
+            if (in_array($fieldName, array('format', 'signing', 'accept-language', 'x-preferred-asset-scheme'))) {
             //if ('format' === $fieldName || 'signing' === $fieldName) {
                 $value = (array) $value;
                 $value = array_combine($value, $value);

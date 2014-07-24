@@ -56,6 +56,7 @@ class Workbench_Model_Workbench_EntryPoints
     const FORMAT = 'format';
     const ACCEPT = 'accept';
     const ACCEPT_LANG = 'accept-language';
+    const PREF_ASSET_SCHEME = 'x-preferred-asset-scheme';
     const QUERY = 'query';
     const URL = 'url';
     const DISABLED = 'disabled';
@@ -86,6 +87,7 @@ class Workbench_Model_Workbench_EntryPoints
         self::FORMAT => '~(.+)(\+@format)~',
         self::ACCEPT => '~(.+)~',
         self::ACCEPT_LANG => '~(.+)~',
+        self::PREF_ASSET_SCHEME => '~(.+)~',
         self::URL => '(.+)',
         self::DISABLED => '(true)',
     );
@@ -261,6 +263,7 @@ class Workbench_Model_Workbench_EntryPoints
                                     break;
                                 case self::FORMAT:
                                 case self::ACCEPT_LANG:
+                                case self::PREF_ASSET_SCHEME:
                                     $params[$k] = array_filter(explode('|', trim($value)));
                                     break;
                                 case self::PARAM:
