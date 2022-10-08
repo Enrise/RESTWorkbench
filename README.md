@@ -1,3 +1,9 @@
+# Archived and unmaintained
+
+This is an old repository that is no longer used or maintained. We advice to no longer use this repository.
+
+## Original README can be found below:
+
 Copy the Workbench module to your modules directory.
 Copy the workbench.ini to your config folder.
 Modify the config to suit your needs.
